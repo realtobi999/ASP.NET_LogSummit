@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSummitApi.Presentation", "LogSummitApi\LogSummitApi.Presentation.csproj", "{EABB80D5-2DE6-4EAB-9EAF-78DD850CD80D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSummitApi.Domain", "LogSummitApi.Domain\LogSummitApi.Domain.csproj", "{3202BE3A-A86F-4538-AD72-666128637C95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSummitApi.Infrastructure", "LogSummitApi.Infrastructure\LogSummitApi.Infrastructure.csproj", "{F3AC6AF1-EC85-4163-9C86-71734ABDCEEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSummitApi.Application", "LogSummitApi.Application\LogSummitApi.Application.csproj", "{FA74A1C9-AE7D-4F81-A3F3-528C292FFE14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSummitApi.Tests", "LogSummitApi.Tests\LogSummitApi.Tests.csproj", "{4381AAFC-D60F-413A-98A1-E7D3CD7D59E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EABB80D5-2DE6-4EAB-9EAF-78DD850CD80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EABB80D5-2DE6-4EAB-9EAF-78DD850CD80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EABB80D5-2DE6-4EAB-9EAF-78DD850CD80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EABB80D5-2DE6-4EAB-9EAF-78DD850CD80D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3202BE3A-A86F-4538-AD72-666128637C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3202BE3A-A86F-4538-AD72-666128637C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3202BE3A-A86F-4538-AD72-666128637C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3202BE3A-A86F-4538-AD72-666128637C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3AC6AF1-EC85-4163-9C86-71734ABDCEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3AC6AF1-EC85-4163-9C86-71734ABDCEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3AC6AF1-EC85-4163-9C86-71734ABDCEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3AC6AF1-EC85-4163-9C86-71734ABDCEEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA74A1C9-AE7D-4F81-A3F3-528C292FFE14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA74A1C9-AE7D-4F81-A3F3-528C292FFE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA74A1C9-AE7D-4F81-A3F3-528C292FFE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA74A1C9-AE7D-4F81-A3F3-528C292FFE14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4381AAFC-D60F-413A-98A1-E7D3CD7D59E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4381AAFC-D60F-413A-98A1-E7D3CD7D59E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4381AAFC-D60F-413A-98A1-E7D3CD7D59E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4381AAFC-D60F-413A-98A1-E7D3CD7D59E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
