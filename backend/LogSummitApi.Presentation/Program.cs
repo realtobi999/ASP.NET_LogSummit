@@ -1,8 +1,9 @@
 using LogSummitApi.Application.Core.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Presentation.Extensions;
+using LogSummitApi.Presentation.Middleware.Handlers;
 
-internal class Program
+public class Program
 {
     private static void Main(string[] args)
     {
@@ -14,6 +15,8 @@ internal class Program
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
 
+            builder.Services.AddExceptionHandler<ExceptionHandler>();
+
             // JWT 
             var jwt = JwtFactory.Create(config.GetSection("JWT:Issuer").Value, config.GetSection("JWT:Key").Value);
             builder.Services.AddSingleton<IJwt>(_ => jwt);
@@ -22,8 +25,10 @@ internal class Program
 
         var app = builder.Build();
         {
+            app.UseExceptionHandler(opt => {});
+
             if (app.Environment.IsDevelopment())
-            {   
+            {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }

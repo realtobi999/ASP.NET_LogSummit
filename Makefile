@@ -5,3 +5,6 @@ test:
 
 build:
 	cd backend && dotnet build
+
+run:
+	cd backend/LogSummitApi.Presentation && dotnet run

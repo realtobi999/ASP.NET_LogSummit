@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogSummitApi\LogSummitApi.Presentation.csproj" />
+    <ProjectReference Include="..\LogSummitApi.Presentation\LogSummitApi.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
