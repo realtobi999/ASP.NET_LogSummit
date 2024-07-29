@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
-using FluentAssertions;
 using LogSummitApi.Application.Core.Utilities;
 using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Tests.Helpers;
-using Xunit;
 
 namespace LogSummitApi.Tests.Unit;
 
@@ -34,10 +32,10 @@ public class JwtUtilTests
     public void Jwt_Parse_ValidationWorks()
     {
         // act & assert
-        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader(""); });
-        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader("Bearer"); });
-        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader("Bearer "); });
-        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader("TOKEN"); });
+        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader(""); });
+        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader("Bearer"); });
+        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader("Bearer "); });
+        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader("TOKEN"); });
     }
 
     [Fact]

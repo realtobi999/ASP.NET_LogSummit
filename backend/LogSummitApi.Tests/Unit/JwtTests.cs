@@ -1,8 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using FluentAssertions;
 using LogSummitApi.Application.Core.Utilities;
 using LogSummitApi.Tests.Helpers;
-using Xunit;
 
 namespace LogSummitApi.Tests.Unit;
 
