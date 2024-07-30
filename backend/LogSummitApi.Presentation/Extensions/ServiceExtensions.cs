@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using LogSummitApi.Application.Core.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
@@ -13,8 +14,12 @@ namespace LogSummitApi.Presentation.Extensions;
 
 public static class ServiceExtensions
 {
-    public static void ConfigureJwtAuthentication(this IServiceCollection services, IJwt jwt)
+    public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration config)
     {
+        var jwt = JwtFactory.Create(config.GetSection("JWT:Issuer").Value, config.GetSection("JWT:Key").Value);
+
+        services.AddSingleton<IJwt>(_ => jwt);
+        
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
                 {

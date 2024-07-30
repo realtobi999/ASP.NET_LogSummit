@@ -21,10 +21,7 @@ public class Program
             builder.Services.ConfigureDbContext(config);
             builder.Services.ConfigureRepositoryManager();
 
-            // JWT 
-            var jwt = JwtFactory.Create(config.GetSection("JWT:Issuer").Value, config.GetSection("JWT:Key").Value);
-            builder.Services.AddSingleton(_ => jwt);
-            builder.Services.ConfigureJwtAuthentication(jwt);
+            builder.Services.ConfigureJwtAuthentication(config);
         }
 
         var app = builder.Build();
