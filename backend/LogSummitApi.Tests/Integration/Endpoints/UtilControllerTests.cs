@@ -1,4 +1,5 @@
 ﻿using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Presentation;
 using LogSummitApi.Tests.Integration.Server;
 
 namespace LogSummitApi.Tests.Integration.Endpoints;

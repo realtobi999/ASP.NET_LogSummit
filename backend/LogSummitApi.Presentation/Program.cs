@@ -1,7 +1,8 @@
 using LogSummitApi.Application.Core.Factories;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Presentation.Extensions;
 using LogSummitApi.Presentation.Middleware.Handlers;
+
+namespace LogSummitApi.Presentation;
 
 public class Program
 {
@@ -17,9 +18,12 @@ public class Program
 
             builder.Services.AddExceptionHandler<ExceptionHandler>();
 
+            builder.Services.ConfigureDbContext(config);
+            builder.Services.ConfigureRepositoryManager();
+
             // JWT 
             var jwt = JwtFactory.Create(config.GetSection("JWT:Issuer").Value, config.GetSection("JWT:Key").Value);
-            builder.Services.AddSingleton<IJwt>(_ => jwt);
+            builder.Services.AddSingleton(_ => jwt);
             builder.Services.ConfigureJwtAuthentication(jwt);
         }
 
@@ -37,7 +41,7 @@ public class Program
 
             app.UseHttpsRedirection();
             app.MapControllers();
-            
+
             app.Run();
         }
     }

@@ -1,6 +1,12 @@
 ﻿using System.Text;
+using LogSummitApi.Domain.Core.Interfaces.Factories;
+using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Infrastructure.Factories;
+using LogSummitApi.Infrastructure.Persistance;
+using LogSummitApi.Infrastructure.Persistance.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LogSummitApi.Presentation.Extensions;
@@ -24,5 +30,19 @@ public static class ServiceExtensions
                     };
                 }
             );
+    }
+
+    public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<LogSummitContext>(options =>
+       {
+           options.UseNpgsql(configuration.GetConnectionString("LogSummit"));
+       });
+    }
+
+    public static void ConfigureRepositoryManager(this IServiceCollection services)
+    {
+        services.AddScoped<IRepositoryFactory, RepositoryFactory>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
     }
 }
