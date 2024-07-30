@@ -8,7 +8,7 @@ namespace LogSummitApi.Tests.Unit;
 public class JwtUtilTests
 {
     [Fact]
-    public void Jwt_ParsePayload_Works()
+    public void ParsePayload_Works()
     {
         // prepare
         var issuer = "TEST_ISSUER";
@@ -29,7 +29,7 @@ public class JwtUtilTests
     }
 
     [Fact]
-    public void Jwt_Parse_ValidationWorks()
+    public void Parse_ValidationWorks()
     {
         // act & assert
         Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader(""); });
@@ -39,7 +39,7 @@ public class JwtUtilTests
     }
 
     [Fact]
-    public void Jwt_Parse_Works()
+    public void Parse_Works()
     {
         // prepare
         var issuer = "TEST_ISSUER";
@@ -55,7 +55,7 @@ public class JwtUtilTests
     }
 
     [Fact]
-    public void Jwt_ParseFromPayload_Works()
+    public void ParseFromPayload_Works()
     {
         // prepare
         var issuer = "TEST_ISSUER";

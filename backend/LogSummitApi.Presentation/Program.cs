@@ -1,4 +1,6 @@
 using LogSummitApi.Application.Core.Factories;
+using LogSummitApi.Application.Core.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Presentation.Extensions;
 using LogSummitApi.Presentation.Middleware.Handlers;
 
@@ -19,6 +21,7 @@ public class Program
             // services - dependency injection
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
+            builder.Services.AddSingleton<IHasher, Hasher>();
 
             builder.Services.ConfigureJwtAuthentication(config);
 

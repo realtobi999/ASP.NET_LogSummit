@@ -7,7 +7,7 @@ namespace LogSummitApi.Tests.Unit;
 public class JwtTests
 {
     [Fact]
-    public void Jwt_Generate_Works()
+    public void Generate_WorksAndReturnsAToken()
     {
         // prepare
         var issuer = "TEST_ISSUER";
