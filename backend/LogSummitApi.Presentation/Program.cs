@@ -12,16 +12,19 @@ public class Program
         {
             var config = builder.Configuration;
 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers();
-
             builder.Services.AddExceptionHandler<ExceptionHandler>();
 
             builder.Services.ConfigureDbContext(config);
+
+            // services - dependency injection
             builder.Services.ConfigureRepositoryManager();
+            builder.Services.ConfigureServiceManager();
 
             builder.Services.ConfigureJwtAuthentication(config);
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
         }
 
         var app = builder.Build();

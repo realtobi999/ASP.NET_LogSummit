@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using LogSummitApi.Application.Core.Factories;
+using LogSummitApi.Application.Core.Services;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
+using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Infrastructure.Factories;
 using LogSummitApi.Infrastructure.Persistance;
@@ -49,5 +51,11 @@ public static class ServiceExtensions
     {
         services.AddScoped<IRepositoryFactory, RepositoryFactory>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
+    }
+
+    public static void ConfigureServiceManager(this IServiceCollection services)
+    {
+        services.AddScoped<IServiceFactory, ServiceFactory>();
+        services.AddScoped<IServiceManager, ServiceManager>();
     }
 }
