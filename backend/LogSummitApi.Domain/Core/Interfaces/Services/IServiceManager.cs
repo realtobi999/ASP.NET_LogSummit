@@ -2,5 +2,5 @@
 
 public interface IServiceManager
 {
-
+    public IUserService Users { get; }
 }

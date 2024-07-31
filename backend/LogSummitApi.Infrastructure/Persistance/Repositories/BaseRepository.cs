@@ -3,7 +3,7 @@ using LogSummitApi.Domain.Core.Interfaces.Repositories;
 
 namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : class
+public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
 {
     protected readonly LogSummitContext _context;
 

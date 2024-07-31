@@ -28,8 +28,10 @@ public class Hasher : IHasher
         return CryptographicOperations.FixedTimeEquals(hash, hashOfInput);
     }
 
-    public string Hash(string plainText)
+    public string Hash(string? plainText)
     {
+        if (plainText is null) throw new NullReferenceException(plainText);
+
         var salt = RandomNumberGenerator.GetBytes(_saltSize);
         var hash = Rfc2898DeriveBytes.Pbkdf2(plainText, salt, _iterations, _algorithm, _hashSize);
 

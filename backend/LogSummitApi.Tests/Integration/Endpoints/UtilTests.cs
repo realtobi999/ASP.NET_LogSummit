@@ -4,7 +4,7 @@ using LogSummitApi.Tests.Integration.Server;
 
 namespace LogSummitApi.Tests.Integration.Endpoints;
 
-public class UtilControllerTests
+public class UtilTests
 {
     [Fact]
     public async void HealthCheck_ReturnsStatusCode200()

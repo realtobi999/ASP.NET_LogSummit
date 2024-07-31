@@ -2,6 +2,6 @@
 
 public interface IHasher
 {
-    string Hash(string plainText);
+    string Hash(string? plainText);
     bool Compare(string plainText, string hashedText);
 }
