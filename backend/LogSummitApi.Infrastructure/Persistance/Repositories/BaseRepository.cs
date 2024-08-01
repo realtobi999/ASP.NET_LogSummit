@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 
@@ -22,9 +23,9 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         _context.Set<T>().Add(entity);
     }
 
-    public IQueryable<T> Get(Expression<Func<T, bool>> expression)
+    public Task<T?> Get(Expression<Func<T, bool>> expression)
     {
-        return _context.Set<T>().Where(expression);
+        return _context.Set<T>().FirstOrDefaultAsync(expression);
     }
 
     public IQueryable<T> Index()

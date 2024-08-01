@@ -6,5 +6,5 @@ namespace LogSummitApi.Domain.Core.Exceptions.HTTP;
 public class BadRequestException(string message) : Exception(message), IHttpException
 {
     public int StatusCode => (int)HttpStatusCode.BadRequest;
-    public string Title => "Bad request, please modify the response and try again.";
+    public string Title => "Bad request";
 }
