@@ -24,11 +24,6 @@ public class AuthController : ControllerBase
     {
         var user = await _service.Users.Create(RegisterUserDto);
 
-        var token = _jwt.Generate([
-            new Claim(ClaimTypes.Role, "User"),
-            new Claim("UserId", user.Id.ToString()),
-        ]); 
-
-        return Created($"/v1/api/user/{user.Id}", token);
+        return Created($"/v1/api/user/{user.Id}", null);
     }
 }
