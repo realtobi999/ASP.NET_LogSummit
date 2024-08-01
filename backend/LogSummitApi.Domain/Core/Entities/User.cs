@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
 using LogSummitApi.Domain.Core.Dto.Users;
 
 namespace LogSummitApi.Domain.Core.Entities;
@@ -9,6 +8,9 @@ public class User
 {
     [Required, Column("id")]
     public Guid Id { get; set; }
+
+    [Required, Column("username"), MaxLength(155)]
+    public string? Username { get; set; }
 
     [Required, Column("email"), EmailAddress, MaxLength(155)]
     public string? Email { get; set; }

@@ -7,6 +7,9 @@ public record class RegisterUserDto
 {
     public Guid? Id { get; set; }
 
+    [Required, MaxLength(155)]
+    public string? Username { get; set; }
+
     [Required, EmailAddress, MaxLength(155)]
     public string? Email { get; set; }
 

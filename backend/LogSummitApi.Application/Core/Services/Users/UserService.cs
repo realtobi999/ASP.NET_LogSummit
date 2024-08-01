@@ -37,13 +37,14 @@ public class UserService : IUserService
         return this.Authenticate(user, inputPassword);
     }
 
-    public async Task<User> Create(RegisterUserDto RegisterUserDto)
+    public async Task<User> Create(RegisterUserDto registerUserDto)
     {
         var user = new User()
         {
-            Id = RegisterUserDto.Id ?? Guid.NewGuid(),
-            Email = RegisterUserDto.Email,
-            Password = _hasher.Hash(RegisterUserDto.Password),
+            Id = registerUserDto.Id ?? Guid.NewGuid(),
+            Username = registerUserDto.Username,
+            Email = registerUserDto.Email,
+            Password = _hasher.Hash(registerUserDto.Password),
         };
 
         _repository.Users.Create(user);
