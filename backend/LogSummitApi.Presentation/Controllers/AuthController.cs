@@ -46,6 +46,9 @@ public class AuthController : ControllerBase
             new Claim("UserId", user.Id.ToString()),
         ]);
 
-        return Ok(token);
+        return Ok(new LoginResponseDto()
+        {
+            Token = token
+        });
     }
 }

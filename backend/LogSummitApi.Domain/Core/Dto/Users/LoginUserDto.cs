@@ -2,7 +2,7 @@
 
 namespace LogSummitApi.Domain.Core.Dto.Users;
 
-public class LoginUserDto
+public record class LoginUserDto
 {
     [Required, EmailAddress, MaxLength(155)]
     public string? Email { get; set; }
