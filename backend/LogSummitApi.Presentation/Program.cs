@@ -1,4 +1,3 @@
-using LogSummitApi.Application.Core.Factories;
 using LogSummitApi.Application.Core.Utilities;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Presentation.Extensions;
