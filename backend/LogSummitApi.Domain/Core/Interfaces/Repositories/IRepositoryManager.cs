@@ -3,6 +3,7 @@
 public interface IRepositoryManager
 {
     public IUserRepository Users { get; }
+    public ISummitRepository Summit { get; }
     public Task<int> SaveAsync();
 
     /// <summary>
