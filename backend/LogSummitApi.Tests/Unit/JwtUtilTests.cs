@@ -32,10 +32,10 @@ public class JwtUtilTests
     public void Parse_ValidationWorks()
     {
         // act & assert
-        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader(""); });
-        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader("Bearer"); });
-        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader("Bearer "); });
-        Assert.Throws<BadRequestException>(() => { JwtUtils.ParseFromHeader("TOKEN"); });
+        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader(""); });
+        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader("Bearer"); });
+        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader("Bearer "); });
+        Assert.Throws<BadRequest400Exception>(() => { JwtUtils.ParseFromHeader("TOKEN"); });
     }
 
     [Fact]

@@ -3,7 +3,7 @@ using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Exceptions;
 
-public class InvalidCoordinateFormatException : BadRequestException
+public class InvalidCoordinateFormatException : BadRequest400Exception
 {
      public InvalidCoordinateFormatException(string message) 
         : base($"Invalid coordinate format: {message}")
