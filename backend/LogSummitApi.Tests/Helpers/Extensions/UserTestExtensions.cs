@@ -12,7 +12,7 @@ public static class UserTestExtensions
         .RuleFor(u => u.Email, f => f.Internet.Email())
         .RuleFor(u => u.Password, f => f.Internet.Password());
 
-    public static User WithFakeData(this User user)
+    public static User WithFakeData(this User _)
     {
         return _userFaker.Generate();
     }

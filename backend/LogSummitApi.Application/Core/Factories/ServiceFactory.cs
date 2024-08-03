@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Application.Core.Services.Summit;
+﻿using LogSummitApi.Application.Core.Services.Summits;
 using LogSummitApi.Application.Core.Services.Users;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -20,7 +20,7 @@ public class ServiceFactory : IServiceFactory
 
     public ISummitService CreateSummitService()
     {
-        return new SummitService();
+        return new SummitService(_repository);
     }
 
     public IUserService CreateUserService()
