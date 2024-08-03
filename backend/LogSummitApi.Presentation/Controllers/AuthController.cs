@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Security.Claims;
-using LogSummitApi.Domain.Core.Dto.Users;
+using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;

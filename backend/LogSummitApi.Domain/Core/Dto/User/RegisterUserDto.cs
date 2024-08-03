@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LogSummitApi.Domain.Core.Attributes.Validation;
 
-namespace LogSummitApi.Domain.Core.Dto.Users;
+namespace LogSummitApi.Domain.Core.Dto.User;
 
 public record class RegisterUserDto
 {

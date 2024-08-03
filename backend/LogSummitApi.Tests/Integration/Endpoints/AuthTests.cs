@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Application.Core.Utilities;
-using LogSummitApi.Domain.Core.Dto.Users;
+using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Presentation;
 using LogSummitApi.Tests.Helpers.Extensions;

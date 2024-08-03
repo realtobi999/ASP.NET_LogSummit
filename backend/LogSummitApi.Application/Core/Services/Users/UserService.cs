@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Dto.Users;
+﻿using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -32,7 +32,7 @@ public class UserService : IUserService
 
     public async Task<bool> Authenticate(string email, string inputPassword)
     {
-        var user = await this.Get(email);
+        var user = await Get(email);
 
         return this.Authenticate(user, inputPassword);
     }

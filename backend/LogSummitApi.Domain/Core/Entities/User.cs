@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LogSummitApi.Domain.Core.Dto.Users;
+using LogSummitApi.Domain.Core.Dto.User;
 
 namespace LogSummitApi.Domain.Core.Entities;
 
