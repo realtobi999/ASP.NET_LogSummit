@@ -18,6 +18,12 @@ public class User
     [Required, Column("password"), MinLength(8), MaxLength(155)]
     public string? Password { get; set; }
 
+    // entity relationships
+
+    public ICollection<Summit>? Summits { get; set; }
+
+    // methods
+
     public UserDto ToDto()
     {
         return new UserDto()
