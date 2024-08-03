@@ -17,17 +17,25 @@ public class SummitService : ISummitService
 
     public async Task<Summit> Create(CreateSummitDto createSummitDto)
     {
-        // check if the user exists in the database
-        var user = await _repository.Users.Get(createSummitDto.UserId) ?? throw new NotFound404Exception(nameof(User), createSummitDto.UserId);
+        // validate that the user exists
+        var user = await _repository.Users.Get(createSummitDto.UserId)
+            ?? throw new NotFound404Exception(nameof(User), createSummitDto.UserId);
 
-        var summit = new Summit()
+        // check if there is already a summit within a set radius (in meters)
+        var existingSummits = await _repository.Summit.Index();
+        if (existingSummits.Any(s => s.Coordinate!.IsWithinRange(createSummitDto.Coordinate!, Summit.SummitProximityRadius)))
+        {
+            throw new BadRequest400Exception($"A summit already exists within a {Summit.SummitProximityRadius}-meter radius.");
+        }
+
+        var summit = new Summit
         {
             Id = createSummitDto.Id ?? Guid.NewGuid(),
             UserId = user.Id,
             Name = createSummitDto.Name,
             Description = createSummitDto.Description,
             CreatedAt = createSummitDto.CreatedAt,
-            Coordinate = createSummitDto.Coordinate, 
+            Coordinate = createSummitDto.Coordinate
         };
 
         _repository.Summit.Create(summit);
@@ -35,4 +43,5 @@ public class SummitService : ISummitService
 
         return summit;
     }
+
 }

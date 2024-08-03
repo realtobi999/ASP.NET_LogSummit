@@ -28,8 +28,8 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         return _context.Set<T>().FirstOrDefaultAsync(expression);
     }
 
-    public IQueryable<T> Index()
+    public async Task<IEnumerable<T>> Index()
     {
-        return _context.Set<T>();
+        return await _context.Set<T>().ToListAsync();
     }
 }
