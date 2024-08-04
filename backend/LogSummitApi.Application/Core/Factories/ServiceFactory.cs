@@ -11,16 +11,18 @@ public class ServiceFactory : IServiceFactory
 {
     private readonly IRepositoryManager _repository;
     private readonly IHasher _hasher;
+    private readonly IValidatorFactory _validators;
 
-    public ServiceFactory(IRepositoryManager repository, IHasher hasher)
+    public ServiceFactory(IRepositoryManager repository, IHasher hasher, IValidatorFactory validators)
     {
         _repository = repository;
         _hasher = hasher;
+        _validators = validators;
     }
 
     public ISummitService CreateSummitService()
     {
-        return new SummitService(_repository);
+        return new SummitService(_repository, _validators.CreateSummitValidator());
     }
 
     public IUserService CreateUserService()

@@ -17,10 +17,12 @@ public class Program
 
             builder.Services.ConfigureDbContext(config);
             builder.Services.AddHttpClient();
+            builder.Services.AddMemoryCache();
 
             // services - dependency injection
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
+            builder.Services.ConfigureValidators();
             builder.Services.AddSingleton<IHasher, Hasher>();
 
             builder.Services.ConfigureJwtAuthentication(config);

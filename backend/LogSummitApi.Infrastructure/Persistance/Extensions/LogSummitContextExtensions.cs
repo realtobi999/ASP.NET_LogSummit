@@ -6,7 +6,7 @@ namespace LogSummitApi.Infrastructure.Persistance.Extensions;
 public static class LogSummitContextExtensions
 {
     /// <summary>
-    /// Configures one-to-many relationship between <c>Summit</c> and <c>User</c>.
+    /// Configures one-to-many relationship between <see cref="Summit"/> and <see cref="User"/> .
     /// </summary>
     /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
     public static void ConfigureSummitUserRelationship(this ModelBuilder builder)

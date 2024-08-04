@@ -1,6 +1,7 @@
 ﻿using LogSummitApi.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LogSummitApi.Tests.Integration.Server;
 

@@ -58,4 +58,9 @@ public static class ServiceExtensions
         services.AddScoped<IServiceFactory, ServiceFactory>();
         services.AddScoped<IServiceManager, ServiceManager>();
     }
+
+    public static void ConfigureValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IValidatorFactory, ValidatorFactory>();
+    }
 }
