@@ -9,6 +9,7 @@ namespace LogSummitApi.Application.Core.Services.Summits;
 public class SummitService : ISummitService
 {
     private readonly IRepositoryManager _repository;
+    private static List<CountryDto>? _countries; // make the property static so we don't have to call the API multiple times
 
     public SummitService(IRepositoryManager repository)
     {
@@ -53,9 +54,12 @@ public class SummitService : ISummitService
 
     public async Task<IEnumerable<string>> GetValidCountries()
     {
-        var countries = await _repository.Country.Index();
+        if (_countries == null)
+        {
+            _countries = (await _repository.Country.Index()).ToList();
+        }
 
-        return countries
+        return _countries
             .Select(country =>
             {
                 if (country.Name == null) throw new NullReferenceException("Country 'Name' property cannot be null.");
