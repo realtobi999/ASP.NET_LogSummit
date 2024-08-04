@@ -77,7 +77,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void Index_Returns200AndCorrectSummits()
+    public async void IndexAsync_Returns200AndCorrectSummits()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();

@@ -23,12 +23,12 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         _context.Set<T>().Remove(entity);
     }
 
-    public Task<T?> Get(Expression<Func<T, bool>> expression)
+    public Task<T?> GetAsync(Expression<Func<T, bool>> expression)
     {
         return _context.Set<T>().FirstOrDefaultAsync(expression);
     }
 
-    public async Task<IEnumerable<T>> Index()
+    public async Task<IEnumerable<T>> IndexAsync()
     {
         return await _context.Set<T>().ToListAsync();
     }

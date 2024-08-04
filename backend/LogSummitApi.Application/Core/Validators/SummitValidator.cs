@@ -16,11 +16,11 @@ public class SummitValidator : IValidator<Summit>
 
     public async Task<(bool isValid, Exception? exception)> IsValidAsync(Summit summit)
     {
-        var summits = await _repository.Summit.Index();
-        var countries = await _repository.HttpCountry.Index();
+        var summits = await _repository.Summit.IndexAsync();
+        var countries = await _repository.HttpCountry.IndexAsync();
 
         // validate that the user exists
-        if (_repository.Users.Get(summit.UserId) is null)
+        if (await _repository.Users.GetAsync(summit.UserId) is null)
         {
             return (false, new NotFound404Exception(nameof(User), summit.UserId));
         }

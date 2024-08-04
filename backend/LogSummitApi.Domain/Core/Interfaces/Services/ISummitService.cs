@@ -5,11 +5,11 @@ namespace LogSummitApi.Domain.Core.Interfaces.Services;
 
 public interface ISummitService
 {
-    Task<IEnumerable<Summit>> Index();
-    Task<Summit> Get(Guid id);
-    Task<Summit> Create(CreateSummitDto createSummitDto);
-    Task Update(Summit summit, UpdateSummitDto updateSummitDto);
-    Task Delete(Summit summit);
+    Task<IEnumerable<Summit>> IndexAsync();
+    Task<Summit> GetAsync(Guid id);
+    Task<Summit> CreateAsync(CreateSummitDto createSummitDto);
+    Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto);
+    Task DeleteAsync(Summit summit);
     
-    Task<IEnumerable<string>> GetValidCountries();
+    Task<IEnumerable<string>> GetValidCountriesAsync();
 }

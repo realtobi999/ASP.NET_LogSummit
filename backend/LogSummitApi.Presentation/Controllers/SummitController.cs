@@ -18,9 +18,9 @@ public class SummitController : ControllerBase
     }
 
     [HttpGet("summit")]
-    public async Task<IActionResult> Index(int limit, int offset)
+    public async Task<IActionResult> IndexAsync(int limit, int offset)
     {
-        var summits = await _service.Summit.Index();
+        var summits = await _service.Summit.IndexAsync();
 
         if (offset > 0)
         {
@@ -37,7 +37,7 @@ public class SummitController : ControllerBase
     [HttpGet("summit/{summitId}")]
     public async Task<IActionResult> Get(Guid summitId)
     {
-        var summit = await _service.Summit.Get(summitId);
+        var summit = await _service.Summit.GetAsync(summitId);
 
         return Ok(summit.ToDto());
     }
@@ -45,13 +45,13 @@ public class SummitController : ControllerBase
     [HttpGet("summit/valid-countries")]
     public async Task<IActionResult> GetValidCountries()
     {
-        return Ok(await _service.Summit.GetValidCountries());
+        return Ok(await _service.Summit.GetValidCountriesAsync());
     }
 
     [HttpPost("summit")]
     public async Task<IActionResult> Create([FromBody] CreateSummitDto createSummitDto)
     {
-        var summit = await _service.Summit.Create(createSummitDto);
+        var summit = await _service.Summit.CreateAsync(createSummitDto);
 
         return Created($"/v1/api/summit/{summit.Id}", null);
     }
@@ -61,13 +61,13 @@ public class SummitController : ControllerBase
     {
         try
         {
-            await _service.Summit.Update(await _service.Summit.Get(summitId), updateSummitDto);
+            await _service.Summit.UpdateAsync(await _service.Summit.GetAsync(summitId), updateSummitDto);
 
             return NoContent();
         }
         catch (NotFound404Exception)
         {
-            var summit = await _service.Summit.Create(new CreateSummitDto()
+            var summit = await _service.Summit.CreateAsync(new CreateSummitDto()
             {
                 Id = summitId,
                 UserId = updateSummitDto.UserId,
@@ -84,9 +84,9 @@ public class SummitController : ControllerBase
     [HttpDelete("summit/{summitId}")]
     public async Task<IActionResult> Delete(Guid summitId)
     {
-        var summit = await _service.Summit.Get(summitId);
+        var summit = await _service.Summit.GetAsync(summitId);
 
-        await _service.Summit.Delete(summit);
+        await _service.Summit.DeleteAsync(summit);
 
         return NoContent();
     }

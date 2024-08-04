@@ -10,7 +10,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
     }
 
-    public async Task<User?> Get(Guid id)
+    public async Task<User?> GetAsync(Guid id)
     {
         return await _context.Set<User>().FirstOrDefaultAsync(u => u.Id == id);
     }

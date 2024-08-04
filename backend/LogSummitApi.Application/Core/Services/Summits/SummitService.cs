@@ -18,7 +18,7 @@ public class SummitService : ISummitService
         _validator = validator;
     }
 
-    public async Task<Summit> Create(CreateSummitDto createSummitDto)
+    public async Task<Summit> CreateAsync(CreateSummitDto createSummitDto)
     {
 
         var summit = new Summit
@@ -42,23 +42,23 @@ public class SummitService : ISummitService
         return summit;
     }
 
-    public async Task Delete(Summit summit)
+    public async Task DeleteAsync(Summit summit)
     {
         _repository.Summit.Delete(summit);
         
         await _repository.SaveSafelyAsync();
     }
 
-    public async Task<Summit> Get(Guid id)
+    public async Task<Summit> GetAsync(Guid id)
     {
-        var summit = await _repository.Summit.Get(id) ?? throw new NotFound404Exception(nameof(Summit), id);
+        var summit = await _repository.Summit.GetAsync(id) ?? throw new NotFound404Exception(nameof(Summit), id);
 
         return summit;
     }
 
-    public async Task<IEnumerable<string>> GetValidCountries()
+    public async Task<IEnumerable<string>> GetValidCountriesAsync()
     {
-        var countries = await _repository.HttpCountry.Index();
+        var countries = await _repository.HttpCountry.IndexAsync();
 
         return countries
             .Select(country =>
@@ -71,14 +71,14 @@ public class SummitService : ISummitService
             .ToList();
     }
 
-    public async Task<IEnumerable<Summit>> Index()
+    public async Task<IEnumerable<Summit>> IndexAsync()
     {
-        var summits = await _repository.Summit.Index();
+        var summits = await _repository.Summit.IndexAsync();
 
         return summits;
     }
 
-    public async Task Update(Summit summit, UpdateSummitDto updateSummitDto)
+    public async Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto)
     {
         summit.Name = updateSummitDto.Name;
         summit.Description = updateSummitDto.Description;
