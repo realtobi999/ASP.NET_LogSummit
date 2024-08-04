@@ -49,6 +49,7 @@ public static class ServiceExtensions
 
     public static void ConfigureRepositoryManager(this IServiceCollection services)
     {
+        services.AddScoped<IHttpRepositoryFactory, HttpRepositoryFactory>();
         services.AddScoped<IRepositoryFactory, RepositoryFactory>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
     }

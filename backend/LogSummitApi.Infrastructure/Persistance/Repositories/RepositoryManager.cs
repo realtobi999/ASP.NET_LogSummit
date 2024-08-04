@@ -9,19 +9,21 @@ public class RepositoryManager : IRepositoryManager
 {
     private readonly LogSummitContext _context;
     private readonly IRepositoryFactory _factory;
+    private readonly IHttpRepositoryFactory _httpFactory;
     private readonly Lazy<IUserRepository> _users;
     private readonly Lazy<ISummitRepository> _summits;
     private readonly Lazy<IHttpCountryRepository> _countries;
 
-    public RepositoryManager(LogSummitContext context, IRepositoryFactory factory)
+    public RepositoryManager(LogSummitContext context, IRepositoryFactory factory, IHttpRepositoryFactory httpFactory)
     {
         _context = context;
         _factory = factory;
+        _httpFactory = httpFactory;
 
         // lazy loading
         _users = new(() => _factory.CreateUserRepository());
         _summits = new(() => _factory.CreateSummitRepository());
-        _countries = new (() => _factory.CreateHttpCountryRepository());
+        _countries = new(() => _httpFactory.CreateCountryHttpRepository());
     }
 
     public IUserRepository Users => _users.Value;
