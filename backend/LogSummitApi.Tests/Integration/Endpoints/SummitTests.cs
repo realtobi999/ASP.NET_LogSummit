@@ -77,7 +77,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void IndexAsync_Returns200AndCorrectSummits()
+    public async void Index_Returns200AndLimitAndOffsetWorks()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -108,6 +108,41 @@ public class SummitTests
         content.Count.Should().Be(limit);
         content.ElementAt(0).Id.Should().Be(summit2.Id);
         content.ElementAt(1).Id.Should().Be(summit3.Id);
+    }
+
+    [Fact]
+    public async void IndexByUser_WorksWithCountryFilterAlso()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user1 = new User().WithFakeData();
+        var user2 = new User().WithFakeData();
+        var summit1 = new Summit().WithFakeData(user1);
+        var summit2 = new Summit().WithFakeData(user2);
+        var summit3 = new Summit().WithFakeData(user2);
+
+        summit3.Country = "Hungary";
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user1.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create2 = await client.PostAsJsonAsync("v1/api/auth/register", user2.ToRegisterUserDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create3 = await client.PostAsJsonAsync("v1/api/summit", summit1.ToCreateSummitDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create4 = await client.PostAsJsonAsync("v1/api/summit", summit2.ToCreateSummitDto());
+        create4.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create5 = await client.PostAsJsonAsync("v1/api/summit", summit3.ToCreateSummitDto());
+        create5.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response = await client.GetAsync($"v1/api/summit/user/{user2.Id}?country=hungary");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();
+
+        content.Count.Should().Be(1);
+        content.ElementAt(0).Id.Should().Be(summit3.Id);
     }
 
     [Fact]

@@ -18,10 +18,39 @@ public class SummitController : ControllerBase
     }
 
     [HttpGet("summit")]
-    public async Task<IActionResult> IndexAsync(int limit, int offset)
+    public async Task<IActionResult> Index(int limit, int offset, string? country)
     {
         var summits = await _service.Summit.IndexAsync();
 
+        if (country is not null)
+        {
+            summits = summits.Where(s => s.Country!.Equals(country, StringComparison.CurrentCultureIgnoreCase));
+        }
+        if (offset > 0)
+        {
+            summits = summits.Skip(offset);
+        }
+        if (limit > 0)
+        {
+            summits = summits.Take(limit);
+        }
+
+        return Ok(summits.Select(s => s.ToDto()).ToList()); 
+    }
+
+    [HttpGet("summit/user/{userId}")]
+    public async Task<IActionResult> IndexByUser(Guid userId, int limit, int offset, string? country)
+    {
+        var summits = await _service.Summit.IndexAsync();
+
+        if (userId != Guid.Empty)
+        {
+            summits = summits.Where(s => s.UserId == userId);
+        }
+        if (country is not null)
+        {
+            summits = summits.Where(s => s.Country!.Equals(country, StringComparison.CurrentCultureIgnoreCase));
+        }
         if (offset > 0)
         {
             summits = summits.Skip(offset);
