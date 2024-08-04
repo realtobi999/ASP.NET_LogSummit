@@ -32,6 +32,14 @@ public class SummitController : ControllerBase
         return Ok(summits.Select(s => s.ToDto()).ToList()); 
     }
 
+    [HttpGet("summit/{summitId}")]
+    public async Task<IActionResult> Get(Guid summitId)
+    {
+        var summit = await _service.Summit.Get(summitId);
+
+        return Ok(summit.ToDto());
+    }
+
     [HttpGet("summit/valid-countries")]
     public async Task<IActionResult> GetSummitValidCountries()
     {

@@ -1,5 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
@@ -37,6 +38,13 @@ public class SummitService : ISummitService
 
         _repository.Summit.Create(summit);
         await _repository.SaveSafelyAsync();
+
+        return summit;
+    }
+
+    public async Task<Summit> Get(Guid id)
+    {
+        var summit = await _repository.Summit.Get(id) ?? throw new NotFound404Exception(nameof(Summit), id);
 
         return summit;
     }

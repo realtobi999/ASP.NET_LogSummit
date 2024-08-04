@@ -109,4 +109,29 @@ public class SummitTests
         content.ElementAt(0).Id.Should().Be(summit2.Id);
         content.ElementAt(1).Id.Should().Be(summit3.Id);
     }
+
+    [Fact]
+    public async void Get_Returns200And404()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response1 = await client.GetAsync($"v1/api/summit/{new Summit().WithFakeData(user).Id}");
+        response1.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var response2 = await client.GetAsync($"v1/api/summit/{summit.Id}");
+        response2.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response2.Content.ReadFromJsonAsync<SummitDto>() ?? throw new NullReferenceException(); 
+
+        content.Id.Should().Be(summit.Id);
+    }
 }

@@ -5,8 +5,6 @@ using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Entities;
-
-// TODO: add country property with third party validation
 public class Summit
 {
     [Required, Column("id")]
