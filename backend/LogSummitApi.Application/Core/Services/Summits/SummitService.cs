@@ -28,13 +28,20 @@ public class SummitService : ISummitService
             throw new BadRequest400Exception($"A summit already exists within a {Summit.SummitProximityRadius}-meter radius.");
         }
 
+        // ensure that the country is valid
+        if (!(await this.GetValidCountries()).Contains(createSummitDto.Country))
+        {
+            throw new BadRequest400Exception($"A {createSummitDto.Country}' is not a valid country. List of all available countries: GET /v1/api/summit/valid-countries");
+        }
+
         var summit = new Summit
         {
             Id = createSummitDto.Id ?? Guid.NewGuid(),
             UserId = user.Id,
             Name = createSummitDto.Name,
             Description = createSummitDto.Description,
-            CreatedAt = createSummitDto.CreatedAt,
+            Country = createSummitDto.Country,
+            CreatedAt = DateTime.UtcNow,
             Coordinate = createSummitDto.Coordinate
         };
 

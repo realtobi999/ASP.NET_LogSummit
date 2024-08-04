@@ -11,7 +11,8 @@ public static class SummitTestExtensions
         .RuleFor(s => s.Id, f => f.Random.Guid())
         .RuleFor(s => s.Name, f => f.Lorem.Sentence(3))
         .RuleFor(s => s.Description, f => f.Lorem.Paragraph())
-        .RuleFor(s => s.CreatedAt, f => f.Date.Past())
+        .RuleFor(s => s.Country, _ => "Czechia")
+        .RuleFor(s => s.CreatedAt, _ => DateTime.UtcNow)
         .RuleFor(s => s.Coordinate, f => new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 100));
 
     public static Summit WithFakeData(this Summit _, User user)
@@ -30,8 +31,8 @@ public static class SummitTestExtensions
             Id = summit.Id,
             UserId = summit.UserId,
             Name = summit.Name,
+            Country = summit.Country,
             Description = summit.Description,
-            CreatedAt = summit.CreatedAt,
             Coordinate = summit.Coordinate
         };
     }

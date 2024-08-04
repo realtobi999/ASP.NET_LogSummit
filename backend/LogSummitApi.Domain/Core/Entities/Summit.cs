@@ -21,6 +21,9 @@ public class Summit
     [Required, Column("description"), MaxLength(1555)]
     public string? Description { get; set; }
 
+    [Required, MaxLength(155)]
+    public string? Country { get; set; }
+
     [Required, Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
