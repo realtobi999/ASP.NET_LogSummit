@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     [HttpPost("auth/register")]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto registerUserDto)
     {
-        var user = await _service.Users.Create(registerUserDto);
+        var user = await _service.Users.CreateAsync(registerUserDto);
 
         return Created($"/v1/api/user/{user.Id}", null);
     }
@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> LoginUser([FromBody] LoginUserDto loginUserDto)
     {
         // we can ignore the null warning cause of the asp.net validation  
-        var user = await _service.Users.Get(loginUserDto.Email!);
+        var user = await _service.Users.GetAsync(loginUserDto.Email!);
         var authenticated = _service.Users.Authenticate(user, loginUserDto.Password!);
 
         if (!authenticated)

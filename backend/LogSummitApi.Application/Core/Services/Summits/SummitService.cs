@@ -1,5 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
@@ -17,7 +18,7 @@ public class SummitService : ISummitService
         _validator = validator;
     }
 
-    public async Task<Summit> Create(CreateSummitDto createSummitDto)
+    public async Task<Summit> CreateAsync(CreateSummitDto createSummitDto)
     {
 
         var summit = new Summit
@@ -41,9 +42,23 @@ public class SummitService : ISummitService
         return summit;
     }
 
-    public async Task<IEnumerable<string>> GetValidCountries()
+    public async Task DeleteAsync(Summit summit)
     {
-        var countries = await _repository.HttpCountry.Index();
+        _repository.Summit.Delete(summit);
+        
+        await _repository.SaveSafelyAsync();
+    }
+
+    public async Task<Summit> GetAsync(Guid id)
+    {
+        var summit = await _repository.Summit.GetAsync(id) ?? throw new NotFound404Exception(nameof(Summit), id);
+
+        return summit;
+    }
+
+    public async Task<IEnumerable<string>> GetValidCountriesAsync()
+    {
+        var countries = await _repository.HttpCountry.IndexAsync();
 
         return countries
             .Select(country =>
@@ -56,10 +71,24 @@ public class SummitService : ISummitService
             .ToList();
     }
 
-    public async Task<IEnumerable<Summit>> Index()
+    public async Task<IEnumerable<Summit>> IndexAsync()
     {
-        var summits = await _repository.Summit.Index();
+        var summits = await _repository.Summit.IndexAsync();
 
         return summits;
+    }
+
+    public async Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto)
+    {
+        summit.Name = updateSummitDto.Name;
+        summit.Description = updateSummitDto.Description;
+        summit.Country = updateSummitDto.Country;
+        summit.Coordinate = updateSummitDto.Coordinate;
+
+        // validate the object
+        var (valid, exception) = await _validator.IsValidAsync(summit);
+        if (!valid && exception is not null) throw exception;
+
+        await _repository.SaveSafelyAsync();
     }
 }

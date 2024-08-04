@@ -5,8 +5,7 @@ namespace LogSummitApi.Domain.Core.Interfaces.Services;
 
 public interface IUserService
 {
-    Task<User> Get(string email);
-    Task<bool> Authenticate(string email, string inputPassword);
+    Task<User> GetAsync(string email);
     bool Authenticate(User user, string inputPassword);
-    Task<User> Create(RegisterUserDto RegisterUserDto);
+    Task<User> CreateAsync(RegisterUserDto RegisterUserDto);
 }

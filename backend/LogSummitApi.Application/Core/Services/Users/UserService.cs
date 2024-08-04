@@ -30,14 +30,7 @@ public class UserService : IUserService
         return true;
     }
 
-    public async Task<bool> Authenticate(string email, string inputPassword)
-    {
-        var user = await Get(email);
-
-        return this.Authenticate(user, inputPassword);
-    }
-
-    public async Task<User> Create(RegisterUserDto registerUserDto)
+    public async Task<User> CreateAsync(RegisterUserDto registerUserDto)
     {
         var user = new User()
         {
@@ -53,8 +46,8 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<User> Get(string email)
+    public async Task<User> GetAsync(string email)
     {
-        return await _repository.Users.Get(u => u.Email == email) ?? throw new NotFound404Exception(nameof(User), email);
+        return await _repository.Users.GetAsync(u => u.Email == email) ?? throw new NotFound404Exception(nameof(User), email);
     }
 }

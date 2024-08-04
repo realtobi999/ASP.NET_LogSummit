@@ -29,7 +29,7 @@ public class HttpCountryRepository : IHttpCountryRepository
     /// <exception cref="ServiceUnavailable503Exception">
     /// Thrown when the API call fails and returns null data.
     /// </exception>
-    public async Task<IEnumerable<CountryDto>> Index()
+    public async Task<IEnumerable<CountryDto>> IndexAsync()
     {
         var value = await _cache.GetOrCreateAsync(CacheKey, async options =>
         {

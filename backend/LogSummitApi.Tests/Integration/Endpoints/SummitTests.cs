@@ -11,7 +11,7 @@ namespace LogSummitApi.Tests.Integration.Endpoints;
 public class SummitTests
 {
     [Fact]
-    public async void CreateSummit_Returns201AndLocationHeader()
+    public async void Create_Returns201AndLocationHeader()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -30,7 +30,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void CreateSummit_Returns400WhenThereIsASummitInAProximityRadius()
+    public async void Create_Returns400WhenThereIsASummitInAProximityRadius()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -61,7 +61,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void GetSummitValidCountries_Returns200AndCorrectListOfCountries()
+    public async void GetValidCountries_Returns200AndCorrectListOfCountries()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -77,7 +77,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void Index_Returns200AndCorrectSummits()
+    public async void Index_Returns200AndLimitAndOffsetWorks()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -109,4 +109,124 @@ public class SummitTests
         content.ElementAt(0).Id.Should().Be(summit2.Id);
         content.ElementAt(1).Id.Should().Be(summit3.Id);
     }
+
+    [Fact]
+    public async void IndexByUser_WorksWithCountryFilterAlso()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user1 = new User().WithFakeData();
+        var user2 = new User().WithFakeData();
+        var summit1 = new Summit().WithFakeData(user1);
+        var summit2 = new Summit().WithFakeData(user2);
+        var summit3 = new Summit().WithFakeData(user2);
+
+        summit3.Country = "Hungary";
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user1.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create2 = await client.PostAsJsonAsync("v1/api/auth/register", user2.ToRegisterUserDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create3 = await client.PostAsJsonAsync("v1/api/summit", summit1.ToCreateSummitDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create4 = await client.PostAsJsonAsync("v1/api/summit", summit2.ToCreateSummitDto());
+        create4.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create5 = await client.PostAsJsonAsync("v1/api/summit", summit3.ToCreateSummitDto());
+        create5.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response = await client.GetAsync($"v1/api/summit/user/{user2.Id}?country=hungary");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();
+
+        content.Count.Should().Be(1);
+        content.ElementAt(0).Id.Should().Be(summit3.Id);
+    }
+
+    [Fact]
+    public async void Get_Returns200And404()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response1 = await client.GetAsync($"v1/api/summit/{new Summit().WithFakeData(user).Id}");
+        response1.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var response2 = await client.GetAsync($"v1/api/summit/{summit.Id}");
+        response2.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response2.Content.ReadFromJsonAsync<SummitDto>() ?? throw new NullReferenceException(); 
+
+        content.Id.Should().Be(summit.Id);
+    } 
+
+    [Fact]
+    public async void Update_Returns204AndIsUpdated()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var updateDto = new UpdateSummitDto()
+        {
+            UserId = summit.UserId,
+            Name = "test",
+            Description = "test",
+            Country = summit.Country,
+            Coordinate = new Coordinate(45, 90, 100),
+        };
+
+        var response = await client.PutAsJsonAsync($"v1/api/summit/{summit.Id}", updateDto);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var get = await client.GetAsync($"v1/api/summit/{summit.Id}");
+        get.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await get.Content.ReadFromJsonAsync<SummitDto>() ?? throw new NullReferenceException(); 
+
+        content.Id.Should().Be(summit.Id);
+        content.Name.Should().Be(updateDto.Name);
+        content.Description.Should().Be(updateDto.Description);
+        content.Coordinate.Should().BeEquivalentTo(updateDto.Coordinate);
+    }
+
+    [Fact]
+    public async void Delete_Returns204AndIsDeleted()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response = await client.DeleteAsync($"v1/api/summit/{summit.Id}");
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var get = await client.GetAsync($"v1/api/summit/{summit.Id}");
+        get.StatusCode.Should().Be(HttpStatusCode.NotFound);
+   }
 }
