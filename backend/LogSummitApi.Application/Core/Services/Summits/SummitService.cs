@@ -44,4 +44,18 @@ public class SummitService : ISummitService
         return summit;
     }
 
+    public async Task<IEnumerable<string>> GetValidCountries()
+    {
+        var countries = await _repository.Country.Index();
+
+        return countries
+            .Select(country =>
+            {
+                if (country.Name == null) throw new NullReferenceException("Country 'Name' property cannot be null.");
+                if (country.Name.Common == null) throw new NullReferenceException("Country 'Name.Common' property cannot be null.");
+
+                return country.Name.Common;
+            })
+            .ToList();
+    }
 }

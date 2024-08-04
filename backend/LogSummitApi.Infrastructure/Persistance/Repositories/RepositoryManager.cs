@@ -1,6 +1,7 @@
 ﻿using LogSummitApi.Domain.Core.Exceptions;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
+using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
 
 namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 
@@ -10,6 +11,7 @@ public class RepositoryManager : IRepositoryManager
     private readonly IRepositoryFactory _factory;
     private readonly Lazy<IUserRepository> _users;
     private readonly Lazy<ISummitRepository> _summits;
+    private readonly Lazy<IHttpCountryRepository> _countries;
 
     public RepositoryManager(LogSummitContext context, IRepositoryFactory factory)
     {
@@ -19,11 +21,14 @@ public class RepositoryManager : IRepositoryManager
         // lazy loading
         _users = new(() => _factory.CreateUserRepository());
         _summits = new(() => _factory.CreateSummitRepository());
+        _countries = new (() => _factory.CreateHttpCountryRepository());
     }
 
     public IUserRepository Users => _users.Value;
 
     public ISummitRepository Summit => _summits.Value;
+
+    public IHttpCountryRepository Country => _countries.Value;
 
     public async Task<int> SaveAsync()
     {

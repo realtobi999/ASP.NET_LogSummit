@@ -58,4 +58,20 @@ public class SummitTests
         content.Type.Should().Be(nameof(BadRequest400Exception));
         content.Detail.Should().Contain("A summit already exists");
     }
+
+    [Fact]
+    public async void GetSummitValidCountries_Returns200AndCorrectListOfCountries()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+
+        // act & assert
+        var response = await client.GetAsync("v1/api/summit/valid-countries");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response.Content.ReadFromJsonAsync<List<string>>() ?? throw new NullReferenceException();
+
+        content.Count.Should().BeInRange(1, 300);
+        content.Any(c => c == "Czechia").Should().BeTrue();
+    }
 }

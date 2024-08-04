@@ -16,6 +16,7 @@ public class Program
             builder.Services.AddExceptionHandler<ExceptionHandler>();
 
             builder.Services.ConfigureDbContext(config);
+            builder.Services.AddHttpClient();
 
             // services - dependency injection
             builder.Services.ConfigureRepositoryManager();

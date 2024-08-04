@@ -15,6 +15,12 @@ public class SummitController : ControllerBase
         _service = service;
     }
 
+    [HttpGet("summit/valid-countries")]
+    public async Task<IActionResult> GetSummitValidCountries()
+    {
+        return Ok(await _service.Summit.GetValidCountries());
+    }
+
     [HttpPost("summit")]
     public async Task<IActionResult> CreateSummit([FromBody] CreateSummitDto createSummitDto)
     {
