@@ -80,4 +80,14 @@ public class SummitController : ControllerBase
             return Created($"/v1/api/summit/{summit.Id}", null);
         }
     }
+
+    [HttpDelete("summit/{summitId}")]
+    public async Task<IActionResult> Delete(Guid summitId)
+    {
+        var summit = await _service.Summit.Get(summitId);
+
+        await _service.Summit.Delete(summit);
+
+        return NoContent();
+    }
 }

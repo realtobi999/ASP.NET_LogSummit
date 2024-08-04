@@ -20,7 +20,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public void Delete(T entity)
     {
-        _context.Set<T>().Add(entity);
+        _context.Set<T>().Remove(entity);
     }
 
     public Task<T?> Get(Expression<Func<T, bool>> expression)

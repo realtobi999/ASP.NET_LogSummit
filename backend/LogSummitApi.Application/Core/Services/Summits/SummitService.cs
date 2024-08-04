@@ -42,6 +42,13 @@ public class SummitService : ISummitService
         return summit;
     }
 
+    public async Task Delete(Summit summit)
+    {
+        _repository.Summit.Delete(summit);
+        
+        await _repository.SaveSafelyAsync();
+    }
+
     public async Task<Summit> Get(Guid id)
     {
         var summit = await _repository.Summit.Get(id) ?? throw new NotFound404Exception(nameof(Summit), id);

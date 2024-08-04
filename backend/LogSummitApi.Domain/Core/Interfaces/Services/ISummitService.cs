@@ -9,5 +9,7 @@ public interface ISummitService
     Task<Summit> Get(Guid id);
     Task<Summit> Create(CreateSummitDto createSummitDto);
     Task Update(Summit summit, UpdateSummitDto updateSummitDto);
+    Task Delete(Summit summit);
+    
     Task<IEnumerable<string>> GetValidCountries();
 }
