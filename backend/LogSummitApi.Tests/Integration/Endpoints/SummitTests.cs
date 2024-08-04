@@ -11,7 +11,7 @@ namespace LogSummitApi.Tests.Integration.Endpoints;
 public class SummitTests
 {
     [Fact]
-    public async void CreateSummit_Returns201AndLocationHeader()
+    public async void Create_Returns201AndLocationHeader()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -30,7 +30,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void CreateSummit_Returns400WhenThereIsASummitInAProximityRadius()
+    public async void Create_Returns400WhenThereIsASummitInAProximityRadius()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -61,7 +61,7 @@ public class SummitTests
     }
 
     [Fact]
-    public async void GetSummitValidCountries_Returns200AndCorrectListOfCountries()
+    public async void GetValidCountries_Returns200AndCorrectListOfCountries()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
@@ -133,5 +133,43 @@ public class SummitTests
         var content = await response2.Content.ReadFromJsonAsync<SummitDto>() ?? throw new NullReferenceException(); 
 
         content.Id.Should().Be(summit.Id);
+    } 
+
+    [Fact]
+    public async void Update_Returns204AndIsUpdated()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var updateDto = new UpdateSummitDto()
+        {
+            UserId = summit.UserId,
+            Name = "test",
+            Description = "test",
+            Country = summit.Country,
+            Coordinate = new Coordinate(45, 90, 100),
+        };
+
+        var response = await client.PutAsJsonAsync($"v1/api/summit/{summit.Id}", updateDto);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var get = await client.GetAsync($"v1/api/summit/{summit.Id}");
+        get.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await get.Content.ReadFromJsonAsync<SummitDto>() ?? throw new NullReferenceException(); 
+
+        content.Id.Should().Be(summit.Id);
+        content.Name.Should().Be(updateDto.Name);
+        content.Description.Should().Be(updateDto.Description);
+        content.Coordinate.Should().BeEquivalentTo(updateDto.Coordinate);
     }
 }

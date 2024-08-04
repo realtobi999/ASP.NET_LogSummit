@@ -1,4 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
+using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,16 +43,41 @@ public class SummitController : ControllerBase
     }
 
     [HttpGet("summit/valid-countries")]
-    public async Task<IActionResult> GetSummitValidCountries()
+    public async Task<IActionResult> GetValidCountries()
     {
         return Ok(await _service.Summit.GetValidCountries());
     }
 
     [HttpPost("summit")]
-    public async Task<IActionResult> CreateSummit([FromBody] CreateSummitDto createSummitDto)
+    public async Task<IActionResult> Create([FromBody] CreateSummitDto createSummitDto)
     {
         var summit = await _service.Summit.Create(createSummitDto);
 
         return Created($"/v1/api/summit/{summit.Id}", null);
+    }
+
+    [HttpPut("summit/{summitId}")]
+    public async Task<IActionResult> Update(Guid summitId, [FromBody] UpdateSummitDto updateSummitDto)
+    {
+        try
+        {
+            await _service.Summit.Update(await _service.Summit.Get(summitId), updateSummitDto);
+
+            return NoContent();
+        }
+        catch (NotFound404Exception)
+        {
+            var summit = await _service.Summit.Create(new CreateSummitDto()
+            {
+                Id = summitId,
+                UserId = updateSummitDto.UserId,
+                Name = updateSummitDto.Name,
+                Description = updateSummitDto.Description,
+                Country = updateSummitDto.Country,
+                Coordinate = updateSummitDto.Coordinate
+            });
+
+            return Created($"/v1/api/summit/{summit.Id}", null);
+        }
     }
 }

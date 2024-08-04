@@ -70,4 +70,18 @@ public class SummitService : ISummitService
 
         return summits;
     }
+
+    public async Task Update(Summit summit, UpdateSummitDto updateSummitDto)
+    {
+        summit.Name = updateSummitDto.Name;
+        summit.Description = updateSummitDto.Description;
+        summit.Country = updateSummitDto.Country;
+        summit.Coordinate = updateSummitDto.Coordinate;
+
+        // validate the object
+        var (valid, exception) = await _validator.IsValidAsync(summit);
+        if (!valid && exception is not null) throw exception;
+
+        await _repository.SaveSafelyAsync();
+    }
 }

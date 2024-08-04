@@ -32,4 +32,9 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         return await _context.Set<T>().ToListAsync();
     }
+
+    public void Update(T entity)
+    {
+        _context.Set<T>().Update(entity);
+    }
 }
