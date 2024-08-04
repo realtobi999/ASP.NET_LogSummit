@@ -2,7 +2,7 @@
 
 namespace LogSummitApi.Domain.Core.Interfaces.Repositories;
 
-public interface IUserRepository : IBaseRepository<User>
+public interface ISummitRepository : IBaseRepository<Summit>
 {
-    Task<User?> Get(Guid id);
+
 }

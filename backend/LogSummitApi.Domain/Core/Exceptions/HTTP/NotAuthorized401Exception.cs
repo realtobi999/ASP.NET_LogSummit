@@ -16,6 +16,5 @@ public class NotAuthorized401Exception : Exception, IHttpException
     }
 
     public int StatusCode => (int)HttpStatusCode.Unauthorized;
-
     public string Title => "Unauthorized Access";
 }

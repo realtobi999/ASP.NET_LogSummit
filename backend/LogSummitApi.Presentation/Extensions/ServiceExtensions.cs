@@ -49,6 +49,7 @@ public static class ServiceExtensions
 
     public static void ConfigureRepositoryManager(this IServiceCollection services)
     {
+        services.AddScoped<IHttpRepositoryFactory, HttpRepositoryFactory>();
         services.AddScoped<IRepositoryFactory, RepositoryFactory>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
     }
@@ -57,5 +58,10 @@ public static class ServiceExtensions
     {
         services.AddScoped<IServiceFactory, ServiceFactory>();
         services.AddScoped<IServiceManager, ServiceManager>();
+    }
+
+    public static void ConfigureValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IValidatorFactory, ValidatorFactory>();
     }
 }

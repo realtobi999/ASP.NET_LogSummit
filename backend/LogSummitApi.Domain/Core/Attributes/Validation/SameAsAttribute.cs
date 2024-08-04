@@ -13,7 +13,7 @@ public class SameAsAttribute : ValidationAttribute
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        // Get the value of the property to compare
+        // get the value of the property to compare
         var property = validationContext.ObjectType.GetProperty(_comparisonProperty);
 
         if (property == null)
@@ -23,7 +23,7 @@ public class SameAsAttribute : ValidationAttribute
 
         var comparisonValue = property.GetValue(validationContext.ObjectInstance);
 
-        // Compare the values
+        // compare the values
         if (!object.Equals(value, comparisonValue))
         {
             return new ValidationResult($"The {validationContext.DisplayName} and {_comparisonProperty} fields do not match.");

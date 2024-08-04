@@ -2,5 +2,6 @@
 
 public interface IServiceManager
 {
+    public ISummitService Summit { get; }
     public IUserService Users { get; }
 }

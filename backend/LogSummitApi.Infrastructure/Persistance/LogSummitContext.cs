@@ -1,4 +1,5 @@
 ﻿using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Infrastructure.Persistance.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace LogSummitApi.Infrastructure.Persistance;
@@ -13,5 +14,8 @@ public class LogSummitContext(DbContextOptions<LogSummitContext> opt) : DbContex
         builder.Entity<User>()
                .HasIndex(u => u.Email)
                .IsUnique();
+
+        // configure entity relationships      
+        builder.ConfigureSummitUserRelationship();
     }
 }

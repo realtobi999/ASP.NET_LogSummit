@@ -5,4 +5,5 @@ namespace LogSummitApi.Domain.Core.Interfaces.Factories;
 public interface IServiceFactory
 {
     IUserService CreateUserService();
+    ISummitService CreateSummitService();
 }

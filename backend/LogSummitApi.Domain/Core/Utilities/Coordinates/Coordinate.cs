@@ -30,13 +30,27 @@ public class Coordinate
 
         if (LowestElevationPoint > elevation || elevation > MaximumElevationPoint)
         {
-            throw new InvalidCoordinateFormatException(this, $"Elevation must be between {LowestElevationPoint} meters and {MaximumElevationPoint} meters ");
+            throw new InvalidCoordinateFormatException(this, $"Elevation must be between {LowestElevationPoint} meters and {MaximumElevationPoint} meters.");
         }
     }
 
     public override string ToString()
     {
         return $"{Latitude}|{Longitude}|{Elevation}";
+    }
+
+    public bool IsWithinRange(Coordinate coordinate2, double range)
+    {
+        return Coordinate.AreWithinRange(this, coordinate2, range);
+    }
+
+    public static bool AreWithinRange(Coordinate coordinate1, Coordinate coordinate2, double range)
+    {
+        if (range <= 0) throw new ArgumentException("AreWithingRange 'range' argument needs to be bigger than zero.");
+
+        var distance = CoordinateMath.Haversine(coordinate1, coordinate2);
+
+        return distance <= range;
     }
 
     public static Coordinate Parse(string coordinate)

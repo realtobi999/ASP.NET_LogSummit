@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using Microsoft.AspNetCore.Diagnostics;
 

@@ -64,4 +64,58 @@ public class CoordinateTests
         Assert.Throws<InvalidCoordinateFormatException>(() => Coordinate.Parse("45|90|hello"));
         Assert.Throws<InvalidCoordinateFormatException>(() => Coordinate.Parse("45|hello|0"));
     }
+
+    [Fact]
+    public void Haversine_CalculatesCorrectDistance()
+    {
+        // prepare
+        var coord1 = new Coordinate(52.5200, 13.4050, 0); // Berlin
+        var coord2 = new Coordinate(48.8566, 2.3522, 0);  // Paris
+        double expectedDistance = 878_000; // approximate distance in meters
+
+        // act & assert
+        var actualDistance = CoordinateMath.Haversine(coord1, coord2);
+
+        Assert.InRange(actualDistance, expectedDistance - 5000, expectedDistance + 5000); // tolerance of 5 km
+    }
+
+    [Fact]
+    public void AreWithinRange_TrueWhenWithinRange()
+    {
+        // prepare
+        var coord1 = new Coordinate(52.5200, 13.4050, 0); // Berlin
+        var coord2 = new Coordinate(52.5200, 13.4060, 0); // close to Berlin
+        double range = 1000; // 1 km
+
+        // act & assert
+        var result = Coordinate.AreWithinRange(coord1, coord2, range);
+
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void AreWithinRange_FalseWhenOutsideRange()
+    {
+        // prepare
+        var coord1 = new Coordinate(52.5200, 13.4050, 0); // Berlin
+        var coord2 = new Coordinate(48.8566, 2.3522, 0);  // Paris
+        double range = 500000; // 500 km
+
+        // act & assert
+        var result = Coordinate.AreWithinRange(coord1, coord2, range);
+
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreWithinRange_ThrowsArgumentException_WhenRangeIsZeroOrNegative()
+    {
+        // prepare
+        var coord1 = new Coordinate(52.5200, 13.4050, 0);
+        var coord2 = new Coordinate(48.8566, 2.3522, 0);
+
+        // act & assert
+        Assert.Throws<ArgumentException>(() => Coordinate.AreWithinRange(coord1, coord2, 0));
+        Assert.Throws<ArgumentException>(() => Coordinate.AreWithinRange(coord1, coord2, -10));
+    }
 }
