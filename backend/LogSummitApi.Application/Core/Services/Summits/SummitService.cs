@@ -43,7 +43,8 @@ public class SummitService : ISummitService
 
     public async Task<IEnumerable<string>> GetValidCountries()
     {
-        var countries = await _repository.Country.Index();
+        var countries = await _repository.HttpCountry.Index();
+
         return countries
             .Select(country =>
             {
@@ -53,5 +54,12 @@ public class SummitService : ISummitService
                 return country.Name.Common;
             })
             .ToList();
+    }
+
+    public async Task<IEnumerable<Summit>> Index()
+    {
+        var summits = await _repository.Summit.Index();
+
+        return summits;
     }
 }

@@ -1,4 +1,5 @@
-﻿using LogSummitApi.Domain.Core.Entities;
+﻿using LogSummitApi.Domain.Core.Dto.Summit;
+using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 using LogSummitApi.Presentation;
@@ -73,5 +74,39 @@ public class SummitTests
 
         content.Count.Should().BeInRange(1, 300);
         content.Any(c => c == "Czechia").Should().BeTrue();
+    }
+
+    [Fact]
+    public async void Index_Returns200AndCorrectSummits()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit1 = new Summit().WithFakeData(user);
+        var summit2 = new Summit().WithFakeData(user);
+        var summit3 = new Summit().WithFakeData(user);
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit1.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create3 = await client.PostAsJsonAsync("v1/api/summit", summit2.ToCreateSummitDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create4 = await client.PostAsJsonAsync("v1/api/summit", summit3.ToCreateSummitDto());
+        create4.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var limit = 2;
+        var offset = 1;
+
+        var response = await client.GetAsync($"v1/api/summit?limit={limit}&offset={offset}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();
+
+        content.Count.Should().Be(limit);
+        content.ElementAt(0).Id.Should().Be(summit2.Id);
+        content.ElementAt(1).Id.Should().Be(summit3.Id);
     }
 }

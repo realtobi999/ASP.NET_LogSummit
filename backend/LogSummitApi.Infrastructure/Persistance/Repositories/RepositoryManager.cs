@@ -10,9 +10,10 @@ public class RepositoryManager : IRepositoryManager
     private readonly LogSummitContext _context;
     private readonly IRepositoryFactory _factory;
     private readonly IHttpRepositoryFactory _httpFactory;
+    
     private readonly Lazy<IUserRepository> _users;
     private readonly Lazy<ISummitRepository> _summits;
-    private readonly Lazy<IHttpCountryRepository> _countries;
+    private readonly Lazy<IHttpCountryRepository> _httpCountries;
 
     public RepositoryManager(LogSummitContext context, IRepositoryFactory factory, IHttpRepositoryFactory httpFactory)
     {
@@ -23,14 +24,14 @@ public class RepositoryManager : IRepositoryManager
         // lazy loading
         _users = new(() => _factory.CreateUserRepository());
         _summits = new(() => _factory.CreateSummitRepository());
-        _countries = new(() => _httpFactory.CreateCountryHttpRepository());
+        _httpCountries = new(() => _httpFactory.CreateCountryHttpRepository());
     }
 
     public IUserRepository Users => _users.Value;
 
     public ISummitRepository Summit => _summits.Value;
 
-    public IHttpCountryRepository Country => _countries.Value;
+    public IHttpCountryRepository HttpCountry => _httpCountries.Value;
 
     public async Task<int> SaveAsync()
     {

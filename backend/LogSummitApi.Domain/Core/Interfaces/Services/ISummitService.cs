@@ -5,6 +5,7 @@ namespace LogSummitApi.Domain.Core.Interfaces.Services;
 
 public interface ISummitService
 {
+    Task<IEnumerable<Summit>> Index();
     Task<IEnumerable<string>> GetValidCountries();
     Task<Summit> Create(CreateSummitDto createSummitDto);
 }

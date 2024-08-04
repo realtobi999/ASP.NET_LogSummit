@@ -1,7 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
-using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
 namespace LogSummitApi.Application.Core.Validators;
@@ -31,7 +30,7 @@ public class SummitValidator : IValidator<Summit>
         }
 
         // ensure that the country is valid
-        if (!(await _repository.Country.Index()).ToList().Any(c => c.Name!.Common == summit.Country))
+        if (!(await _repository.HttpCountry.Index()).ToList().Any(c => c.Name!.Common == summit.Country))
         {
             return (false, new BadRequest400Exception($"A {summit.Country}' is not a valid country. List of all available countries: GET /v1/api/summit/valid-countries"));
         }

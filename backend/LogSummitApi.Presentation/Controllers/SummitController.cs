@@ -15,6 +15,23 @@ public class SummitController : ControllerBase
         _service = service;
     }
 
+    [HttpGet("summit")]
+    public async Task<IActionResult> Index(int limit, int offset)
+    {
+        var summits = await _service.Summit.Index();
+
+        if (offset > 0)
+        {
+            summits = summits.Skip(offset);
+        }
+        if (limit > 0)
+        {
+            summits = summits.Take(limit);
+        }
+
+        return Ok(summits.Select(s => s.ToDto()).ToList()); 
+    }
+
     [HttpGet("summit/valid-countries")]
     public async Task<IActionResult> GetSummitValidCountries()
     {
