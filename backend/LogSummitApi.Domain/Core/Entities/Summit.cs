@@ -46,8 +46,8 @@ public class Summit
 
     [NotMapped]
     public Coordinate? Coordinate { get; set; }
-
     public User? User { get; set; }
+    public ICollection<SummitPush>? SummitPushes { get; set; } 
 
     // methods
 
