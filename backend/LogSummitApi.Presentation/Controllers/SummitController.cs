@@ -82,10 +82,8 @@ public class SummitController : ControllerBase
     [HttpPost("summit"), Authorize(Policy = "User")]
     public async Task<IActionResult> Create([FromBody] CreateSummitDto createSummitDto)
     {
-        if (createSummitDto.UserId != this.GetUserIdFromJwt())
-        {
-            throw new NotAuthorized401Exception();
-        }
+        // authenticate the request
+        if (createSummitDto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
         var summit = await _service.Summit.CreateAsync(createSummitDto);
 
@@ -99,10 +97,8 @@ public class SummitController : ControllerBase
         {
             var summit = await _service.Summit.GetAsync(summitId);
 
-            if (summit.UserId != this.GetUserIdFromJwt())
-            {
-                throw new NotAuthorized401Exception();
-            }
+            // authenticate the request
+            if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
             await _service.Summit.UpdateAsync(summit, updateSummitDto);
 
@@ -129,10 +125,8 @@ public class SummitController : ControllerBase
     {
         var summit = await _service.Summit.GetAsync(summitId);
 
-        if (summit.UserId != this.GetUserIdFromJwt())
-        {
-            throw new NotAuthorized401Exception();
-        }
+        // authenticate the request
+        if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
         await _service.Summit.DeleteAsync(summit);
 

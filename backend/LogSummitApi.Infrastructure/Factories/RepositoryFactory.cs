@@ -14,6 +14,11 @@ public class RepositoryFactory : IRepositoryFactory
         _context = context;
     }
 
+    public ISummitPushRepository CreateSummitPushRepository()
+    {
+        return new SummitPushRepository(_context);
+    }
+
     public ISummitRepository CreateSummitRepository()
     {
         return new SummitRepository(_context);
