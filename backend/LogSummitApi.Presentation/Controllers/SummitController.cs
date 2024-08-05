@@ -1,7 +1,8 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
-using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.HTTP;
 using LogSummitApi.Domain.Core.Interfaces.Services;
+using LogSummitApi.Presentation.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogSummitApi.Presentation.Controllers;
@@ -35,7 +36,7 @@ public class SummitController : ControllerBase
             summits = summits.Take(limit);
         }
 
-        return Ok(summits.Select(s => s.ToDto()).ToList()); 
+        return Ok(summits.Select(s => s.ToDto()).ToList());
     }
 
     [HttpGet("summit/user/{userId}")]
@@ -60,7 +61,7 @@ public class SummitController : ControllerBase
             summits = summits.Take(limit);
         }
 
-        return Ok(summits.Select(s => s.ToDto()).ToList()); 
+        return Ok(summits.Select(s => s.ToDto()).ToList());
     }
 
     [HttpGet("summit/{summitId}")]
@@ -75,11 +76,17 @@ public class SummitController : ControllerBase
     public async Task<IActionResult> GetValidCountries()
     {
         return Ok(await _service.Summit.GetValidCountriesAsync());
+
     }
 
-    [HttpPost("summit")]
+    [HttpPost("summit"), Authorize(Policy = "User")]
     public async Task<IActionResult> Create([FromBody] CreateSummitDto createSummitDto)
     {
+        if (createSummitDto.UserId != this.GetUserIdFromJwt())
+        {
+            throw new NotAuthorized401Exception();
+        }
+
         var summit = await _service.Summit.CreateAsync(createSummitDto);
 
         return Created($"/v1/api/summit/{summit.Id}", null);
@@ -90,7 +97,14 @@ public class SummitController : ControllerBase
     {
         try
         {
-            await _service.Summit.UpdateAsync(await _service.Summit.GetAsync(summitId), updateSummitDto);
+            var summit = await _service.Summit.GetAsync(summitId);
+
+            if (summit.UserId != this.GetUserIdFromJwt())
+            {
+                throw new NotAuthorized401Exception();
+            }
+
+            await _service.Summit.UpdateAsync(summit, updateSummitDto);
 
             return NoContent();
         }
@@ -114,6 +128,11 @@ public class SummitController : ControllerBase
     public async Task<IActionResult> Delete(Guid summitId)
     {
         var summit = await _service.Summit.GetAsync(summitId);
+
+        if (summit.UserId != this.GetUserIdFromJwt())
+        {
+            throw new NotAuthorized401Exception();
+        }
 
         await _service.Summit.DeleteAsync(summit);
 

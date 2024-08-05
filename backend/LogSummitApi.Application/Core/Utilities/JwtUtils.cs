@@ -43,5 +43,4 @@ public static class JwtUtils
 
         return payload.FirstOrDefault(c => c.Type.Equals(key, StringComparison.CurrentCultureIgnoreCase))?.Value;
     }
-
 }

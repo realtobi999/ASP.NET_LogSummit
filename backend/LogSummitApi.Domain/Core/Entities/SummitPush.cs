@@ -31,12 +31,6 @@ public class SummitPush
     [Required, Column("elevation_loss"), Range(0, double.MaxValue)]
     public double ElevationLoss { get; set; }
 
-    [Required, Column("max_speed"), Range(0, double.MaxValue)]
-    public double MaxSpeed { get; set; }
-
-    [Required, Column("moving_time")]
-    public TimeSpan MovingTime { get; set; }
-
     [Required, Column("coordinates"), JsonIgnore]
     public string CoordinatesString
     {

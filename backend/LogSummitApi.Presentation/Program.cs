@@ -28,9 +28,13 @@ public class Program
 
             builder.Services.ConfigureJwtAuthentication(config);
 
+            // user authorization
+            builder.Services.AddAuthorizationBuilder().AddPolicy("User", policy => policy.RequireRole("User"));
+                                                
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
+
         }
 
         var app = builder.Build();
@@ -44,6 +48,7 @@ public class Program
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.MapControllers();
