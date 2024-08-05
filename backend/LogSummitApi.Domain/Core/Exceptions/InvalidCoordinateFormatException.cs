@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Exceptions.HTTP;
+﻿using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Exceptions;

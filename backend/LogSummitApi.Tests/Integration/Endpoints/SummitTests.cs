@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 using LogSummitApi.Presentation;
 using LogSummitApi.Tests.Helpers;

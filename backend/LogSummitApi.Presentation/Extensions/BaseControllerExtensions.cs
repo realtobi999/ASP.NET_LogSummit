@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Application.Core.Utilities;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogSummitApi.Presentation.Extensions;

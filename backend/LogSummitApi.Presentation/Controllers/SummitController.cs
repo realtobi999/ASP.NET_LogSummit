@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Presentation.Extensions;
 using Microsoft.AspNetCore.Authorization;

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
-namespace LogSummitApi.Domain.Core.Exceptions.HTTP;
+namespace LogSummitApi.Domain.Core.Exceptions.Http;
 
 public class ServiceUnavailable503Exception : Exception, IHttpException
 {
