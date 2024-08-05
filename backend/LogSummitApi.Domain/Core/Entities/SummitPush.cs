@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using LogSummitApi.Domain.Core.Attributes;
+using LogSummitApi.Domain.Core.Dto.Summit.Pushes;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Entities;
@@ -45,8 +47,31 @@ public class SummitPush
 
     [NotMapped]
     public List<Coordinate> Coordinates = [];
+
+    [IncludeInQuerying]
     public User? User { get; set; }
+    
+    [IncludeInQuerying]
     public Summit? Summit { get; set; }
+
+    // methods
+
+    public SummitPushDto ToDto()
+    {
+        return new SummitPushDto()
+        {
+            Id = this.Id,
+            Summit = this.Summit!.ToDto(),
+            User = this.User!.ToDto(),
+            Name = this.Name,
+            Description = this.Description,
+            Distance = this.Distance,
+            ElevationGain = this.ElevationGain,
+            ElevationLoss = this.ElevationLoss,
+            Coordinates = this.Coordinates,
+            CreatedAt = this.CreatedAt,
+        };
+    }
 }
 
 

@@ -12,6 +12,6 @@ public class SummitPushRepository : BaseRepository<SummitPush>, ISummitPushRepos
 
     public async Task<SummitPush?> GetAsync(Guid id)
     {
-        return await _context.Set<SummitPush>().FirstOrDefaultAsync(sp => sp.Id == id);
+        return await this.GetAsync(sp => sp.Id == id);
     }
 }

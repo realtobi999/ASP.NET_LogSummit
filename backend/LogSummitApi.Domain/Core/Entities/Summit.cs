@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
@@ -46,6 +47,8 @@ public class Summit
 
     [NotMapped]
     public Coordinate? Coordinate { get; set; }
+
+    [IncludeInQuerying]
     public User? User { get; set; }
     public ICollection<SummitPush>? SummitPushes { get; set; } 
 
@@ -56,7 +59,7 @@ public class Summit
         return new SummitDto()
         {
             Id = this.Id,
-            UserId = this.UserId,
+            User = this.User!.ToDto(),
             Name = this.Name,
             Description = this.Description,
             CreatedAt = this.CreatedAt,

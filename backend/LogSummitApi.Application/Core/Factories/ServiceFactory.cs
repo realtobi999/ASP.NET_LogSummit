@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Application.Core.Services.Summits;
-using LogSummitApi.Application.Core.Services.Summits.SummitPushes;
+using LogSummitApi.Application.Core.Services.Summits.Pushes;
 using LogSummitApi.Application.Core.Services.Users;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
