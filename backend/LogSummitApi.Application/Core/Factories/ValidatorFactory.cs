@@ -15,6 +15,11 @@ public class ValidatorFactory : IValidatorFactory
         _repository = repository;
     }
 
+    public IValidator<SummitPush> CreateSummitPushValidator()
+    {
+        return new SummitPushValidator(_repository);
+    }
+
     public IValidator<Summit> CreateSummitValidator()
     {
         return new SummitValidator(_repository);

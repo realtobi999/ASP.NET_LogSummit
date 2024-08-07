@@ -9,6 +9,7 @@ public static class SummitTestExtensions
 {
     private static readonly Faker<Summit> _summitFaker = new Faker<Summit>()
         .RuleFor(s => s.Id, f => f.Random.Guid())
+        .RuleFor(s => s.UserId, f=> f.Random.Guid())
         .RuleFor(s => s.Name, f => f.Lorem.Sentence(3))
         .RuleFor(s => s.Description, f => f.Lorem.Paragraph())
         .RuleFor(s => s.Country, _ => "Czechia")
@@ -19,6 +20,7 @@ public static class SummitTestExtensions
     {
         var fakeSummit = _summitFaker.Generate();
         
+        fakeSummit.User = user;
         fakeSummit.UserId = user.Id;
 
         return fakeSummit;

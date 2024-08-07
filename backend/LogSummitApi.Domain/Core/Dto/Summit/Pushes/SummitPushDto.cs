@@ -3,7 +3,7 @@ using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Dto.Summit.Pushes;
 
-public class SummitPushDto
+public record class SummitPushDto
 {
     public Guid Id { get; set; }
     public SummitDto? Summit { get; set; }

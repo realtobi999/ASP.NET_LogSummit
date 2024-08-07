@@ -3,6 +3,6 @@
 public interface IServiceManager
 {
     public ISummitService Summit { get; }
-    public ISummitPushService SummitPushes { get; }
-    public IUserService Users { get; }
+    public ISummitPushService SummitPush { get; }
+    public IUserService User { get; }
 }

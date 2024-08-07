@@ -42,6 +42,7 @@ public class Summit
     }
 
     public const double SummitProximityRadius = 55; // in this radius (in meters) no other summit can be located
+    public const double SummitPushRadius = 10;
 
     // entity relationships
 

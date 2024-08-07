@@ -23,7 +23,7 @@ public class ServiceFactory : IServiceFactory
 
     public ISummitPushService CreateSummitPushService()
     {
-        return new SummitPushService();
+        return new SummitPushService(_repository, _validators.CreateSummitPushValidator());
     }
 
     public ISummitService CreateSummitService()

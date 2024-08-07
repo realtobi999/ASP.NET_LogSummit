@@ -20,7 +20,7 @@ public class ServiceManager : IServiceManager
         _summitPushes = new (() => _factory.CreateSummitPushService());
     }
 
-    public IUserService Users => _users.Value;
+    public IUserService User => _users.Value;
     public ISummitService Summit => _summits.Value;
-    public ISummitPushService SummitPushes => _summitPushes.Value;
+    public ISummitPushService SummitPush => _summitPushes.Value;
 }
