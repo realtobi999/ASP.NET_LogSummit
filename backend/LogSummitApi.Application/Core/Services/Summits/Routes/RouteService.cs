@@ -44,6 +44,13 @@ public class RouteService : IRouteService
         return route;
     }
 
+    public async Task DeleteAsync(Route route)
+    {
+        _repository.Route.Delete(route);
+
+        await _repository.SaveSafelyAsync();
+    }
+
     public async Task<Route> GetAsync(Guid id)
     {
         var route = await _repository.Route.GetAsync(id) ?? throw new NotFound404Exception(nameof(Route), id); 

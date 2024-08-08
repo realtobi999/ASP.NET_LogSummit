@@ -198,4 +198,34 @@ public class RouteTests
         content.Name.Should().Be(updateDto.Name);
         content.Description.Should().Be(updateDto.Description);
     }
+
+    [Fact]
+    public async void Delete_Returns204AndIsDeleted()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+        var route = new Route().WithFakeData(user, summit);
+
+        var jwt = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+            new Claim("UserId", user.Id.ToString()),
+        ]);
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create3 = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response = await client.DeleteAsync($"v1/api/summit/route/{route.Id}");
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var get = await client.GetAsync($"v1/api/summit/route/{route.Id}");
+        get.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
 }

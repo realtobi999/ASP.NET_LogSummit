@@ -9,4 +9,5 @@ public interface IRouteService
     Task<Route> GetAsync(Guid id);
     Task<Route> CreateAsync(CreateRouteDto createRouteDto);
     Task UpdateAsync(Route route, UpdateRouteDto updateRouteDto);
+    Task DeleteAsync(Route route);
 }
