@@ -1,4 +1,4 @@
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

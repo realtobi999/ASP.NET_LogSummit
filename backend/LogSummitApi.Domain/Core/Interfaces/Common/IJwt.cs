@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 
-namespace LogSummitApi.Domain.Core.Interfaces.Utilities;
+namespace LogSummitApi.Domain.Core.Interfaces.Common;
 
 public interface IJwt
 {

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace LogSummitApi.Presentation.Middleware.Handlers;

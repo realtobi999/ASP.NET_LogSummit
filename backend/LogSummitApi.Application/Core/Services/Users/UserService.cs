@@ -1,9 +1,9 @@
 ﻿using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
 namespace LogSummitApi.Application.Core.Services.Users;
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Dto.Summit;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Entities;

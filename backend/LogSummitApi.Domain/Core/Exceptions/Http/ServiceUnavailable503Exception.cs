@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 
 namespace LogSummitApi.Domain.Core.Exceptions.Http;
 

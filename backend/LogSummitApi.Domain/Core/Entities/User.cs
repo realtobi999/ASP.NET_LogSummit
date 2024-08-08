@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Dto.User;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 
 namespace LogSummitApi.Domain.Core.Entities;
 

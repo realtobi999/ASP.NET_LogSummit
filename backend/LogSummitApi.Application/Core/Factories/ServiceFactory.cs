@@ -1,10 +1,10 @@
 ﻿using LogSummitApi.Application.Core.Services.Summits;
 using LogSummitApi.Application.Core.Services.Summits.Routes;
 using LogSummitApi.Application.Core.Services.Users;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
 namespace LogSummitApi.Application.Core.Factories;
 

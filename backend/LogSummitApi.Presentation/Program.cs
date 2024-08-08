@@ -1,5 +1,5 @@
 using LogSummitApi.Application.Core.Utilities;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Presentation.Extensions;
 using LogSummitApi.Presentation.Middleware.Filters;
 using LogSummitApi.Presentation.Middleware.Handlers;

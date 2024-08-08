@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Exceptions.Http;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogSummitApi.Presentation.Controllers;
