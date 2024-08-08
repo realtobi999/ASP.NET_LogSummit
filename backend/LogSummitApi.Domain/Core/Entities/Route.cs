@@ -58,11 +58,14 @@ public class Route
 
     public RouteDto ToDto()
     {
+        if (this.Summit is null) throw new NullReferenceException("Route 'Summit' property cannot be null.");
+        if (this.User is null) throw new NullReferenceException("Route 'User' property cannot be null.");
+    
         return new RouteDto()
         {
             Id = this.Id,
-            Summit = this.Summit!.ToDto(),
-            User = this.User!.ToDto(),
+            Summit = this.Summit.ToDto(),
+            User = this.User.ToDto(),
             Name = this.Name,
             Description = this.Description,
             Distance = this.Distance,

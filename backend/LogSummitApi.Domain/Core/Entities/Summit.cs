@@ -57,10 +57,12 @@ public class Summit
 
     public SummitDto ToDto()
     {
+        if (this.User is null) throw new NullReferenceException("Summit 'User' property cannot be null.");
+
         return new SummitDto()
         {
             Id = this.Id,
-            User = this.User!.ToDto(),
+            User = this.User.ToDto(),
             Name = this.Name,
             Description = this.Description,
             CreatedAt = this.CreatedAt,
