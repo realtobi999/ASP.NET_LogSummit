@@ -1,9 +1,9 @@
 ﻿using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
-namespace LogSummitApi.Domain.Core.Dto.Summit.Pushes;
+namespace LogSummitApi.Domain.Core.Dto.Summit.Routes;
 
-public record class SummitPushDto
+public record class RouteDto
 {
     public Guid Id { get; set; }
     public SummitDto? Summit { get; set; }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
-namespace LogSummitApi.Domain.Core.Dto.Summit.Pushes;
+namespace LogSummitApi.Domain.Core.Dto.Summit.Routes;
 
-public record class CreateSummitPushDto
+public record class CreateRouteDto
 {
     public Guid Id { get; set; }
 

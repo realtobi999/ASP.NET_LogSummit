@@ -6,5 +6,5 @@ public interface IServiceFactory
 {
     IUserService CreateUserService();
     ISummitService CreateSummitService();
-    ISummitPushService CreateSummitPushService();
+    IRouteService CreateRouteService();
 }

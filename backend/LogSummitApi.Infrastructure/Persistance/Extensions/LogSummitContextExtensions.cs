@@ -18,26 +18,26 @@ public static class LogSummitContextExtensions
     }
 
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="SummitPush"/> and <see cref="User"/> .
+    /// Configures one-to-many relationship between <see cref="Route"/> and <see cref="User"/> .
     /// </summary>
     /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
-    public static void ConfigureSummitPushToUserRelationShip(this ModelBuilder builder)
+    public static void ConfigureRouteToUserRelationShip(this ModelBuilder builder)
     {
-        builder.Entity<SummitPush>()
+        builder.Entity<Route>()
                .HasOne(sp => sp.User)
-               .WithMany(u => u.SummitPushes)
+               .WithMany(u => u.Routes)
                .HasForeignKey(sp => sp.UserId);
     }
 
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="SummitPush"/> and <see cref="Summit"/> .
+    /// Configures one-to-many relationship between <see cref="Route"/> and <see cref="Summit"/> .
     /// </summary>
     /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
-    public static void ConfigureSummitPushToSummitRelationship(this ModelBuilder builder)
+    public static void ConfigureRouteToSummitRelationship(this ModelBuilder builder)
     {
-        builder.Entity<SummitPush>()
+        builder.Entity<Route>()
                .HasOne(sp => sp.Summit)
-               .WithMany(s => s.SummitPushes)
+               .WithMany(s => s.Routes)
                .HasForeignKey(sp => sp.SummitId); // Note: I changed UserId to SummitId, assuming that's the correct foreign key
     }
 }

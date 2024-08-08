@@ -6,5 +6,5 @@ public interface IRepositoryFactory
 {
     IUserRepository CreateUserRepository();
     ISummitRepository CreateSummitRepository();
-    ISummitPushRepository CreateSummitPushRepository();
+    IRouteRepository CreateRouteRepository();
 }

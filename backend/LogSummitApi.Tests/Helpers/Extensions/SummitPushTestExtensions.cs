@@ -1,13 +1,13 @@
 using Bogus;
-using LogSummitApi.Domain.Core.Dto.Summit.Pushes;
+using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Tests.Helpers.Extensions;
 
-public static class SummitPushTestExtensions
+public static class RouteTestExtensions
 {
-    private static readonly Faker<SummitPush> _summitPushFaker = new Faker<SummitPush>()
+    private static readonly Faker<Route> _routeFaker = new Faker<Route>()
         .RuleFor(sp => sp.Id, f => f.Random.Guid())
         .RuleFor(sp => sp.SummitId, f => f.Random.Guid())
         .RuleFor(sp => sp.UserId, f => f.Random.Guid())
@@ -23,36 +23,36 @@ public static class SummitPushTestExtensions
         ])
         .RuleFor(sp => sp.CreatedAt, _ => DateTime.UtcNow);
 
-    public static SummitPush WithFakeData(this SummitPush _, User user, Summit summit)
+    public static Route WithFakeData(this Route _, User user, Summit summit)
     {
-        var fakeSummitPush = _summitPushFaker.Generate();
+        var fakeRoute = _routeFaker.Generate();
 
-        fakeSummitPush.UserId = user.Id;
-        fakeSummitPush.SummitId = summit.Id;
-        fakeSummitPush.User = user;
-        fakeSummitPush.Summit = summit;
+        fakeRoute.UserId = user.Id;
+        fakeRoute.SummitId = summit.Id;
+        fakeRoute.User = user;
+        fakeRoute.Summit = summit;
 
-        if (summit.Coordinate is not null && fakeSummitPush.Coordinates.Count > 0)
+        if (summit.Coordinate is not null && fakeRoute.Coordinates.Count > 0)
         {
-            fakeSummitPush.Coordinates[^1] = summit.Coordinate;
+            fakeRoute.Coordinates[^1] = summit.Coordinate;
         }
 
-        return fakeSummitPush;
+        return fakeRoute;
     }
 
-    public static CreateSummitPushDto ToCreateSummitPushDto(this SummitPush summitPush)
+    public static CreateRouteDto ToCreateRouteDto(this Route route)
     {
-        return new CreateSummitPushDto()
+        return new CreateRouteDto()
         {
-            Id = summitPush.Id,
-            UserId = summitPush.UserId,
-            SummitId = summitPush.SummitId,
-            Name = summitPush.Name,
-            Description = summitPush.Description,
-            Distance = summitPush.Distance,
-            ElevationGain = summitPush.ElevationGain,
-            ElevationLoss = summitPush.ElevationLoss,
-            Coordinates = summitPush.Coordinates,
+            Id = route.Id,
+            UserId = route.UserId,
+            SummitId = route.SummitId,
+            Name = route.Name,
+            Description = route.Description,
+            Distance = route.Distance,
+            ElevationGain = route.ElevationGain,
+            ElevationLoss = route.ElevationLoss,
+            Coordinates = route.Coordinates,
         };
     }
 }

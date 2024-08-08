@@ -8,7 +8,7 @@ public class ServiceManager : IServiceManager
     private readonly IServiceFactory _factory;
     private readonly Lazy<IUserService> _users;
     private readonly Lazy<ISummitService> _summits;
-    private readonly Lazy<ISummitPushService> _summitPushes;
+    private readonly Lazy<IRouteService> _routes;
 
     public ServiceManager(IServiceFactory factory)
     {
@@ -17,10 +17,10 @@ public class ServiceManager : IServiceManager
         // lazy loading
         _users = new(() => _factory.CreateUserService());
         _summits = new (() => _factory.CreateSummitService());
-        _summitPushes = new (() => _factory.CreateSummitPushService());
+        _routes = new (() => _factory.CreateRouteService());
     }
 
     public IUserService User => _users.Value;
     public ISummitService Summit => _summits.Value;
-    public ISummitPushService SummitPush => _summitPushes.Value;
+    public IRouteService Route => _routes.Value;
 }

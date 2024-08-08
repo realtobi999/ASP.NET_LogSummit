@@ -21,7 +21,7 @@ public class User
     // entity relationships
 
     public ICollection<Summit>? Summits { get; set; }
-    public ICollection<SummitPush>? SummitPushes { get; set; }
+    public ICollection<Route>? Routes { get; set; }
 
     // methods
 

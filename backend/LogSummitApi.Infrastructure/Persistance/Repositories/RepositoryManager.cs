@@ -14,7 +14,7 @@ public class RepositoryManager : IRepositoryManager
     private readonly Lazy<IUserRepository> _users;
     private readonly Lazy<ISummitRepository> _summits;
     private readonly Lazy<IHttpCountryRepository> _httpCountries;
-    private readonly Lazy<ISummitPushRepository> _summitPushes;
+    private readonly Lazy<IRouteRepository> _routes;
 
     public RepositoryManager(LogSummitContext context, IRepositoryFactory factory, IHttpRepositoryFactory httpFactory)
     {
@@ -26,7 +26,7 @@ public class RepositoryManager : IRepositoryManager
         _users = new(() => _factory.CreateUserRepository());
         _summits = new(() => _factory.CreateSummitRepository());
         _httpCountries = new(() => _httpFactory.CreateCountryHttpRepository());
-        _summitPushes = new(() => _factory.CreateSummitPushRepository());
+        _routes = new(() => _factory.CreateRouteRepository());
     }
 
     public IUserRepository Users => _users.Value;
@@ -35,7 +35,7 @@ public class RepositoryManager : IRepositoryManager
 
     public IHttpCountryRepository HttpCountry => _httpCountries.Value;
 
-    public ISummitPushRepository SummitPush => _summitPushes.Value;
+    public IRouteRepository Route => _routes.Value;
 
     public async Task<int> SaveAsync()
     {

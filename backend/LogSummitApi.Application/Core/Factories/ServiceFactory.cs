@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Application.Core.Services.Summits;
-using LogSummitApi.Application.Core.Services.Summits.Pushes;
+using LogSummitApi.Application.Core.Services.Summits.Routes;
 using LogSummitApi.Application.Core.Services.Users;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -21,9 +21,9 @@ public class ServiceFactory : IServiceFactory
         _validators = validators;
     }
 
-    public ISummitPushService CreateSummitPushService()
+    public IRouteService CreateRouteService()
     {
-        return new SummitPushService(_repository, _validators.CreateSummitPushValidator());
+        return new RouteService(_repository, _validators.CreateRouteValidator());
     }
 
     public ISummitService CreateSummitService()

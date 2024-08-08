@@ -1,52 +1,52 @@
-﻿using LogSummitApi.Domain.Core.Dto.Summit.Pushes;
+﻿using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
-namespace LogSummitApi.Application.Core.Services.Summits.Pushes;
+namespace LogSummitApi.Application.Core.Services.Summits.Routes;
 
-public class SummitPushService : ISummitPushService
+public class RouteService : IRouteService
 {
     private readonly IRepositoryManager _repository;
-    private readonly IValidator<SummitPush> _validator;
+    private readonly IValidator<Route> _validator;
 
-    public SummitPushService(IRepositoryManager repository, IValidator<SummitPush> validator)
+    public RouteService(IRepositoryManager repository, IValidator<Route> validator)
     {
         _repository = repository;
         _validator = validator;
     }
 
-    public async Task<SummitPush> CreateAsync(CreateSummitPushDto createSummitPushDto)
+    public async Task<Route> CreateAsync(CreateRouteDto createRouteDto)
     {
-        var summitPush = new SummitPush()
+        var route = new Route()
         {
-            Id = createSummitPushDto.Id,
-            SummitId = createSummitPushDto.SummitId,
-            UserId = createSummitPushDto.UserId,
-            Name = createSummitPushDto.Name,
-            Description = createSummitPushDto.Description,
-            Distance = createSummitPushDto.Distance,
-            ElevationGain = createSummitPushDto.ElevationGain,
-            ElevationLoss = createSummitPushDto.ElevationLoss,
-            Coordinates = createSummitPushDto.Coordinates ?? throw new NullReferenceException("Coordinates must be set."),
+            Id = createRouteDto.Id,
+            SummitId = createRouteDto.SummitId,
+            UserId = createRouteDto.UserId,
+            Name = createRouteDto.Name,
+            Description = createRouteDto.Description,
+            Distance = createRouteDto.Distance,
+            ElevationGain = createRouteDto.ElevationGain,
+            ElevationLoss = createRouteDto.ElevationLoss,
+            Coordinates = createRouteDto.Coordinates ?? throw new NullReferenceException("Coordinates must be set."),
             CreatedAt = DateTime.UtcNow
         };
 
         // validate the object
-        var (valid, exception) = await _validator.IsValidAsync(summitPush);
+        var (valid, exception) = await _validator.IsValidAsync(route);
         if (!valid && exception is not null) throw exception;
 
-        _repository.SummitPush.Create(summitPush);
+        _repository.Route.Create(route);
         await _repository.SaveSafelyAsync(); 
 
-        return summitPush;
+        return route;
     }
 
-    public async Task<IEnumerable<SummitPush>> IndexAsync()
+    public async Task<IEnumerable<Route>> IndexAsync()
     {
-        var summitPushes = await _repository.SummitPush.IndexAsync();
+        var routes = await _repository.Route.IndexAsync();
 
-        return summitPushes.OrderBy(sp => sp.CreatedAt);
+        return routes.OrderBy(sp => sp.CreatedAt);
     }
 }

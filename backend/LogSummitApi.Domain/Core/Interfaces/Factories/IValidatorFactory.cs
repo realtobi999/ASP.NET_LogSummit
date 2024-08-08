@@ -6,5 +6,5 @@ namespace LogSummitApi.Domain.Core.Interfaces.Factories;
 public interface IValidatorFactory
 {
     IValidator<Summit> CreateSummitValidator();
-    IValidator<SummitPush> CreateSummitPushValidator();
+    IValidator<Route> CreateRouteValidator();
 }

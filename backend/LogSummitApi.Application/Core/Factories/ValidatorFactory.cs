@@ -15,9 +15,9 @@ public class ValidatorFactory : IValidatorFactory
         _repository = repository;
     }
 
-    public IValidator<SummitPush> CreateSummitPushValidator()
+    public IValidator<Route> CreateRouteValidator()
     {
-        return new SummitPushValidator(_repository);
+        return new RouteValidator(_repository);
     }
 
     public IValidator<Summit> CreateSummitValidator()

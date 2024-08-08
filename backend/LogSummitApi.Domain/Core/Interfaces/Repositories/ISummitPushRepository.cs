@@ -2,7 +2,7 @@
 
 namespace LogSummitApi.Domain.Core.Interfaces.Repositories;
 
-public interface ISummitPushRepository : IBaseRepository<SummitPush>
+public interface IRouteRepository : IBaseRepository<Route>
 {
-    Task<SummitPush?> GetAsync(Guid id);
+    Task<Route?> GetAsync(Guid id);
 }

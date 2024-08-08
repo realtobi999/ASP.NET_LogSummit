@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 
-public class SummitPushRepository : BaseRepository<SummitPush>, ISummitPushRepository
+public class RouteRepository : BaseRepository<Route>, IRouteRepository
 {
-    public SummitPushRepository(LogSummitContext context) : base(context)
+    public RouteRepository(LogSummitContext context) : base(context)
     {
     }
 
-    public async Task<SummitPush?> GetAsync(Guid id)
+    public async Task<Route?> GetAsync(Guid id)
     {
         return await this.GetAsync(sp => sp.Id == id);
     }

@@ -1,4 +1,4 @@
-using LogSummitApi.Domain.Core.Dto.Summit.Pushes;
+using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,37 +6,37 @@ namespace LogSummitApi.Presentation.Controllers;
 
 [ApiController]
 [Route("v1/api")]
-public class SummitPushController : ControllerBase
+public class RouteController : ControllerBase
 {
     private readonly IServiceManager _service;
 
-    public SummitPushController(IServiceManager service)
+    public RouteController(IServiceManager service)
     {
         _service = service;
     }
 
-    [HttpGet("summit/push")]
+    [HttpGet("summit/route")]
     public async Task<IActionResult> Index(int limit, int offset)
     {
-        var summitPushes = await _service.SummitPush.IndexAsync();
+        var routes = await _service.Route.IndexAsync();
 
         if (offset > 0)
         {
-            summitPushes = summitPushes.Skip(offset);
+            routes = routes.Skip(offset);
         }
         if (limit > 0)
         {
-            summitPushes = summitPushes.Take(limit);
+            routes = routes.Take(limit);
         }
 
-        return Ok(summitPushes.Select(sp => sp.ToDto()).ToList());
+        return Ok(routes.Select(sp => sp.ToDto()).ToList());
     }
 
-    [HttpPost("summit/push")]
-    public async Task<IActionResult> Create([FromBody] CreateSummitPushDto createSummitPushDto)
+    [HttpPost("summit/route")]
+    public async Task<IActionResult> Create([FromBody] CreateRouteDto createRouteDto)
     {
-        var summitPush = await _service.SummitPush.CreateAsync(createSummitPushDto);
+        var route = await _service.Route.CreateAsync(createRouteDto);
 
-        return Created($"/v1/api/summit/push/{summitPush.Id}", null);
+        return Created($"/v1/api/summit/route/{route.Id}", null);
     }
 }
