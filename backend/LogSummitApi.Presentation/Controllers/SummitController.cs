@@ -36,7 +36,7 @@ public class SummitController : ControllerBase
             summits = summits.Take(limit);
         }
 
-        return Ok(summits.Select(s => s.ToDto()).ToList());
+        return Ok(summits);
     }
 
     [HttpGet("summit/user/{userId}")]
@@ -61,7 +61,7 @@ public class SummitController : ControllerBase
             summits = summits.Take(limit);
         }
 
-        return Ok(summits.Select(s => s.ToDto()).ToList());
+        return Ok(summits);
     }
 
     [HttpGet("summit/{summitId}")]
@@ -69,7 +69,7 @@ public class SummitController : ControllerBase
     {
         var summit = await _service.Summit.GetAsync(summitId);
 
-        return Ok(summit.ToDto());
+        return Ok(summit);
     }
 
     [HttpGet("summit/valid-countries")]

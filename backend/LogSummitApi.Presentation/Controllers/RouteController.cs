@@ -29,7 +29,7 @@ public class RouteController : ControllerBase
             routes = routes.Take(limit);
         }
 
-        return Ok(routes.Select(sp => sp.ToDto()).ToList());
+        return Ok(routes);
     }
 
     [HttpPost("summit/route")]

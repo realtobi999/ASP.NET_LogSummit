@@ -1,6 +1,7 @@
 using LogSummitApi.Application.Core.Utilities;
 using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Presentation.Extensions;
+using LogSummitApi.Presentation.Middleware.Filters;
 using LogSummitApi.Presentation.Middleware.Handlers;
 
 namespace LogSummitApi.Presentation;
@@ -33,7 +34,9 @@ public class Program
                                                 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options => {
+                options.Filters.Add<SerializeToDtoFilter>();
+            });
 
         }
 

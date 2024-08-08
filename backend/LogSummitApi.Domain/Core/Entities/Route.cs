@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
+using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Entities;
 
-public class Route
+public class Route : ISerializable<RouteDto>
 {
     [Required, Column("id")]
     public Guid Id { get; set; }

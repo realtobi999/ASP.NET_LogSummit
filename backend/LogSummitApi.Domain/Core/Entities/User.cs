@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Dto.User;
+using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
 namespace LogSummitApi.Domain.Core.Entities;
 
-public class User
+public class User : ISerializable<UserDto>
 {
     [Required, Column("id")]
     public Guid Id { get; set; }
@@ -31,7 +33,6 @@ public class User
         {
             Id = this.Id,
             Email = this.Email,
-            Password = this.Password,
         };
     }
 }
