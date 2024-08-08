@@ -15,30 +15,51 @@ public class ExceptionHandler : IExceptionHandler
             Instance = $"{context.Request.Method} {context.Request.Path}"
         };
 
-        if (exception is IHttpException httpException) // this is a planned http exception
+        if (exception is IHttpException httpException)
         {
-            error.StatusCode = httpException.StatusCode;
-            error.Title = httpException.Title;
-            error.Detail = httpException.Message;
-
-            await WriteError(context, error, token);
+            await HandleHttpException(context, httpException, token);
         }
-        else // this is not an planned http exception => default 500
+        else
         {
-            error.StatusCode = (int)HttpStatusCode.InternalServerError;
-            error.Title = "An unexpected internal error occurred";
-            error.Detail = exception.Message;
-
-            await WriteError(context, error, token);
+            await HandleGeneralException(context, exception, token);
         }
 
         return false;
     }
 
-    private static async Task WriteError(HttpContext context, ErrorMessage error, CancellationToken token)
+    private static async Task HandleHttpException(HttpContext context, IHttpException exception, CancellationToken token)
+    {
+        var error = new ErrorMessage
+        {
+            StatusCode = exception.StatusCode,
+            Type = exception.GetType().Name,
+            Title = exception.Title,
+            Detail = exception.Message,
+            Instance = $"{context.Request.Method} {context.Request.Path}"
+        };
+
+        await WriteErrorAsync(context, error, token);
+    }
+
+    private static async Task HandleGeneralException(HttpContext context, Exception exception, CancellationToken token)
+    {
+        var error = new ErrorMessage
+        {
+            StatusCode = (int)HttpStatusCode.InternalServerError,
+            Type = exception.GetType().Name,
+            Title = "An unexpected internal error occurred",
+            Detail = exception.Message,
+            Instance = $"{context.Request.Method} {context.Request.Path}"
+        };
+
+        await WriteErrorAsync(context, error, token);
+    }
+
+    private static async Task WriteErrorAsync(HttpContext context, ErrorMessage error, CancellationToken token)
     {
         context.Response.StatusCode = error.StatusCode;
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsJsonAsync<ErrorMessage>(error, token);
+        await context.Response.WriteAsJsonAsync(error, token);
     }
 }
+
