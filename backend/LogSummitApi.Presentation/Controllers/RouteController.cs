@@ -34,6 +34,14 @@ public class RouteController : ControllerBase
         return Ok(routes);
     }
 
+    [HttpGet("summit/route/{routeId}")]
+    public async Task<IActionResult> Get(Guid routeId)
+    {
+        var route = await _service.Route.GetAsync(routeId);
+
+        return Ok(route);
+    }
+
     [HttpPost("summit/route")]
     public async Task<IActionResult> Create([FromBody] CreateRouteDto createRouteDto)
     {
