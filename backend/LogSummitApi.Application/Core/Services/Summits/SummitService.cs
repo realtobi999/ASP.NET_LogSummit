@@ -75,7 +75,7 @@ public class SummitService : ISummitService
     {
         var summits = await _repository.Summit.IndexAsync();
 
-        return summits;
+        return summits.OrderBy(s => s.CreatedAt);
     }
 
     public async Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto)

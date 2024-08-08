@@ -42,4 +42,11 @@ public class SummitPushService : ISummitPushService
 
         return summitPush;
     }
+
+    public async Task<IEnumerable<SummitPush>> IndexAsync()
+    {
+        var summitPushes = await _repository.SummitPush.IndexAsync();
+
+        return summitPushes.OrderBy(sp => sp.CreatedAt);
+    }
 }

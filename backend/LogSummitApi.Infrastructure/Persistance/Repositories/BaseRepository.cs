@@ -42,10 +42,10 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     private IQueryable<T> GetQueryable()
     {
         var query = _context.Set<T>().AsQueryable();
-        return IncludeNavigationProperties(query);
+        return BaseRepository<T>.IncludeNavigationProperties(query);
     }
 
-    private IQueryable<T> IncludeNavigationProperties(IQueryable<T> query)
+    private static IQueryable<T> IncludeNavigationProperties(IQueryable<T> query)
     {
         var navigationProperties = typeof(T).GetProperties()
            .Where(p => p.GetCustomAttributes(typeof(IncludeInQueryingAttribute), false).Length != 0);
