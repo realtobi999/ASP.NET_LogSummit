@@ -232,7 +232,7 @@ public class SummitTests
             Name = "test",
             Description = "test",
             Country = summit.Country,
-            Coordinate = new Coordinate(45, 90, 100),
+            Coordinate = summit.Coordinate,
         };
 
         var response = await client.PutAsJsonAsync($"v1/api/summit/{summit.Id}", updateDto);
@@ -246,7 +246,6 @@ public class SummitTests
         content.Id.Should().Be(summit.Id);
         content.Name.Should().Be(updateDto.Name);
         content.Description.Should().Be(updateDto.Description);
-        content.Coordinate.Should().BeEquivalentTo(updateDto.Coordinate);
     }
 
     [Fact]

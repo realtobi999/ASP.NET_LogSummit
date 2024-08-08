@@ -83,7 +83,6 @@ public class SummitService : ISummitService
         summit.Name = updateSummitDto.Name;
         summit.Description = updateSummitDto.Description;
         summit.Country = updateSummitDto.Country;
-        summit.Coordinate = updateSummitDto.Coordinate;
 
         // validate the object
         var (valid, exception) = await _validator.IsValidAsync(summit);

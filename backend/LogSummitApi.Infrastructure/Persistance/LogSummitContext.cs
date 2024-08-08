@@ -17,7 +17,7 @@ public class LogSummitContext(DbContextOptions<LogSummitContext> opt) : DbContex
 
         // configure entity relationships      
         builder.ConfigureSummitToUserRelationship();
-        builder.ConfigureRouteToUserRelationShip();
-        builder.ConfigureRouteToSummitRelationship();
+        builder.ConfigureUserToRouteRelationship();
+        builder.ConfigureSummitToRouteRelationship();
     }
 }

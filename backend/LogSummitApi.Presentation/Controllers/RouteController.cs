@@ -1,5 +1,7 @@
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Services;
+using LogSummitApi.Presentation.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogSummitApi.Presentation.Controllers;
@@ -38,5 +40,38 @@ public class RouteController : ControllerBase
         var route = await _service.Route.CreateAsync(createRouteDto);
 
         return Created($"/v1/api/summit/route/{route.Id}", null);
+    }
+
+    [HttpPut("summit/route/{routeId}")]
+    public async Task<IActionResult> Update(Guid routeId, [FromBody] UpdateRouteDto updateRouteDto)
+    {
+        try
+        {
+            var route = await _service.Route.GetAsync(routeId);
+
+            // authenticate the request
+            if (route.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+
+            await _service.Route.UpdateAsync(route, updateRouteDto);
+
+            return NoContent();
+        }
+        catch (NotFound404Exception)
+        {
+            var route = await _service.Route.CreateAsync(new CreateRouteDto()
+            {
+                Id = Guid.NewGuid(),
+                UserId = updateRouteDto.UserId,
+                SummitId = updateRouteDto.SummitId,
+                Name = updateRouteDto.Name,
+                Description = updateRouteDto.Description,
+                Distance = updateRouteDto.Distance,
+                ElevationGain = updateRouteDto.ElevationGain,
+                ElevationLoss = updateRouteDto.ElevationLoss,
+                Coordinates = updateRouteDto.Coordinates,
+            });
+
+            return Created($"/v1/api/summit/route/{route.Id}", null);
+        }
     }
 }

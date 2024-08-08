@@ -18,26 +18,28 @@ public static class LogSummitContextExtensions
     }
 
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="Route"/> and <see cref="User"/> .
+    /// Configures one-to-many relationship between <see cref="User"/> and <see cref="Route"/> .
     /// </summary>
     /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
-    public static void ConfigureRouteToUserRelationShip(this ModelBuilder builder)
+    public static void ConfigureUserToRouteRelationship(this ModelBuilder builder)
     {
         builder.Entity<Route>()
                .HasOne(sp => sp.User)
                .WithMany(u => u.Routes)
-               .HasForeignKey(sp => sp.UserId);
+               .HasForeignKey(sp => sp.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="Route"/> and <see cref="Summit"/> .
+    /// Configures one-to-many relationship between <see cref="Summit"/> and <see cref="Route"/> .
     /// </summary>
     /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
-    public static void ConfigureRouteToSummitRelationship(this ModelBuilder builder)
+    public static void ConfigureSummitToRouteRelationship(this ModelBuilder builder)
     {
         builder.Entity<Route>()
                .HasOne(sp => sp.Summit)
                .WithMany(s => s.Routes)
-               .HasForeignKey(sp => sp.SummitId); // Note: I changed UserId to SummitId, assuming that's the correct foreign key
+               .HasForeignKey(sp => sp.SummitId)
+               .OnDelete(DeleteBehavior.Cascade); 
     }
 }

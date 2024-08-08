@@ -1,5 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
@@ -43,10 +44,29 @@ public class RouteService : IRouteService
         return route;
     }
 
+    public async Task<Route> GetAsync(Guid id)
+    {
+        var route = await _repository.Route.GetAsync(id) ?? throw new NotFound404Exception(nameof(Route), id); 
+
+        return route;
+    }
+
     public async Task<IEnumerable<Route>> IndexAsync()
     {
         var routes = await _repository.Route.IndexAsync();
 
         return routes.OrderBy(sp => sp.CreatedAt);
+    }
+
+    public async Task UpdateAsync(Route route, UpdateRouteDto updateRouteDto)
+    {
+        route.Name = updateRouteDto.Name;
+        route.Description = updateRouteDto.Description;
+
+        // validate the object
+        var (valid, exception) = await _validator.IsValidAsync(route);
+        if (!valid && exception is not null) throw exception;
+
+        await _repository.SaveSafelyAsync();
     }
 }
