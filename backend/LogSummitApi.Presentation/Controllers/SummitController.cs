@@ -23,6 +23,8 @@ public class SummitController : ControllerBase
     {
         var summits = await _service.Summit.IndexAsync();
 
+        summits = summits.Where(s => s.IsPublic); // leave out all the privates
+
         if (country is not null)
         {
             summits = summits.Where(s => s.Country!.Equals(country, StringComparison.CurrentCultureIgnoreCase));
@@ -43,6 +45,8 @@ public class SummitController : ControllerBase
     public async Task<IActionResult> IndexByUser(Guid userId, int limit, int offset, string? country)
     {
         var summits = await _service.Summit.IndexAsync();
+
+        summits = summits.Where(s => s.IsPublic); // leave out all the private summits
 
         if (userId != Guid.Empty)
         {
