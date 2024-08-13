@@ -72,7 +72,7 @@ public class RouteController : ControllerBase
         {
             var route = await _service.Route.CreateAsync(new CreateRouteDto()
             {
-                Id = Guid.NewGuid(),
+                Id = routeId,
                 UserId = updateRouteDto.UserId,
                 SummitId = updateRouteDto.SummitId,
                 Name = updateRouteDto.Name,
