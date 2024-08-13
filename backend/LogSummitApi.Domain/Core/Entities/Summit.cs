@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Dto.Summit;
+using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
@@ -60,7 +61,7 @@ public class Summit : ISerializable<SummitDto>
 
     public SummitDto? ToDto()
     {
-        if (this.User is null) throw new NullReferenceException("Summit 'User' property cannot be null.");
+        if (this.User is null) throw new NullPropertyException(nameof(Summit), nameof(User)); 
 
         if (!this.IsPublic)
         {

@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Exceptions;
+﻿using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;

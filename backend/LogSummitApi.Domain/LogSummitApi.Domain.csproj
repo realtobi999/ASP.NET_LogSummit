@@ -10,8 +10,4 @@
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Core/Exceptions/Common/" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.User;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -20,7 +21,7 @@ public class UserService : IUserService
 
     public bool Authenticate(User user, string inputPassword)
     {
-        var userPassword = user.Password ?? throw new NullReferenceException(user.Password);
+        var userPassword = user.Password ?? throw new NullPropertyException(nameof(User), nameof(User.Password));
 
         if (!_hasher.Compare(inputPassword, userPassword))
         {

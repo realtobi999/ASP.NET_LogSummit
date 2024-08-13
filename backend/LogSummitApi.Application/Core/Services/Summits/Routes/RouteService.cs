@@ -1,5 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -30,7 +31,7 @@ public class RouteService : IRouteService
             Distance = createRouteDto.Distance,
             ElevationGain = createRouteDto.ElevationGain,
             ElevationLoss = createRouteDto.ElevationLoss,
-            Coordinates = createRouteDto.Coordinates ?? throw new NullReferenceException("Coordinates must be set."),
+            Coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(Route), nameof(Route.Coordinates)),
             CreatedAt = DateTime.UtcNow
         };
 

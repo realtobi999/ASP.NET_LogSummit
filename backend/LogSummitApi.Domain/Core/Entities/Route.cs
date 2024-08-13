@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
+using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
@@ -55,8 +56,8 @@ public class Route : ISerializable<RouteDto>
 
     public RouteDto ToDto()
     {
-        if (this.Summit is null) throw new NullReferenceException("Route 'Summit' property cannot be null.");
-        if (this.User is null) throw new NullReferenceException("Route 'User' property cannot be null.");
+        if (this.Summit is null) throw new NullPropertyException(nameof(Route), nameof(Summit));
+        if (this.User is null) throw new  NullPropertyException(nameof(Route), nameof(User));
     
         return new RouteDto()
         {

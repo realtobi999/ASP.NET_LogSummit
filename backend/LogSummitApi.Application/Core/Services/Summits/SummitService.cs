@@ -1,5 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -28,7 +29,7 @@ public class SummitService : ISummitService
             Name = createSummitDto.Name,
             Description = createSummitDto.Description,
             Country = createSummitDto.Country,
-            IsPublic = createSummitDto.IsPublic ?? throw new NullReferenceException("Summit 'IsPublic' property cannot be null."),
+            IsPublic = createSummitDto.IsPublic ?? throw new NullPropertyException(nameof(Summit), nameof(Summit.IsPublic)),
             CreatedAt = DateTime.UtcNow,
             Coordinate = createSummitDto.Coordinate
         };
@@ -64,8 +65,8 @@ public class SummitService : ISummitService
         return countries
             .Select(country =>
             {
-                if (country.Name == null) throw new NullReferenceException("Country 'Name' property cannot be null.");
-                if (country.Name.Common == null) throw new NullReferenceException("Country 'Name.Common' property cannot be null.");
+                if (country.Name == null) throw new NullPropertyException(nameof(CountryDto), nameof(CountryDto.Name));
+                if (country.Name.Common == null) throw new NullPropertyException(nameof(CountryDto), nameof(CountryDto.Name.Common));
 
                 return country.Name.Common;
             })
