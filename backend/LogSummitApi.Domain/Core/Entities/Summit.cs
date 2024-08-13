@@ -53,8 +53,6 @@ public class Summit : ISerializable<SummitDto>
 
     [NotMapped]
     public Coordinate? Coordinate { get; set; }
-
-    [IncludeInQuerying]
     public User? User { get; set; }
     public ICollection<Route>? Routes { get; set; } 
 

@@ -10,6 +10,13 @@ public class RouteRepository : BaseRepository<Route>, IRouteRepository
     {
     }
 
+    protected override IQueryable<Route> GetQueryable()
+    {
+        return base.GetQueryable()
+                   .Include(r => r.User)
+                   .Include(r => r.Summit);
+    }
+
     public async Task<Route?> GetAsync(Guid id)
     {
         return await this.GetAsync(sp => sp.Id == id);

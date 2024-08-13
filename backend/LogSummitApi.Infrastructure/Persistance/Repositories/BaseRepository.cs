@@ -39,24 +39,8 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         return await GetQueryable().ToListAsync();
     }
 
-    private IQueryable<T> GetQueryable()
+    protected virtual IQueryable<T> GetQueryable()
     {
-        var query = _context.Set<T>().AsQueryable();
-        
-        return BaseRepository<T>.IncludeNavigationProperties(query);
-    }
-
-    private static IQueryable<T> IncludeNavigationProperties(IQueryable<T> query)
-    {
-        var navigationProperties = typeof(T).GetProperties()
-           .Where(p => p.GetCustomAttributes(typeof(IncludeInQueryingAttribute), false).Length != 0);
-
-        foreach (var property in navigationProperties)
-        {
-            query = query.Include(property.Name);
-        }
-
-        return query;
-    }
-
+        return _context.Set<T>().AsQueryable();
+    } 
 }

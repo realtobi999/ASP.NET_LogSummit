@@ -48,11 +48,7 @@ public class Route : ISerializable<RouteDto>
 
     [NotMapped]
     public List<Coordinate> Coordinates = [];
-
-    [IncludeInQuerying]
     public User? User { get; set; }
-    
-    [IncludeInQuerying]
     public Summit? Summit { get; set; }
 
     // methods
