@@ -35,7 +35,7 @@ public class Program
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers(options => {
-                options.Filters.Add<SerializeToDtoFilter>();
+                options.Filters.Add<CustomSerializationFilter>();
             });
 
         }

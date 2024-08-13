@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace LogSummitApi.Presentation.Middleware.Filters;
 
-public class SerializeToDtoFilter : IAsyncResultFilter
+public class CustomSerializationFilter : IAsyncResultFilter
 {
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {

@@ -14,34 +14,35 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         _context = context;
     }
 
-    public void Create(T entity)
+    public virtual void Create(T entity)
     {
         _context.Set<T>().Add(entity);
     }
 
-    public void Delete(T entity)
+    public virtual void Delete(T entity)
     {
         _context.Set<T>().Remove(entity);
     }
 
-    public async Task<T?> GetAsync(Expression<Func<T, bool>> expression)
+    public virtual void Update(T entity)
+    {
+        _context.Set<T>().Update(entity);
+    }
+
+    public virtual async Task<T?> GetAsync(Expression<Func<T, bool>> expression)
     {
         return await GetQueryable().FirstOrDefaultAsync(expression);
     }
 
-    public async Task<IEnumerable<T>> IndexAsync()
+    public virtual async Task<IEnumerable<T>> IndexAsync()
     {
         return await GetQueryable().ToListAsync();
-    }
-
-    public void Update(T entity)
-    {
-        _context.Set<T>().Update(entity);
     }
 
     private IQueryable<T> GetQueryable()
     {
         var query = _context.Set<T>().AsQueryable();
+        
         return BaseRepository<T>.IncludeNavigationProperties(query);
     }
 

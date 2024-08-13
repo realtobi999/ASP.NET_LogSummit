@@ -25,6 +25,9 @@ public class Summit : ISerializable<SummitDto>
     [Required, MaxLength(155)]
     public string? Country { get; set; }
 
+    [Required, Column("is_public")]
+    public bool IsPublic { get; set; }
+
     [Required, Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
@@ -57,9 +60,14 @@ public class Summit : ISerializable<SummitDto>
 
     // methods
 
-    public SummitDto ToDto()
+    public SummitDto? ToDto()
     {
         if (this.User is null) throw new NullReferenceException("Summit 'User' property cannot be null.");
+
+        if (!this.IsPublic)
+        {
+            return null;
+        }
 
         return new SummitDto()
         {

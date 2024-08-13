@@ -28,6 +28,7 @@ public class SummitService : ISummitService
             Name = createSummitDto.Name,
             Description = createSummitDto.Description,
             Country = createSummitDto.Country,
+            IsPublic = createSummitDto.IsPublic ?? throw new NullReferenceException("Summit 'IsPublic' property cannot be null."),
             CreatedAt = DateTime.UtcNow,
             Coordinate = createSummitDto.Coordinate
         };
