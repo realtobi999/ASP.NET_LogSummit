@@ -1,6 +1,5 @@
 ﻿using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 
@@ -12,6 +11,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<User?> GetAsync(Guid id)
     {
-        return await _context.Set<User>().FirstOrDefaultAsync(u => u.Id == id);
+        return await this.GetAsync(u => u.Id == id);
     }
 }

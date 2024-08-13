@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using LogSummitApi.Application.Core.Factories;
 using LogSummitApi.Application.Core.Services;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using LogSummitApi.Infrastructure.Factories;
 using LogSummitApi.Infrastructure.Persistance;
 using LogSummitApi.Infrastructure.Persistance.Repositories;

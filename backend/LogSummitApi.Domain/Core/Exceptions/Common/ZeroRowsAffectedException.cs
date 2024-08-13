@@ -1,4 +1,4 @@
-﻿namespace LogSummitApi.Domain.Core.Exceptions;
+﻿namespace LogSummitApi.Domain.Core.Exceptions.Common;
 
 public class ZeroRowsAffectedException : Exception
 {

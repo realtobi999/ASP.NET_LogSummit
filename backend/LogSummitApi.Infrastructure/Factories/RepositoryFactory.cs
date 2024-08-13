@@ -14,6 +14,11 @@ public class RepositoryFactory : IRepositoryFactory
         _context = context;
     }
 
+    public IRouteRepository CreateRouteRepository()
+    {
+        return new RouteRepository(_context);
+    }
+
     public ISummitRepository CreateSummitRepository()
     {
         return new SummitRepository(_context);

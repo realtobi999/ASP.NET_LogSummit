@@ -1,8 +1,8 @@
 ﻿using LogSummitApi.Application.Core.Validators;
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
 namespace LogSummitApi.Application.Core.Factories;
 
@@ -13,6 +13,11 @@ public class ValidatorFactory : IValidatorFactory
     public ValidatorFactory(IRepositoryManager repository)
     {
         _repository = repository;
+    }
+
+    public IValidator<Route> CreateRouteValidator()
+    {
+        return new RouteValidator(_repository);
     }
 
     public IValidator<Summit> CreateSummitValidator()

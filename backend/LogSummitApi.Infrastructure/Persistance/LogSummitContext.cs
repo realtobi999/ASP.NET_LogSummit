@@ -16,6 +16,8 @@ public class LogSummitContext(DbContextOptions<LogSummitContext> opt) : DbContex
                .IsUnique();
 
         // configure entity relationships      
-        builder.ConfigureSummitUserRelationship();
+        builder.ConfigureSummitToUserRelationship();
+        builder.ConfigureUserToRouteRelationship();
+        builder.ConfigureSummitToRouteRelationship();
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using LogSummitApi.Domain.Core.Dto.User;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 
 namespace LogSummitApi.Domain.Core.Entities;
 
-public class User
+public class User : ISerializable<UserDto>
 {
     [Required, Column("id")]
     public Guid Id { get; set; }
@@ -21,6 +22,7 @@ public class User
     // entity relationships
 
     public ICollection<Summit>? Summits { get; set; }
+    public ICollection<Route>? Routes { get; set; }
 
     // methods
 
@@ -30,7 +32,6 @@ public class User
         {
             Id = this.Id,
             Email = this.Email,
-            Password = this.Password,
         };
     }
 }

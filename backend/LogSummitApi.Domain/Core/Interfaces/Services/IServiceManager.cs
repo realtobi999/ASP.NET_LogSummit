@@ -3,5 +3,6 @@
 public interface IServiceManager
 {
     public ISummitService Summit { get; }
-    public IUserService Users { get; }
+    public IRouteService Route { get; }
+    public IUserService User { get; }
 }

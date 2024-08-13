@@ -7,6 +7,7 @@ public interface IRepositoryManager
 {
     public IUserRepository Users { get; }
     public ISummitRepository Summit { get; }
+    public IRouteRepository Route { get; }
     public IHttpCountryRepository HttpCountry { get; }
     public Task<int> SaveAsync();
 

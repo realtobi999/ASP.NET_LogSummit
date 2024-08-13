@@ -1,10 +1,10 @@
 ﻿using System.Net.Http.Json;
 using LogSummitApi.Domain.Core.Dto.Summit;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace LogSummitApi.Infrastructure.HTTP.Repositories;
+namespace LogSummitApi.Infrastructure.Api.Repositories;
 
 
 public class HttpCountryRepository : IHttpCountryRepository

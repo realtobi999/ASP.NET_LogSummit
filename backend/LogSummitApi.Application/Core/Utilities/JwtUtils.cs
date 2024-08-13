@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 
 namespace LogSummitApi.Application.Core.Utilities;
 
@@ -43,5 +43,4 @@ public static class JwtUtils
 
         return payload.FirstOrDefault(c => c.Type.Equals(key, StringComparison.CurrentCultureIgnoreCase))?.Value;
     }
-
 }

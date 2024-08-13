@@ -1,6 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
-using LogSummitApi.Infrastructure.HTTP.Repositories;
+using LogSummitApi.Infrastructure.Api.Repositories;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace LogSummitApi.Infrastructure.Factories;

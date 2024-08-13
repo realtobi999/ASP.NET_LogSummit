@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using LogSummitApi.Application.Core.Utilities;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Tests.Helpers;
 
 namespace LogSummitApi.Tests.Unit;

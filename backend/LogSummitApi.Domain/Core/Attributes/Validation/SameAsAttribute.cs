@@ -2,6 +2,10 @@
 
 namespace LogSummitApi.Domain.Core.Attributes.Validation;
 
+/// <summary>
+/// Validation attribute that checks if the value of the decorated property is the same as the value of another specified property.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property)]
 public class SameAsAttribute : ValidationAttribute
 {
     private readonly string _comparisonProperty;

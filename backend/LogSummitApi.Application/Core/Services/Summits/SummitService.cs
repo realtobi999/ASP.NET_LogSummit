@@ -1,9 +1,10 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Common;
+using LogSummitApi.Domain.Core.Exceptions.Http;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 
 namespace LogSummitApi.Application.Core.Services.Summits;
 
@@ -28,6 +29,7 @@ public class SummitService : ISummitService
             Name = createSummitDto.Name,
             Description = createSummitDto.Description,
             Country = createSummitDto.Country,
+            IsPublic = createSummitDto.IsPublic ?? throw new NullPropertyException(nameof(Summit), nameof(Summit.IsPublic)),
             CreatedAt = DateTime.UtcNow,
             Coordinate = createSummitDto.Coordinate
         };
@@ -63,8 +65,8 @@ public class SummitService : ISummitService
         return countries
             .Select(country =>
             {
-                if (country.Name == null) throw new NullReferenceException("Country 'Name' property cannot be null.");
-                if (country.Name.Common == null) throw new NullReferenceException("Country 'Name.Common' property cannot be null.");
+                if (country.Name == null) throw new NullPropertyException(nameof(CountryDto), nameof(CountryDto.Name));
+                if (country.Name.Common == null) throw new NullPropertyException(nameof(CountryDto), nameof(CountryDto.Name.Common));
 
                 return country.Name.Common;
             })
@@ -75,7 +77,7 @@ public class SummitService : ISummitService
     {
         var summits = await _repository.Summit.IndexAsync();
 
-        return summits;
+        return summits.OrderBy(s => s.CreatedAt);
     }
 
     public async Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto)
@@ -83,7 +85,6 @@ public class SummitService : ISummitService
         summit.Name = updateSummitDto.Name;
         summit.Description = updateSummitDto.Description;
         summit.Country = updateSummitDto.Country;
-        summit.Coordinate = updateSummitDto.Coordinate;
 
         // validate the object
         var (valid, exception) = await _validator.IsValidAsync(summit);

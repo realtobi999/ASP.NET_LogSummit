@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 
 namespace LogSummitApi.Application.Core.Utilities;
 

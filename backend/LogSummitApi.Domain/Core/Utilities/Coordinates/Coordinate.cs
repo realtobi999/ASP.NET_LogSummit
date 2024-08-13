@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Exceptions;
+﻿using LogSummitApi.Domain.Core.Exceptions.Common;
 
 namespace LogSummitApi.Domain.Core.Utilities.Coordinates;
 
@@ -7,6 +7,7 @@ public class Coordinate
     public const string StringCoordinateFormat = "latitude|longitude|elevation";
     public const double MaximumElevationPoint = 8848;
     public const double LowestElevationPoint = -420;
+    
     public double Latitude { get; }
     public double Longitude { get; }
     public double Elevation { get; }

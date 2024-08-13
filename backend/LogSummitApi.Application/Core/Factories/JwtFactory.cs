@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Application.Core.Utilities;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using Microsoft.Extensions.Configuration;
 
 namespace LogSummitApi.Application.Core.Factories;

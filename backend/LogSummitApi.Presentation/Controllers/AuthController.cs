@@ -1,9 +1,8 @@
-﻿using System.Net.Http.Headers;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using LogSummitApi.Domain.Core.Dto.User;
-using LogSummitApi.Domain.Core.Exceptions.HTTP;
+using LogSummitApi.Domain.Core.Exceptions.Http;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogSummitApi.Presentation.Controllers;
@@ -24,7 +23,7 @@ public class AuthController : ControllerBase
     [HttpPost("auth/register")]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto registerUserDto)
     {
-        var user = await _service.Users.CreateAsync(registerUserDto);
+        var user = await _service.User.CreateAsync(registerUserDto);
 
         return Created($"/v1/api/user/{user.Id}", null);
     }
@@ -33,8 +32,8 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> LoginUser([FromBody] LoginUserDto loginUserDto)
     {
         // we can ignore the null warning cause of the asp.net validation  
-        var user = await _service.Users.GetAsync(loginUserDto.Email!);
-        var authenticated = _service.Users.Authenticate(user, loginUserDto.Password!);
+        var user = await _service.User.GetAsync(loginUserDto.Email!);
+        var authenticated = _service.User.Authenticate(user, loginUserDto.Password!);
 
         if (!authenticated)
         {

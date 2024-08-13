@@ -1,6 +1,7 @@
 using LogSummitApi.Application.Core.Utilities;
-using LogSummitApi.Domain.Core.Interfaces.Utilities;
+using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Presentation.Extensions;
+using LogSummitApi.Presentation.Middleware.Filters;
 using LogSummitApi.Presentation.Middleware.Handlers;
 
 namespace LogSummitApi.Presentation;
@@ -28,9 +29,15 @@ public class Program
 
             builder.Services.ConfigureJwtAuthentication(config);
 
+            // user authorization
+            builder.Services.AddAuthorizationBuilder().AddPolicy("User", policy => policy.RequireRole("User"));
+                                                
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options => {
+                options.Filters.Add<CustomSerializationFilter>();
+            });
+
         }
 
         var app = builder.Build();
@@ -44,6 +51,7 @@ public class Program
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.MapControllers();

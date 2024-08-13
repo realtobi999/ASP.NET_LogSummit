@@ -10,8 +10,14 @@ public class SummitRepository : BaseRepository<Summit>, ISummitRepository
     {
     }
 
+    protected override IQueryable<Summit> GetQueryable()
+    {
+        return base.GetQueryable()
+                   .Include(s => s.User);
+    }
+    
     public async Task<Summit?> GetAsync(Guid id)
     {
-        return await _context.Set<Summit>().FirstOrDefaultAsync(s => s.Id == id);
+        return await this.GetAsync(s => s.Id == id);
     }
 }
