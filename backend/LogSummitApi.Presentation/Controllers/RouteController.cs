@@ -1,3 +1,4 @@
+using LogSummitApi.Application.Core.Extensions;
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Services;
@@ -23,16 +24,7 @@ public class RouteController : ControllerBase
     {
         var routes = await _service.Route.IndexAsync();
 
-        if (offset > 0)
-        {
-            routes = routes.Skip(offset);
-        }
-        if (limit > 0)
-        {
-            routes = routes.Take(limit);
-        }
-
-        return Ok(routes);
+        return Ok(routes.Paginate(offset, limit));
     }
 
     [HttpGet("summit/route/{routeId}")]

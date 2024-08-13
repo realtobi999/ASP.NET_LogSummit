@@ -1,9 +1,11 @@
-﻿using LogSummitApi.Domain.Core.Dto.Summit;
+﻿using LogSummitApi.Application.Core.Extensions;
+using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Presentation.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LogSummitApi.Presentation.Controllers;
 
@@ -19,36 +21,14 @@ public class SummitController : ControllerBase
     }
 
     [HttpGet("summit")]
-    public async Task<IActionResult> Index(int limit, int offset, string? country)
-    {
-        var summits = await _service.Summit.IndexAsync();
-
-        summits = summits.Where(s => s.IsPublic); // leave out all the privates
-
-        if (country is not null)
-        {
-            summits = summits.Where(s => s.Country!.Equals(country, StringComparison.CurrentCultureIgnoreCase));
-        }
-        if (offset > 0)
-        {
-            summits = summits.Skip(offset);
-        }
-        if (limit > 0)
-        {
-            summits = summits.Take(limit);
-        }
-
-        return Ok(summits);
-    }
-
     [HttpGet("summit/user/{userId}")]
-    public async Task<IActionResult> IndexByUser(Guid userId, int limit, int offset, string? country)
+    public async Task<IActionResult> Index(Guid? userId, int limit, int offset, string? country)
     {
         var summits = await _service.Summit.IndexAsync();
 
         summits = summits.Where(s => s.IsPublic); // leave out all the private summits
 
-        if (userId != Guid.Empty)
+        if (userId != null && userId != Guid.Empty)
         {
             summits = summits.Where(s => s.UserId == userId);
         }
@@ -56,17 +36,10 @@ public class SummitController : ControllerBase
         {
             summits = summits.Where(s => s.Country!.Equals(country, StringComparison.CurrentCultureIgnoreCase));
         }
-        if (offset > 0)
-        {
-            summits = summits.Skip(offset);
-        }
-        if (limit > 0)
-        {
-            summits = summits.Take(limit);
-        }
 
-        return Ok(summits);
+        return Ok(summits.Paginate(offset, limit));
     }
+
 
     [HttpGet("summit/{summitId}")]
     public async Task<IActionResult> Get(Guid summitId)
