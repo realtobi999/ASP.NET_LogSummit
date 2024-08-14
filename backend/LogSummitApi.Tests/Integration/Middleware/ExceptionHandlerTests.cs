@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Presentation;
+using LogSummitApi.Tests.Helpers;
 using LogSummitApi.Tests.Integration.Server;
 
 namespace LogSummitApi.Tests.Integration.Middleware;
@@ -11,6 +13,11 @@ public class ExceptionHandlerTests
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
+
+        var jwt = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+        ]);
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
         // act & assert
         var response = await client.GetAsync($"v1/api/summit/{Guid.NewGuid()}");

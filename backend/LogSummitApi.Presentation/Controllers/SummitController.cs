@@ -5,12 +5,12 @@ using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Presentation.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace LogSummitApi.Presentation.Controllers;
 
 [ApiController]
 [Route("v1/api")]
+[Authorize(Policy = "User")]
 public class SummitController : ControllerBase
 {
     private readonly IServiceManager _service;
@@ -22,13 +22,14 @@ public class SummitController : ControllerBase
 
     [HttpGet("summit")]
     [HttpGet("summit/user/{userId}")]
-    public async Task<IActionResult> Index(Guid? userId, int limit, int offset, string? country)
+    [HttpGet("summit/country/{country}")]
+    public async Task<IActionResult> Index(Guid? userId, string? country, int limit, int offset)
     {
         var summits = await _service.Summit.IndexAsync();
 
         summits = summits.Where(s => s.IsPublic); // leave out all the private summits
 
-        if (userId != null && userId != Guid.Empty)
+        if (userId is not null)
         {
             summits = summits.Where(s => s.UserId == userId);
         }
@@ -56,7 +57,7 @@ public class SummitController : ControllerBase
 
     }
 
-    [HttpPost("summit"), Authorize(Policy = "User")]
+    [HttpPost("summit")]
     public async Task<IActionResult> Create([FromBody] CreateSummitDto createSummitDto)
     {
         // authenticate the request
@@ -70,31 +71,14 @@ public class SummitController : ControllerBase
     [HttpPut("summit/{summitId}")]
     public async Task<IActionResult> Update(Guid summitId, [FromBody] UpdateSummitDto updateSummitDto)
     {
-        try
-        {
-            var summit = await _service.Summit.GetAsync(summitId);
+        var summit = await _service.Summit.GetAsync(summitId);
 
-            // authenticate the request
-            if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+        // authenticate the request
+        if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-            await _service.Summit.UpdateAsync(summit, updateSummitDto);
+        await _service.Summit.UpdateAsync(summit, updateSummitDto);
 
-            return NoContent();
-        }
-        catch (NotFound404Exception)
-        {
-            var summit = await _service.Summit.CreateAsync(new CreateSummitDto()
-            {
-                Id = summitId,
-                UserId = updateSummitDto.UserId,
-                Name = updateSummitDto.Name,
-                Description = updateSummitDto.Description,
-                Country = updateSummitDto.Country,
-                Coordinate = updateSummitDto.Coordinate
-            });
-
-            return Created($"/v1/api/summit/{summit.Id}", null);
-        }
+        return NoContent();
     }
 
     [HttpDelete("summit/{summitId}")]

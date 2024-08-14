@@ -15,7 +15,14 @@ public class SummitRepository : BaseRepository<Summit>, ISummitRepository
         return base.GetQueryable()
                    .Include(s => s.User);
     }
-    
+
+    public override async Task<IEnumerable<Summit>> IndexAsync()
+    {
+        var summits = await base.IndexAsync();
+
+        return summits.OrderBy(s => s.CreatedAt);
+    }
+
     public async Task<Summit?> GetAsync(Guid id)
     {
         return await this.GetAsync(s => s.Id == id);

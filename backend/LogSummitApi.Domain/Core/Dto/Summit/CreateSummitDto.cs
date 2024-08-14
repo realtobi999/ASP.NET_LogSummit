@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Utilities.Coordinates;
 
 namespace LogSummitApi.Domain.Core.Dto.Summit;
@@ -11,10 +10,10 @@ public record class CreateSummitDto
     [Required]
     public Guid UserId { get; set; }
 
-    [Required, MaxLength(155)]
+    [Required, MinLength(3), MaxLength(155)]
     public string? Name { get; set; }
 
-    [Required, MaxLength(1555)]
+    [Required, MinLength(15), MaxLength(1555)]
     public string? Description { get; set; }
 
     [Required, MaxLength(155)]

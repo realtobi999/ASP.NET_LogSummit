@@ -79,6 +79,11 @@ public class SummitTests
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
 
+        var jwt = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+        ]);
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
+
         // act & assert
         var response = await client.GetAsync("v1/api/summit/valid-countries");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -129,17 +134,15 @@ public class SummitTests
     }
 
     [Fact]
-    public async void IndexByUser_WorksWithCountryFilterAlso()
+    public async void Index_WorksWithUserFilter()
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
         var user1 = new User().WithFakeData();
         var user2 = new User().WithFakeData();
         var summit1 = new Summit().WithFakeData(user1);
-        var summit2 = new Summit().WithFakeData(user2);
+        var summit2 = new Summit().WithFakeData(user1);
         var summit3 = new Summit().WithFakeData(user2);
-
-        summit3.Country = "Hungary";
 
         var jwt1 = JwtTestUtils.CreateInstance().Generate([
             new Claim(ClaimTypes.Role, "User"),
@@ -149,31 +152,67 @@ public class SummitTests
             new Claim(ClaimTypes.Role, "User"),
             new Claim("UserId", user2.Id.ToString()),
         ]);
-        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt1}");
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt2}");
 
         var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user1.ToRegisterUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/auth/register", user2.ToRegisterUserDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
-        var create3 = await client.PostAsJsonAsync("v1/api/summit", summit1.ToCreateSummitDto());
-        create3.StatusCode.Should().Be(HttpStatusCode.Created);
 
-        client.DefaultRequestHeaders.Remove("Authorization");
-        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt2}");
-
-        var create4 = await client.PostAsJsonAsync("v1/api/summit", summit2.ToCreateSummitDto());
-        create4.StatusCode.Should().Be(HttpStatusCode.Created);
         var create5 = await client.PostAsJsonAsync("v1/api/summit", summit3.ToCreateSummitDto());
         create5.StatusCode.Should().Be(HttpStatusCode.Created);
 
+        client.DefaultRequestHeaders.Remove("Authorization");
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt1}");
+
+        var create3 = await client.PostAsJsonAsync("v1/api/summit", summit1.ToCreateSummitDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create4 = await client.PostAsJsonAsync("v1/api/summit", summit2.ToCreateSummitDto());
+        create4.StatusCode.Should().Be(HttpStatusCode.Created);
+
         // act & assert
-        var response = await client.GetAsync($"v1/api/summit/user/{user2.Id}?country=hungary");
+        var response = await client.GetAsync($"v1/api/summit/user/{user1.Id}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();
+
+        content.Count.Should().Be(2);
+        content.ElementAt(0).Id.Should().Be(summit1.Id);
+        content.ElementAt(1).Id.Should().Be(summit2.Id);
+    }
+
+    [Fact]
+    public async void Index_WorksWithCountryFilter()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit1 = new Summit().WithFakeData(user);
+        var summit2 = new Summit().WithFakeData(user);
+
+        summit1.Country = "Hungary";
+
+        var jwt = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+            new Claim("UserId", user.Id.ToString()),
+        ]);
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit1.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create3 = await client.PostAsJsonAsync("v1/api/summit", summit2.ToCreateSummitDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response = await client.GetAsync($"v1/api/summit/country/hungary");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();
 
         content.Count.Should().Be(1);
-        content.ElementAt(0).Id.Should().Be(summit3.Id);
+        content.ElementAt(0).Id.Should().Be(summit1.Id);
     }
 
     [Fact]
@@ -228,7 +267,6 @@ public class SummitTests
         // act & assert
         var updateDto = new UpdateSummitDto()
         {
-            UserId = summit.UserId,
             Name = "test",
             Description = "test",
             Country = summit.Country,
