@@ -70,6 +70,7 @@ public class SummitService : ISummitService
         summit.Name = dto.Name;
         summit.Description = dto.Description;
         summit.Country = dto.Country;
+        summit.IsPublic = (bool) dto.IsPublic!; 
         summit.Coordinate = dto.Coordinate;
 
         // validate the object

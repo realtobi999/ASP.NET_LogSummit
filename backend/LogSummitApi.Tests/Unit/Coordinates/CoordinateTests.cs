@@ -1,7 +1,8 @@
-﻿using LogSummitApi.Domain.Core.Exceptions.Common;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+﻿using LogSummitApi.Application.Core.Services.Summits.Coordinates;
+using LogSummitApi.Domain.Core.Exceptions.Common;
+using LogSummitApi.Domain.Core.Utilities;
 
-namespace LogSummitApi.Tests.Unit;
+namespace LogSummitApi.Tests.Unit.Coordinates;
 
 public class CoordinateTests
 {
@@ -77,45 +78,5 @@ public class CoordinateTests
         var actualDistance = CoordinateMath.Haversine(coord1, coord2);
 
         Assert.InRange(actualDistance, expectedDistance - 5000, expectedDistance + 5000); // tolerance of 5 km
-    }
-
-    [Fact]
-    public void AreWithinRange_TrueWhenWithinRange()
-    {
-        // prepare
-        var coord1 = new Coordinate(52.5200, 13.4050, 0); // Berlin
-        var coord2 = new Coordinate(52.5200, 13.4060, 0); // close to Berlin
-        double range = 1000; // 1 km
-
-        // act & assert
-        var result = Coordinate.AreWithinRange(coord1, coord2, range);
-
-        Assert.True(result);
-    }
-
-    [Fact]
-    public void AreWithinRange_FalseWhenOutsideRange()
-    {
-        // prepare
-        var coord1 = new Coordinate(52.5200, 13.4050, 0); // Berlin
-        var coord2 = new Coordinate(48.8566, 2.3522, 0);  // Paris
-        double range = 500000; // 500 km
-
-        // act & assert
-        var result = Coordinate.AreWithinRange(coord1, coord2, range);
-
-        Assert.False(result);
-    }
-
-    [Fact]
-    public void AreWithinRange_ThrowsArgumentException_WhenRangeIsZeroOrNegative()
-    {
-        // prepare
-        var coord1 = new Coordinate(52.5200, 13.4050, 0);
-        var coord2 = new Coordinate(48.8566, 2.3522, 0);
-
-        // act & assert
-        Assert.Throws<ArgumentException>(() => Coordinate.AreWithinRange(coord1, coord2, 0));
-        Assert.Throws<ArgumentException>(() => Coordinate.AreWithinRange(coord1, coord2, -10));
     }
 }
