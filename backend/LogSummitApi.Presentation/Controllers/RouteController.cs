@@ -10,6 +10,7 @@ namespace LogSummitApi.Presentation.Controllers;
 
 [ApiController]
 [Route("v1/api")]
+[Authorize(Policy = "User")]
 public class RouteController : ControllerBase
 {
     private readonly IServiceManager _service;
@@ -39,7 +40,7 @@ public class RouteController : ControllerBase
         return Ok(route);
     }
 
-    [HttpPost("summit/route"), Authorize(Policy = "User")]
+    [HttpPost("summit/route")]
     public async Task<IActionResult> Create([FromBody] CreateRouteDto createRouteDto)
     {
         // authenticate the request
@@ -50,7 +51,7 @@ public class RouteController : ControllerBase
         return Created($"/v1/api/summit/route/{route.Id}", null);
     }
 
-    [HttpPut("summit/route/{routeId}"), Authorize(Policy = "User")]
+    [HttpPut("summit/route/{routeId}")]
     public async Task<IActionResult> Update(Guid routeId, [FromBody] UpdateRouteDto updateRouteDto)
     {
         var route = await _service.Route.GetAsync(routeId);
@@ -62,7 +63,7 @@ public class RouteController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("summit/route/{routeId}"), Authorize(Policy = "User")]
+    [HttpDelete("summit/route/{routeId}")]
     public async Task<IActionResult> Delete(Guid routeId)
     {
         var route = await _service.Route.GetAsync(routeId);

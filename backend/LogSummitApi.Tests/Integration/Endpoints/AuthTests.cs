@@ -46,6 +46,8 @@ public class AuthTests
 
         var content = await response.Content.ReadFromJsonAsync<LoginResponseDto>() ?? throw new NullReferenceException();
         content.Token.Should().NotBeNull();
+        content.User.Should().NotBeNull();
+        content.User!.Id.Should().Be(user.Id);
         
         JwtUtils.ParseFromPayload(content.Token!, "UserId").Should().Be(user.Id.ToString());
     }

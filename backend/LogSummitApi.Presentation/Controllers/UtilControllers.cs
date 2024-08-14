@@ -1,5 +1,4 @@
-﻿using LogSummitApi.Application.Core.Utilities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogSummitApi.Presentation.Controllers;
