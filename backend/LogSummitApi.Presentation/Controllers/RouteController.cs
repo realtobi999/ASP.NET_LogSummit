@@ -24,6 +24,8 @@ public class RouteController : ControllerBase
     {
         var routes = await _service.Route.IndexAsync();
 
+        routes = routes.Where(r => r.IsPublic);
+
         return Ok(routes.Paginate(offset, limit));
     }
 
@@ -31,6 +33,8 @@ public class RouteController : ControllerBase
     public async Task<IActionResult> Get(Guid routeId)
     {
         var route = await _service.Route.GetAsync(routeId);
+
+        if (!route.IsPublic && route.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
         return Ok(route);
     }

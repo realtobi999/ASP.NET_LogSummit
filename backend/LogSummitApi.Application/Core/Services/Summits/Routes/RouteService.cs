@@ -31,6 +31,7 @@ public class RouteService : IRouteService
             Distance = createRouteDto.Distance,
             ElevationGain = createRouteDto.ElevationGain,
             ElevationLoss = createRouteDto.ElevationLoss,
+            IsPublic = createRouteDto.IsPublic ?? throw new NullPropertyException(nameof(Route), nameof(Route.IsPublic)),
             Coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(Route), nameof(Route.Coordinates)),
             CreatedAt = DateTime.UtcNow
         };

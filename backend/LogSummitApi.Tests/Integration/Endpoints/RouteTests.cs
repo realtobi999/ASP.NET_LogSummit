@@ -228,4 +228,35 @@ public class RouteTests
         var get = await client.GetAsync($"v1/api/summit/route/{route.Id}");
         get.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
+
+    [Fact]
+    public async void Create_Returns400WhenTryingToCreateAPublicRouteOnAPrivateSummit()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+        var route = new Route().WithFakeData(user, summit);
+
+        summit.IsPublic = false;
+
+        var jwt = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+            new Claim("UserId", user.Id.ToString()),
+        ]);
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        // act & assert
+        var response = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+        var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();
+
+        content.Detail.Should().Contain("Cannot set the route to public");
+    }
 }

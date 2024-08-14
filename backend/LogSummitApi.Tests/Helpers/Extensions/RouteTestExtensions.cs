@@ -8,20 +8,21 @@ namespace LogSummitApi.Tests.Helpers.Extensions;
 public static class RouteTestExtensions
 {
     private static readonly Faker<Route> _routeFaker = new Faker<Route>()
-        .RuleFor(sp => sp.Id, f => f.Random.Guid())
-        .RuleFor(sp => sp.SummitId, f => f.Random.Guid())
-        .RuleFor(sp => sp.UserId, f => f.Random.Guid())
-        .RuleFor(sp => sp.Name, f => f.Lorem.Sentence(3))
-        .RuleFor(sp => sp.Description, f => f.Lorem.Paragraph())
-        .RuleFor(sp => sp.Distance, f => f.Random.Double(0, 10000))
-        .RuleFor(sp => sp.ElevationGain, f => f.Random.Double(0, 10000))
-        .RuleFor(sp => sp.ElevationLoss, f => f.Random.Double(0, 10000))
-        .RuleFor(sp => sp.Coordinates, f =>
+        .RuleFor(r => r.Id, f => f.Random.Guid())
+        .RuleFor(r => r.SummitId, f => f.Random.Guid())
+        .RuleFor(r => r.UserId, f => f.Random.Guid())
+        .RuleFor(r => r.Name, f => f.Lorem.Sentence(3))
+        .RuleFor(r => r.Description, f => f.Lorem.Paragraph())
+        .RuleFor(r => r.Distance, f => f.Random.Double(0, 10000))
+        .RuleFor(r => r.ElevationGain, f => f.Random.Double(0, 10000))
+        .RuleFor(r => r.ElevationLoss, f => f.Random.Double(0, 10000))
+        .RuleFor(r => r.IsPublic, _ => true)
+        .RuleFor(r => r.Coordinates, f =>
         [
             new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 100),
             new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 200)
         ])
-        .RuleFor(sp => sp.CreatedAt, _ => DateTime.UtcNow);
+        .RuleFor(r => r.CreatedAt, _ => DateTime.UtcNow);
 
     public static Route WithFakeData(this Route _, User user, Summit summit)
     {
@@ -32,6 +33,7 @@ public static class RouteTestExtensions
         fakeRoute.User = user;
         fakeRoute.Summit = summit;
 
+        // ensure that the last coordinate is the summit coordinate
         if (summit.Coordinate is not null && fakeRoute.Coordinates.Count > 0)
         {
             fakeRoute.Coordinates[^1] = summit.Coordinate;
@@ -52,6 +54,7 @@ public static class RouteTestExtensions
             Distance = route.Distance,
             ElevationGain = route.ElevationGain,
             ElevationLoss = route.ElevationLoss,
+            IsPublic = route.IsPublic,
             Coordinates = route.Coordinates,
         };
     }

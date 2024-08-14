@@ -35,13 +35,16 @@ public class Route : ISerializable<RouteDto>
     [Required, Column("elevation_loss"), Range(0, double.MaxValue)]
     public double ElevationLoss { get; set; }
 
+    [Required, Column("is_public")]
+    public bool IsPublic { get; set; }
+
     [Required, Column("coordinates"), JsonIgnore]
     public string CoordinatesString
     {
         get => string.Join(";", Coordinates.Select(a => a.ToString()));
         set => Coordinates = value.Split(';').Select(Coordinate.Parse).ToList();
     }
-    
+
     [Required, Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
@@ -57,8 +60,8 @@ public class Route : ISerializable<RouteDto>
     public RouteDto ToDto()
     {
         if (this.Summit is null) throw new NullPropertyException(nameof(Route), nameof(Summit));
-        if (this.User is null) throw new  NullPropertyException(nameof(Route), nameof(User));
-    
+        if (this.User is null) throw new NullPropertyException(nameof(Route), nameof(User));
+
         return new RouteDto()
         {
             Id = this.Id,

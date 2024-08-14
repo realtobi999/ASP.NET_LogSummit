@@ -29,6 +29,12 @@ public class RouteValidator : IValidator<Route>
             return (false, new NotFound404Exception(nameof(Summit), route.SummitId));
         }
 
+        // ensure the right visibility is enforced
+        if (!summit.IsPublic && route.IsPublic)
+        {
+            return (false, new BadRequest400Exception($"Cannot set the route to public because the summit is private. Please set the summit to public or the route to private."));
+        }
+
         // validate that the last coordinate is atleast 10 meters in the range of the summit coordinate
         if (summit.Coordinate is not null && !route.Coordinates.Last().IsWithinRange(summit.Coordinate, Summit.RouteRadius))
         {

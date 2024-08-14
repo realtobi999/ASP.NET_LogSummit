@@ -28,6 +28,9 @@ public record class CreateRouteDto
     [Required, Range(0, double.MaxValue)]
     public double ElevationLoss { get; set; }
 
+    [Required]
+    public bool? IsPublic { get; set; }
+
     [Required, MinLength(2)]
     public List<Coordinate>? Coordinates { get; set; }
 }
