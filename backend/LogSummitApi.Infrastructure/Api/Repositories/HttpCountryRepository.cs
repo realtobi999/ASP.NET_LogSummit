@@ -20,23 +20,23 @@ public class HttpCountryRepository : IHttpCountryRepository
     }
 
     /// <summary>
-    /// Retrieves a list of <see cref="CountryDto"/> from the cache or fetches it from the API if not present in the cache.
+    /// Retrieves a list of <see cref="Country"/> from the cache or fetches it from the API if not present in the cache.
     /// </summary>
     /// <returns>
-    /// A task that represents the asynchronous operation containing <see cref="IEnumerable{CountryDto}"/> 
+    /// A task that represents the asynchronous operation containing <see cref="IEnumerable{Country}"/> 
     /// representing the list of countries.
     /// </returns>
     /// <exception cref="ServiceUnavailable503Exception">
     /// Thrown when the API call fails and returns null data.
     /// </exception>
-    public async Task<IEnumerable<CountryDto>> IndexAsync()
+    public async Task<IEnumerable<Country>> IndexAsync()
     {
         var value = await _cache.GetOrCreateAsync(CacheKey, async options =>
         {
             options.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
             options.SlidingExpiration = TimeSpan.FromMinutes(30);
 
-            var countries = await _client.GetFromJsonAsync<List<CountryDto>>("https://restcountries.com/v3.1/all");
+            var countries = await _client.GetFromJsonAsync<List<Country>>("https://restcountries.com/v3.1/all");
 
             if (countries == null) throw new ServiceUnavailable503Exception("Failed to retrieve country data from the 'rest-country' API.");
 

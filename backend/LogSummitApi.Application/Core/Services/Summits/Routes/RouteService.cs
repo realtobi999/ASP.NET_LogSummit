@@ -74,7 +74,7 @@ public class RouteService : IRouteService
     {
         route.Name = dto.Name;
         route.Description = dto.Description;
-        route.IsPublic = (bool) dto.IsPublic!;
+        route.IsPublic = dto.IsPublic ?? throw new NullPropertyException(nameof(UpdateRouteDto), nameof(UpdateRouteDto.IsPublic));
         route.Coordinates = dto.Coordinates;
 
         // validate the object

@@ -1,10 +1,10 @@
 ﻿namespace LogSummitApi.Domain.Core.Dto.Summit;
 
-public record class CountryDto
+public record class Country
 {
-    public NameDto? Name { get; set; }
+    public CountryNameDto? Name { get; set; }
 
-    public record class NameDto
+    public record class CountryNameDto
     {
         public string? Common { get; set; }
         public string? Official { get; set; }

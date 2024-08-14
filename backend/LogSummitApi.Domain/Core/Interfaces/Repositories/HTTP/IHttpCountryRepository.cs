@@ -4,5 +4,5 @@ namespace LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
 
 public interface IHttpCountryRepository
 {
-    Task<IEnumerable<CountryDto>> IndexAsync();
+    Task<IEnumerable<Country>> IndexAsync();
 }

@@ -16,13 +16,13 @@ public class Summit : ISerializable<SummitDto>
     [Required, Column("user_id")]
     public Guid UserId { get; set; }
 
-    [Required, Column("name"), MaxLength(155)]
+    [Required, Column("name")]
     public string? Name { get; set; }
 
-    [Required, Column("description"), MaxLength(1555)]
+    [Required, Column("description")]
     public string? Description { get; set; }
 
-    [Required, MaxLength(155)]
+    [Required, Column("country")]
     public string? Country { get; set; }
 
     [Required, Column("is_public")]
@@ -46,8 +46,8 @@ public class Summit : ISerializable<SummitDto>
         }
     }
 
-    public const double SummitProximityRadius = 55; // in this radius (in meters) no other summit can be located
-    public const double RouteRadius = 10;
+    public const double SummitProximityRadius = 55; // in this radius around the summit (in meters) no other summit can be located
+    public const double RouteProximityRadius = 10; // in this radius around the summit (in meters) the route last coordinate must be
 
     // entity relationships
 

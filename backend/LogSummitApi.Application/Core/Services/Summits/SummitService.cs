@@ -5,7 +5,6 @@ using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
-using Microsoft.IdentityModel.Tokens;
 
 namespace LogSummitApi.Application.Core.Services.Summits;
 
@@ -87,8 +86,8 @@ public class SummitService : ISummitService
         return countries
             .Select(country =>
             {
-                if (country.Name == null) throw new NullPropertyException(nameof(CountryDto), nameof(CountryDto.Name));
-                if (country.Name.Common == null) throw new NullPropertyException(nameof(CountryDto), nameof(CountryDto.Name.Common));
+                if (country.Name == null) throw new NullPropertyException(nameof(Country), nameof(Country.Name));
+                if (country.Name.Common == null) throw new NullPropertyException(nameof(Country), nameof(Country.Name.Common));
 
                 return country.Name.Common;
             })
