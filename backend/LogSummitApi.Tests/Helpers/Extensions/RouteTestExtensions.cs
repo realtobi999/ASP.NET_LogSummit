@@ -1,7 +1,8 @@
 using Bogus;
+using LogSummitApi.Application.Core.Services.Summits.Coordinates;
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Tests.Helpers.Extensions;
 
@@ -13,14 +14,12 @@ public static class RouteTestExtensions
         .RuleFor(r => r.UserId, f => f.Random.Guid())
         .RuleFor(r => r.Name, f => f.Lorem.Sentence(3))
         .RuleFor(r => r.Description, f => f.Lorem.Paragraph())
-        .RuleFor(r => r.Distance, f => f.Random.Double(0, 10000))
-        .RuleFor(r => r.ElevationGain, f => f.Random.Double(0, 10000))
-        .RuleFor(r => r.ElevationLoss, f => f.Random.Double(0, 10000))
         .RuleFor(r => r.IsPublic, _ => true)
         .RuleFor(r => r.Coordinates, f =>
         [
             new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 100),
-            new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 200)
+            new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 200),
+            new Coordinate(f.Address.Latitude(), f.Address.Longitude(), 150),
         ])
         .RuleFor(r => r.CreatedAt, _ => DateTime.UtcNow);
 
@@ -39,6 +38,10 @@ public static class RouteTestExtensions
             fakeRoute.Coordinates[^1] = summit.Coordinate;
         }
 
+        fakeRoute.Distance = fakeRoute.Coordinates.TotalDistance();
+        fakeRoute.ElevationGain = fakeRoute.Coordinates.TotalElevationGain();
+        fakeRoute.ElevationLoss = fakeRoute.Coordinates.TotalElevationLoss();
+
         return fakeRoute;
     }
 
@@ -51,9 +54,6 @@ public static class RouteTestExtensions
             SummitId = route.SummitId,
             Name = route.Name,
             Description = route.Description,
-            Distance = route.Distance,
-            ElevationGain = route.ElevationGain,
-            ElevationLoss = route.ElevationLoss,
             IsPublic = route.IsPublic,
             Coordinates = route.Coordinates,
         };

@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Tests.Helpers.Extensions;
 

@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Common;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Domain.Core.Entities;
 

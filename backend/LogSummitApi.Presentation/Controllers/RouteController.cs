@@ -53,34 +53,13 @@ public class RouteController : ControllerBase
     [HttpPut("summit/route/{routeId}"), Authorize(Policy = "User")]
     public async Task<IActionResult> Update(Guid routeId, [FromBody] UpdateRouteDto updateRouteDto)
     {
-        try
-        {
-            var route = await _service.Route.GetAsync(routeId);
+        var route = await _service.Route.GetAsync(routeId);
 
-            // authenticate the request
-            if (route.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+        // authenticate the request
+        if (route.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-            await _service.Route.UpdateAsync(route, updateRouteDto);
-
-            return NoContent();
-        }
-        catch (NotFound404Exception)
-        {
-            var route = await _service.Route.CreateAsync(new CreateRouteDto()
-            {
-                Id = routeId,
-                UserId = updateRouteDto.UserId,
-                SummitId = updateRouteDto.SummitId,
-                Name = updateRouteDto.Name,
-                Description = updateRouteDto.Description,
-                Distance = updateRouteDto.Distance,
-                ElevationGain = updateRouteDto.ElevationGain,
-                ElevationLoss = updateRouteDto.ElevationLoss,
-                Coordinates = updateRouteDto.Coordinates,
-            });
-
-            return Created($"/v1/api/summit/route/{route.Id}", null);
-        }
+        await _service.Route.UpdateAsync(route, updateRouteDto);
+        return NoContent();
     }
 
     [HttpDelete("summit/route/{routeId}"), Authorize(Policy = "User")]
@@ -92,7 +71,6 @@ public class RouteController : ControllerBase
         if (route.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
         await _service.Route.DeleteAsync(route);
-
         return NoContent();
     }
 }

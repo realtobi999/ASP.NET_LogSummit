@@ -47,6 +47,9 @@ public class SummitController : ControllerBase
     {
         var summit = await _service.Summit.GetAsync(summitId);
 
+        // authenticate the request
+        if (!summit.IsPublic && summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+
         return Ok(summit);
     }
 
@@ -77,7 +80,6 @@ public class SummitController : ControllerBase
         if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
         await _service.Summit.UpdateAsync(summit, updateSummitDto);
-
         return NoContent();
     }
 
@@ -90,7 +92,6 @@ public class SummitController : ControllerBase
         if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
         await _service.Summit.DeleteAsync(summit);
-
         return NoContent();
     }
 }

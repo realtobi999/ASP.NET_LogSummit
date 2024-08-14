@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Domain.Core.Dto.User;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Domain.Core.Dto.Summit;
 

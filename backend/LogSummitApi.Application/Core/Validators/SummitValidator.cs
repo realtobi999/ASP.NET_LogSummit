@@ -1,4 +1,5 @@
-﻿using LogSummitApi.Domain.Core.Entities;
+﻿using LogSummitApi.Application.Core.Services.Summits.Coordinates;
+using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;

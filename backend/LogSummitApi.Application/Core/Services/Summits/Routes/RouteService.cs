@@ -1,4 +1,5 @@
-﻿using LogSummitApi.Domain.Core.Dto.Summit.Routes;
+﻿using LogSummitApi.Application.Core.Services.Summits.Coordinates;
+using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Exceptions.Http;
@@ -21,6 +22,8 @@ public class RouteService : IRouteService
 
     public async Task<Route> CreateAsync(CreateRouteDto createRouteDto)
     {
+        var coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.Coordinates)); 
+
         var route = new Route()
         {
             Id = createRouteDto.Id,
@@ -28,11 +31,11 @@ public class RouteService : IRouteService
             UserId = createRouteDto.UserId,
             Name = createRouteDto.Name,
             Description = createRouteDto.Description,
-            Distance = createRouteDto.Distance,
-            ElevationGain = createRouteDto.ElevationGain,
-            ElevationLoss = createRouteDto.ElevationLoss,
-            IsPublic = createRouteDto.IsPublic ?? throw new NullPropertyException(nameof(Route), nameof(Route.IsPublic)),
-            Coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(Route), nameof(Route.Coordinates)),
+            Distance = coordinates.TotalDistance(),
+            ElevationGain = coordinates.TotalElevationGain(),
+            ElevationLoss = coordinates.TotalElevationLoss(),
+            IsPublic = createRouteDto.IsPublic ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.IsPublic)),
+            Coordinates =  coordinates,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -67,10 +70,12 @@ public class RouteService : IRouteService
         return routes.OrderBy(sp => sp.CreatedAt);
     }
 
-    public async Task UpdateAsync(Route route, UpdateRouteDto updateRouteDto)
+    public async Task UpdateAsync(Route route, UpdateRouteDto dto)
     {
-        route.Name = updateRouteDto.Name;
-        route.Description = updateRouteDto.Description;
+        route.Name = dto.Name;
+        route.Description = dto.Description;
+        route.IsPublic = (bool) dto.IsPublic!;
+        route.Coordinates = dto.Coordinates;
 
         // validate the object
         var (valid, exception) = await _validator.IsValidAsync(route);

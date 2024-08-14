@@ -2,7 +2,7 @@
 using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+using LogSummitApi.Domain.Core.Utilities;
 using LogSummitApi.Presentation;
 using LogSummitApi.Tests.Helpers;
 using LogSummitApi.Tests.Helpers.Extensions;
@@ -268,8 +268,9 @@ public class SummitTests
         var updateDto = new UpdateSummitDto()
         {
             Name = "test",
-            Description = "test",
+            Description = "test_test_test_test_test",
             Country = summit.Country,
+            IsPublic = summit.IsPublic,
             Coordinate = summit.Coordinate,
         };
 

@@ -2,7 +2,7 @@ using System.Security.Claims;
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
-using LogSummitApi.Domain.Core.Utilities.Coordinates;
+using LogSummitApi.Domain.Core.Utilities;
 using LogSummitApi.Presentation;
 using LogSummitApi.Tests.Helpers;
 using LogSummitApi.Tests.Helpers.Extensions;
@@ -176,13 +176,10 @@ public class RouteTests
         // act & assert
         var updateDto = new UpdateRouteDto
         {
-            UserId = route.UserId,
-            SummitId = route.SummitId,
+
             Name = "test",
-            Description = "test",
-            Distance = route.Distance,
-            ElevationGain = route.ElevationGain,
-            ElevationLoss = route.ElevationLoss,
+            Description = "test_test_test_test_test",
+            IsPublic = route.IsPublic, 
             Coordinates = route.Coordinates,
         };
 
