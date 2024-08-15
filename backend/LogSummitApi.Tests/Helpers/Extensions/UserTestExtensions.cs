@@ -17,9 +17,9 @@ public static class UserTestExtensions
         return _userFaker.Generate();
     }
 
-    public static RegisterUserDto ToRegisterUserDto(this User user)
+    public static CreateUserDto ToCreateUserDto(this User user)
     {
-        return new RegisterUserDto
+        return new CreateUserDto
         {
             Id = user.Id,
             Username = user.Username,

@@ -5,7 +5,7 @@ namespace LogSummitApi.Domain.Core.Dto.Summits.Routes;
 
 public record class CreateRouteDto
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     public Guid SummitId { get; set; }

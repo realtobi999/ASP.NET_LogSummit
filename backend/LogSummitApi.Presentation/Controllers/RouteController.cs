@@ -1,6 +1,7 @@
 using LogSummitApi.Application.Core.Extensions;
 using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Exceptions.Http;
+using LogSummitApi.Domain.Core.Interfaces.Mappers;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Presentation.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +15,12 @@ namespace LogSummitApi.Presentation.Controllers;
 public class RouteController : ControllerBase
 {
     private readonly IServiceManager _service;
+    private readonly IRouteMapper _mapper;
 
-    public RouteController(IServiceManager service)
+    public RouteController(IServiceManager service, IRouteMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [HttpGet("route")]
@@ -52,25 +55,28 @@ public class RouteController : ControllerBase
     }
 
     [HttpPost("route")]
-    public async Task<IActionResult> Create([FromBody] CreateRouteDto createRouteDto)
+    public async Task<IActionResult> Create(CreateRouteDto dto)
     {
         // authenticate the request
-        if (createRouteDto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+        if (dto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-        var route = await _service.Route.CreateAsync(createRouteDto);
+        var route = _mapper.CreateEntityFromDto(dto); 
 
+        await _service.Route.CreateAsync(route);
         return Created($"/v1/api/route/{route.Id}", null);
     }
 
     [HttpPut("route/{routeId}")]
-    public async Task<IActionResult> Update(Guid routeId, [FromBody] UpdateRouteDto updateRouteDto)
+    public async Task<IActionResult> Update(Guid routeId, UpdateRouteDto dto)
     {
         var route = await _service.Route.GetAsync(routeId);
 
         // authenticate the request
         if (route.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-        await _service.Route.UpdateAsync(route, updateRouteDto);
+        _mapper.UpdateEntityFromDto(route, dto);
+
+        await _service.Route.UpdateAsync(route);
         return NoContent();
     }
 

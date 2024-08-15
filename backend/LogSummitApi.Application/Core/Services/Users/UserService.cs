@@ -1,5 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Dto.Users;
-using LogSummitApi.Domain.Core.Entities;
+﻿using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
@@ -31,20 +30,11 @@ public class UserService : IUserService
         return true;
     }
 
-    public async Task<User> CreateAsync(RegisterUserDto registerUserDto)
+    public async Task CreateAsync(User user)
     {
-        var user = new User()
-        {
-            Id = registerUserDto.Id ?? Guid.NewGuid(),
-            Username = registerUserDto.Username,
-            Email = registerUserDto.Email,
-            Password = _hasher.Hash(registerUserDto.Password),
-        };
-
         _repository.Users.Create(user);
+        
         await _repository.SaveSafelyAsync();
-
-        return user;
     }
 
     public async Task<User> GetAsync(string email)

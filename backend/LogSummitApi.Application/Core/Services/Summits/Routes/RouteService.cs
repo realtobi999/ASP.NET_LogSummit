@@ -1,7 +1,4 @@
-﻿using LogSummitApi.Application.Core.Services.Summits.Coordinates;
-using LogSummitApi.Domain.Core.Dto.Summits.Routes;
-using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Exceptions.Common;
+﻿using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -20,40 +17,11 @@ public class RouteService : IRouteService
         _validator = validator;
     }
 
-    public async Task<Route> CreateAsync(CreateRouteDto createRouteDto)
+    public async Task<IEnumerable<Route>> IndexAsync()
     {
-        var coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.Coordinates));
+        var routes = await _repository.Route.IndexAsync();
 
-        var route = new Route()
-        {
-            Id = createRouteDto.Id,
-            SummitId = createRouteDto.SummitId,
-            UserId = createRouteDto.UserId,
-            Name = createRouteDto.Name,
-            Description = createRouteDto.Description,
-            Distance = coordinates.TotalDistance(),
-            ElevationGain = coordinates.TotalElevationGain(),
-            ElevationLoss = coordinates.TotalElevationLoss(),
-            IsPublic = createRouteDto.IsPublic ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.IsPublic)),
-            Coordinates = coordinates,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        // validate the object
-        var (valid, exception) = await _validator.IsValidAsync(route);
-        if (!valid && exception is not null) throw exception;
-
-        _repository.Route.Create(route);
-        await _repository.SaveSafelyAsync();
-
-        return route;
-    }
-
-    public async Task DeleteAsync(Route route)
-    {
-        _repository.Route.Delete(route);
-
-        await _repository.SaveSafelyAsync();
+        return routes.OrderBy(sp => sp.CreatedAt);
     }
 
     public async Task<Route> GetAsync(Guid id)
@@ -63,23 +31,31 @@ public class RouteService : IRouteService
         return route;
     }
 
-    public async Task<IEnumerable<Route>> IndexAsync()
+    public async Task CreateAsync(Route route)
     {
-        var routes = await _repository.Route.IndexAsync();
-
-        return routes.OrderBy(sp => sp.CreatedAt);
-    }
-
-    public async Task UpdateAsync(Route route, UpdateRouteDto dto)
-    {
-        route.Name = dto.Name;
-        route.Description = dto.Description;
-        route.IsPublic = dto.IsPublic ?? throw new NullPropertyException(nameof(UpdateRouteDto), nameof(UpdateRouteDto.IsPublic));
-        route.Coordinates = dto.Coordinates;
-
         // validate the object
         var (valid, exception) = await _validator.IsValidAsync(route);
         if (!valid && exception is not null) throw exception;
+
+        _repository.Route.Create(route);
+
+        await _repository.SaveSafelyAsync();
+    }
+
+    public async Task UpdateAsync(Route route)
+    {
+        // validate the object
+        var (valid, exception) = await _validator.IsValidAsync(route);
+        if (!valid && exception is not null) throw exception;
+
+        _repository.Route.Update(route);
+
+        await _repository.SaveSafelyAsync();
+    }
+
+    public async Task DeleteAsync(Route route)
+    {
+        _repository.Route.Delete(route);
 
         await _repository.SaveSafelyAsync();
     }

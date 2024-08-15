@@ -7,8 +7,8 @@ public interface ISummitService
 {
     Task<IEnumerable<Summit>> IndexAsync();
     Task<Summit> GetAsync(Guid id);
-    Task<Summit> CreateAsync(CreateSummitDto createSummitDto);
-    Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto);
+    Task CreateAsync(Summit summit);
+    Task UpdateAsync(Summit summit);
     Task DeleteAsync(Summit summit);
     Task<IEnumerable<string>> GetValidCountriesAsync();
 }

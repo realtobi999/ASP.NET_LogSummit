@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using LogSummitApi.Application.Core.Factories;
+using LogSummitApi.Application.Core.Mappers;
 using LogSummitApi.Application.Core.Services;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
+using LogSummitApi.Domain.Core.Interfaces.Mappers;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Infrastructure.Factories;
@@ -63,5 +65,12 @@ public static class ServiceExtensions
     public static void ConfigureValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidatorFactory, ValidatorFactory>();
+    }
+
+    public static void ConfigureMappers(this IServiceCollection services)
+    {
+        services.AddSingleton<IUserMapper, UserMapper>();
+        services.AddSingleton<ISummitMapper, SummitMapper>();
+        services.AddSingleton<IRouteMapper, RouteMapper>();
     }
 }

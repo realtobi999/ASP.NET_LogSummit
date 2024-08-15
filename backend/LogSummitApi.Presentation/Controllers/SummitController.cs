@@ -1,6 +1,7 @@
 ﻿using LogSummitApi.Application.Core.Extensions;
 using LogSummitApi.Domain.Core.Dto.Summits;
 using LogSummitApi.Domain.Core.Exceptions.Http;
+using LogSummitApi.Domain.Core.Interfaces.Mappers;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using LogSummitApi.Presentation.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +15,12 @@ namespace LogSummitApi.Presentation.Controllers;
 public class SummitController : ControllerBase
 {
     private readonly IServiceManager _service;
+    private readonly ISummitMapper _mapper;
 
-    public SummitController(IServiceManager service)
+    public SummitController(IServiceManager service, ISummitMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [HttpGet("summit")]
@@ -25,9 +28,7 @@ public class SummitController : ControllerBase
     [HttpGet("summit/country/{country}")]
     public async Task<IActionResult> Index(Guid? userId, string? country, int limit, int offset)
     {
-        var summits = await _service.Summit.IndexAsync();
-
-        summits = summits.Where(s => s.IsPublic); // leave out all the private summits
+        var summits = (await _service.Summit.IndexAsync()).Where(r => r.IsPublic); // leave out all the private summits
 
         if (userId is not null)
         {
@@ -54,31 +55,31 @@ public class SummitController : ControllerBase
     }
 
     [HttpGet("summit/valid-countries")]
-    public async Task<IActionResult> GetValidCountries()
-    {
-        return Ok(await _service.Summit.GetValidCountriesAsync());
-    }
+    public async Task<IActionResult> GetValidCountries() => Ok(await _service.Summit.GetValidCountriesAsync());
 
     [HttpPost("summit")]
-    public async Task<IActionResult> Create([FromBody] CreateSummitDto createSummitDto)
+    public async Task<IActionResult> Create(CreateSummitDto dto)
     {
         // authenticate the request
-        if (createSummitDto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+        if (dto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-        var summit = await _service.Summit.CreateAsync(createSummitDto);
+        var summit = _mapper.CreateEntityFromDto(dto); 
 
+        await _service.Summit.CreateAsync(summit);
         return Created($"/v1/api/summit/{summit.Id}", null);
     }
 
     [HttpPut("summit/{summitId}")]
-    public async Task<IActionResult> Update(Guid summitId, [FromBody] UpdateSummitDto updateSummitDto)
+    public async Task<IActionResult> Update(Guid summitId, UpdateSummitDto dto)
     {
         var summit = await _service.Summit.GetAsync(summitId);
 
         // authenticate the request
         if (summit.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-        await _service.Summit.UpdateAsync(summit, updateSummitDto);
+        _mapper.UpdateEntityFromDto(summit, dto);
+
+        await _service.Summit.UpdateAsync(summit);
         return NoContent();
     }
 

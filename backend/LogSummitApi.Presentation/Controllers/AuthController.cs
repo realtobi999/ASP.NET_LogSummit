@@ -2,6 +2,7 @@
 using LogSummitApi.Domain.Core.Dto.Users;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
+using LogSummitApi.Domain.Core.Interfaces.Mappers;
 using LogSummitApi.Domain.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,25 +14,28 @@ public class AuthController : ControllerBase
 {
     private readonly IServiceManager _service;
     private readonly IJwt _jwt;
+    private readonly IUserMapper _mapper;
 
-    public AuthController(IServiceManager service, IJwt jwt)
+    public AuthController(IServiceManager service, IJwt jwt, IUserMapper mapper)
     {
         _service = service;
         _jwt = jwt;
+        _mapper = mapper;
     }
 
     [HttpPost("auth/register")]
-    public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto registerUserDto)
+    public async Task<IActionResult> RegisterUser(CreateUserDto body)
     {
-        var user = await _service.User.CreateAsync(registerUserDto);
+        var user = _mapper.CreateEntityFromDto(body);
 
+        await _service.User.CreateAsync(user);
         return Created($"/v1/api/user/{user.Id}", null);
     }
 
     [HttpPost("auth/login")]
-    public async Task<IActionResult> LoginUser([FromBody] LoginUserDto loginUserDto)
+    public async Task<IActionResult> LoginUser(LoginUserDto loginUserDto)
     {
-        // we can ignore the null warning cause of the asp.net validation  
+        // we can ignore the null warnings because of the asp.net validation  
         var user = await _service.User.GetAsync(loginUserDto.Email!);
 
         if (!_service.User.Authenticate(user, loginUserDto.Password!))

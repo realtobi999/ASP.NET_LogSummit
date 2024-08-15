@@ -27,7 +27,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -58,7 +58,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -93,7 +93,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -133,7 +133,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -166,7 +166,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -211,7 +211,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -243,7 +243,7 @@ public class RouteTests
         ]);
         client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);

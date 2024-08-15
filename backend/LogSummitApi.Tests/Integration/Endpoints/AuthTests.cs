@@ -17,7 +17,7 @@ public class AuthTests
         var user = new User().WithFakeData();
 
         // act & assert
-        var response = await client.PostAsJsonAsync("/v1/api/auth/register", user.ToRegisterUserDto());
+        var response = await client.PostAsJsonAsync("/v1/api/auth/register", user.ToCreateUserDto());
         response.StatusCode.Should().Be(HttpStatusCode.Created);
 
         var header = response.Headers.GetValues("Location");
@@ -31,7 +31,7 @@ public class AuthTests
         var client = new WebAppFactory<Program>().CreateDefaultClient();
         var user = new User().WithFakeData();
 
-        var create1 = await client.PostAsJsonAsync("/v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("/v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
@@ -59,7 +59,7 @@ public class AuthTests
         var client = new WebAppFactory<Program>().CreateDefaultClient();
         var user = new User().WithFakeData();
 
-        var create1 = await client.PostAsJsonAsync("/v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("/v1/api/auth/register", user.ToCreateUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert

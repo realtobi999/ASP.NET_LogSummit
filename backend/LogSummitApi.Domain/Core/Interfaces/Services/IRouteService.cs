@@ -7,7 +7,7 @@ public interface IRouteService
 {
     Task<IEnumerable<Route>> IndexAsync();
     Task<Route> GetAsync(Guid id);
-    Task<Route> CreateAsync(CreateRouteDto createRouteDto);
-    Task UpdateAsync(Route route, UpdateRouteDto updateRouteDto);
+    Task CreateAsync(Route route);
+    Task UpdateAsync(Route route);
     Task DeleteAsync(Route route);
 }

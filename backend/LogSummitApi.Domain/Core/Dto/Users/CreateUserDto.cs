@@ -3,7 +3,7 @@ using LogSummitApi.Domain.Core.Attributes.Validation;
 
 namespace LogSummitApi.Domain.Core.Dto.Users;
 
-public record class RegisterUserDto
+public record class CreateUserDto
 {
     public Guid? Id { get; set; }
 
