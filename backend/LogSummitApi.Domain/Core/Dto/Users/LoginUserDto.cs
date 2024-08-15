@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LogSummitApi.Domain.Core.Dto.User;
+namespace LogSummitApi.Domain.Core.Dto.Users;
 
 public record class LoginUserDto
 {

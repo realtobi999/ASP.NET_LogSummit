@@ -1,4 +1,4 @@
-﻿namespace LogSummitApi.Domain.Core.Dto.User;
+﻿namespace LogSummitApi.Domain.Core.Dto.Users;
 
 public class UserDto
 {

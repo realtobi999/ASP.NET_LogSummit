@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Dto.Summit;
+﻿using LogSummitApi.Domain.Core.Dto.Summits;
 
 namespace LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 

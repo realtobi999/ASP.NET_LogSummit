@@ -1,7 +1,7 @@
-﻿using LogSummitApi.Domain.Core.Dto.User;
+﻿using LogSummitApi.Domain.Core.Dto.Users;
 using LogSummitApi.Domain.Core.Utilities;
 
-namespace LogSummitApi.Domain.Core.Dto.Summit.Routes;
+namespace LogSummitApi.Domain.Core.Dto.Summits.Routes;
 
 public record class RouteDto
 {

@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using LogSummitApi.Domain.Core.Dto.Summit.Routes;
+using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Utilities;

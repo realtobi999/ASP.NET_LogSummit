@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using LogSummitApi.Domain.Core.Dto.Summit;
+using LogSummitApi.Domain.Core.Dto.Summits;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 using Microsoft.Extensions.Caching.Memory;

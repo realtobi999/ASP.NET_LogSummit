@@ -1,4 +1,4 @@
-﻿namespace LogSummitApi.Domain.Core.Dto.Summit;
+﻿namespace LogSummitApi.Domain.Core.Dto.Summits;
 
 public record class Country
 {

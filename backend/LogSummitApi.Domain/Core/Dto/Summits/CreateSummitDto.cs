@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LogSummitApi.Domain.Core.Utilities;
 
-namespace LogSummitApi.Domain.Core.Dto.Summit;
+namespace LogSummitApi.Domain.Core.Dto.Summits;
 
 public record class CreateSummitDto
 {

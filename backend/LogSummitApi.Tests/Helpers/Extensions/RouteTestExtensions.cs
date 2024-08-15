@@ -1,6 +1,6 @@
 using Bogus;
 using LogSummitApi.Application.Core.Services.Summits.Coordinates;
-using LogSummitApi.Domain.Core.Dto.Summit.Routes;
+using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Utilities;
 

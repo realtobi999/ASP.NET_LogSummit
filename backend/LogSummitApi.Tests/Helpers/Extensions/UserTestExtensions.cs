@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using LogSummitApi.Domain.Core.Dto.User;
+using LogSummitApi.Domain.Core.Dto.Users;
 using LogSummitApi.Domain.Core.Entities;
 
 namespace LogSummitApi.Tests.Helpers.Extensions;

@@ -1,4 +1,4 @@
-﻿using LogSummitApi.Domain.Core.Dto.Summit;
+﻿using LogSummitApi.Domain.Core.Dto.Summits;
 using LogSummitApi.Domain.Core.Entities;
 
 namespace LogSummitApi.Domain.Core.Interfaces.Services;

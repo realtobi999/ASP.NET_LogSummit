@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using LogSummitApi.Domain.Core.Dto.Summit;
+using LogSummitApi.Domain.Core.Dto.Summits;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Utilities;
 
