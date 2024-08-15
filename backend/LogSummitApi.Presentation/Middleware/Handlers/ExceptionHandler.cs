@@ -11,6 +11,7 @@ public class ExceptionHandler : IExceptionHandler
     {
         var error = new ErrorMessage()
         {
+            Success = false,
             Type = exception.GetType().Name,
             Instance = $"{context.Request.Method} {context.Request.Path}"
         };

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using LogSummitApi.Application.Core.Utilities;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Presentation.Extensions;
@@ -35,7 +36,10 @@ public class Program
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers(options => {
-                options.Filters.Add<CustomSerializationFilter>();
+                options.Filters.Add<CustomDtoSerializationFilter>(1);
+                options.Filters.Add<CustomSuccessSerializationFilter>(2);
+            }).AddJsonOptions(options => {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
 
         }

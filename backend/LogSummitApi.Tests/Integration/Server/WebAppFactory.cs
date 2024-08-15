@@ -1,4 +1,5 @@
 ﻿using LogSummitApi.Infrastructure.Persistance;
+using LogSummitApi.Presentation.Middleware.Filters;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Caching.Memory;
@@ -17,6 +18,7 @@ public class WebAppFactory<TStartup> : WebApplicationFactory<TStartup> where TSt
             services.ReplaceWithInMemoryDatabase<LogSummitContext>(_dbName);
 
             services.RemoveService<MemoryCache>();
+            services.RemoveFilter<CustomSuccessSerializationFilter>();
             services.AddSingleton(_cache);
         });
     }

@@ -10,7 +10,7 @@ public class UtilControllers : ControllerBase
     [HttpGet("check/health")]
     public IActionResult HealthCheck()
     {
-        return Ok();
+        return Ok("healthy");
     }
 
     [HttpGet("check/error")]
@@ -22,6 +22,6 @@ public class UtilControllers : ControllerBase
     [HttpGet("check/auth"), Authorize]
     public IActionResult AuthCheck()
     {
-        return Ok();
+        return Ok("authorized");
     }
 }
