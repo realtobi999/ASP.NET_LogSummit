@@ -48,7 +48,7 @@ public class AuthTests
         content.Token.Should().NotBeNull();
         content.User.Should().NotBeNull();
         content.User!.Id.Should().Be(user.Id);
-        
+
         JwtUtils.ParseFromPayload(content.Token!, "UserId").Should().Be(user.Id.ToString());
     }
 

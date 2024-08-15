@@ -22,7 +22,7 @@ public class RouteService : IRouteService
 
     public async Task<Route> CreateAsync(CreateRouteDto createRouteDto)
     {
-        var coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.Coordinates)); 
+        var coordinates = createRouteDto.Coordinates ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.Coordinates));
 
         var route = new Route()
         {
@@ -35,7 +35,7 @@ public class RouteService : IRouteService
             ElevationGain = coordinates.TotalElevationGain(),
             ElevationLoss = coordinates.TotalElevationLoss(),
             IsPublic = createRouteDto.IsPublic ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.IsPublic)),
-            Coordinates =  coordinates,
+            Coordinates = coordinates,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -44,7 +44,7 @@ public class RouteService : IRouteService
         if (!valid && exception is not null) throw exception;
 
         _repository.Route.Create(route);
-        await _repository.SaveSafelyAsync(); 
+        await _repository.SaveSafelyAsync();
 
         return route;
     }
@@ -58,7 +58,7 @@ public class RouteService : IRouteService
 
     public async Task<Route> GetAsync(Guid id)
     {
-        var route = await _repository.Route.GetAsync(id) ?? throw new NotFound404Exception(nameof(Route), id); 
+        var route = await _repository.Route.GetAsync(id) ?? throw new NotFound404Exception(nameof(Route), id);
 
         return route;
     }

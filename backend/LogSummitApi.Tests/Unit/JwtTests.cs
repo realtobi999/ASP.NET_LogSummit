@@ -11,7 +11,7 @@ public class JwtTests
     {
         // prepare
         var issuer = "TEST_ISSUER";
-        var key = JwtTestUtils.GenerateRandomKey(); 
+        var key = JwtTestUtils.GenerateRandomKey();
         var jwt = new Jwt(issuer, key);
 
         // act & assert

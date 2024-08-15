@@ -16,8 +16,8 @@ public class ServiceManager : IServiceManager
 
         // lazy loading
         _users = new(() => _factory.CreateUserService());
-        _summits = new (() => _factory.CreateSummitService());
-        _routes = new (() => _factory.CreateRouteService());
+        _summits = new(() => _factory.CreateSummitService());
+        _routes = new(() => _factory.CreateRouteService());
     }
 
     public IUserService User => _users.Value;

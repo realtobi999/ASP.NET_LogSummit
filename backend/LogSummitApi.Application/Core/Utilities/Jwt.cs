@@ -19,7 +19,7 @@ public class Jwt : IJwt
 
     public string Issuer => this._issuer;
 
-    public string Key => this._key; 
+    public string Key => this._key;
 
     public string Generate()
     {
@@ -47,7 +47,7 @@ public class Jwt : IJwt
 
         return this.Generate(descriptor);
     }
-    
+
     public string Generate(SecurityTokenDescriptor descriptor)
     {
         var tokenHandler = new JwtSecurityTokenHandler();

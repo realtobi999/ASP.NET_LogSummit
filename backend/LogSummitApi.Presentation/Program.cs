@@ -25,28 +25,30 @@ public class Program
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
             builder.Services.ConfigureValidators();
-            
+
             builder.Services.AddSingleton<IHasher, Hasher>();
 
             builder.Services.ConfigureJwtAuthentication(config);
 
             // user authorization
             builder.Services.AddAuthorizationBuilder().AddPolicy("User", policy => policy.RequireRole("User"));
-                                                
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers(options => {
+
+            builder.Services.AddControllers(options =>
+            {
                 options.Filters.Add<CustomDtoSerializationFilter>(1);
                 options.Filters.Add<CustomSuccessSerializationFilter>(2);
-            }).AddJsonOptions(options => {
+            }).AddJsonOptions(options =>
+            {
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
-
         }
 
         var app = builder.Build();
         {
-            app.UseExceptionHandler(opt => {});
+            app.UseExceptionHandler(opt => { });
 
             if (app.Environment.IsDevelopment())
             {

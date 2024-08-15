@@ -7,7 +7,7 @@ namespace LogSummitApi.Infrastructure.Persistance;
 public class LogSummitContext(DbContextOptions<LogSummitContext> opt) : DbContext(opt)
 {
     public DbSet<User> Users { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // configure specific properties

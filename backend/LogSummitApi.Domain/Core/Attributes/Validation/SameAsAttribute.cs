@@ -3,8 +3,19 @@
 namespace LogSummitApi.Domain.Core.Attributes.Validation;
 
 /// <summary>
-/// Validation attribute that checks if the value of the decorated property is the same as the value of another specified property.
+/// A validation attribute that ensures the value of the decorated property matches the value of another specified property.
+/// <para>
+/// This attribute is used to validate that the value of a property is the same as the value of another property within the same object.
+/// It is commonly used for scenarios such as confirming that password and confirm password fields are identical.
+/// </para>
 /// </summary>
+/// <param name="comparisonProperty">
+/// The name of the property whose value is used for comparison.
+/// </param>
+/// <returns>
+/// A <c>ValidationResult</c> indicating whether the validation succeeded or failed. If the values do not match, 
+/// the result will contain an error message specifying that the properties do not match.
+/// </returns>
 [AttributeUsage(AttributeTargets.Property)]
 public class SameAsAttribute : ValidationAttribute
 {

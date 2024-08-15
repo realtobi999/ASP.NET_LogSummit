@@ -10,6 +10,5 @@ public interface ISummitService
     Task<Summit> CreateAsync(CreateSummitDto createSummitDto);
     Task UpdateAsync(Summit summit, UpdateSummitDto updateSummitDto);
     Task DeleteAsync(Summit summit);
-    
     Task<IEnumerable<string>> GetValidCountriesAsync();
 }

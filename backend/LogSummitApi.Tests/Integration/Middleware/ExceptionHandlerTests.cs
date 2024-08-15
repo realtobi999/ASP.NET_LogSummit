@@ -22,8 +22,8 @@ public class ExceptionHandlerTests
         // act & assert
         var response = await client.GetAsync($"v1/api/summit/{Guid.NewGuid()}");
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        
-        var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException(); 
+
+        var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();
 
         content.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         content.Title.Should().Be("Resource Not Found");

@@ -1,5 +1,5 @@
 ﻿
-using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
+using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 
 namespace LogSummitApi.Domain.Core.Interfaces.Factories;
 

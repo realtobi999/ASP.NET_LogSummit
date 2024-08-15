@@ -33,11 +33,11 @@ public class RouteTests
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        var response = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
         response.StatusCode.Should().Be(HttpStatusCode.Created);
 
         var header = response.Headers.GetValues("Location");
-        header.Should().Equal(string.Format("/v1/api/summit/route/{0}", route.Id));
+        header.Should().Equal(string.Format("/v1/api/route/{0}", route.Id));
     }
 
     [Fact]
@@ -64,14 +64,14 @@ public class RouteTests
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        var response = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
         var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();
 
         content.Title.Should().Be("Bad Request");
         content.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
-        content.Instance.Should().Be("POST /v1/api/summit/route");
+        content.Instance.Should().Be("POST /v1/api/route");
         content.Type.Should().Be(nameof(BadRequest400Exception));
         content.Detail.Should().Contain(Summit.RouteProximityRadius.ToString());
     }
@@ -98,18 +98,18 @@ public class RouteTests
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
 
-        var create3 = await client.PostAsJsonAsync("v1/api/summit/route", route1.ToCreateRouteDto());
+        var create3 = await client.PostAsJsonAsync("v1/api/route", route1.ToCreateRouteDto());
         create3.StatusCode.Should().Be(HttpStatusCode.Created);
-        var create4 = await client.PostAsJsonAsync("v1/api/summit/route", route2.ToCreateRouteDto());
+        var create4 = await client.PostAsJsonAsync("v1/api/route", route2.ToCreateRouteDto());
         create4.StatusCode.Should().Be(HttpStatusCode.Created);
-        var create5 = await client.PostAsJsonAsync("v1/api/summit/route", route3.ToCreateRouteDto());
+        var create5 = await client.PostAsJsonAsync("v1/api/route", route3.ToCreateRouteDto());
         create5.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
         var offset = 1;
         var limit = 2;
 
-        var response = await client.GetAsync($"v1/api/summit/route?limit={limit}&offset={offset}");
+        var response = await client.GetAsync($"v1/api/route?limit={limit}&offset={offset}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var content = await response.Content.ReadFromJsonAsync<List<RouteDto>>() ?? throw new NullReferenceException();
@@ -137,13 +137,13 @@ public class RouteTests
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
-        var create3 = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        var create3 = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
         create3.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response1 = await client.GetAsync($"v1/api/summit/route/{Guid.NewGuid()}");
+        var response1 = await client.GetAsync($"v1/api/route/{Guid.NewGuid()}");
         response1.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var response2 = await client.GetAsync($"v1/api/summit/route/{route.Id}");
+        var response2 = await client.GetAsync($"v1/api/route/{route.Id}");
         response2.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var content = await response2.Content.ReadFromJsonAsync<RouteDto>() ?? throw new NullReferenceException();
@@ -170,7 +170,7 @@ public class RouteTests
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
-        var create3 = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        var create3 = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
         create3.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
@@ -179,14 +179,14 @@ public class RouteTests
 
             Name = "test",
             Description = "test_test_test_test_test",
-            IsPublic = route.IsPublic, 
+            IsPublic = route.IsPublic,
             Coordinates = route.Coordinates,
         };
 
-        var response = await client.PutAsJsonAsync($"v1/api/summit/route/{route.Id}", updateDto);
+        var response = await client.PutAsJsonAsync($"v1/api/route/{route.Id}", updateDto);
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
-        var get = await client.GetAsync($"v1/api/summit/route/{route.Id}");
+        var get = await client.GetAsync($"v1/api/route/{route.Id}");
         get.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var content = await get.Content.ReadFromJsonAsync<RouteDto>() ?? throw new NullReferenceException();
@@ -215,14 +215,14 @@ public class RouteTests
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
-        var create3 = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        var create3 = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
         create3.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response = await client.DeleteAsync($"v1/api/summit/route/{route.Id}");
+        var response = await client.DeleteAsync($"v1/api/route/{route.Id}");
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
-        var get = await client.GetAsync($"v1/api/summit/route/{route.Id}");
+        var get = await client.GetAsync($"v1/api/route/{route.Id}");
         get.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
@@ -249,7 +249,7 @@ public class RouteTests
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response = await client.PostAsJsonAsync("v1/api/summit/route", route.ToCreateRouteDto());
+        var response = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
         var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();

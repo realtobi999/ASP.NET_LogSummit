@@ -57,7 +57,6 @@ public class SummitController : ControllerBase
     public async Task<IActionResult> GetValidCountries()
     {
         return Ok(await _service.Summit.GetValidCountriesAsync());
-
     }
 
     [HttpPost("summit")]

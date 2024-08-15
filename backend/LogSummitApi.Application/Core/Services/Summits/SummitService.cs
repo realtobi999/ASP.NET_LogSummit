@@ -69,7 +69,7 @@ public class SummitService : ISummitService
         summit.Name = dto.Name;
         summit.Description = dto.Description;
         summit.Country = dto.Country;
-        summit.IsPublic = (bool) dto.IsPublic!; 
+        summit.IsPublic = (bool)dto.IsPublic!;
         summit.Coordinate = dto.Coordinate;
 
         // validate the object
@@ -83,14 +83,12 @@ public class SummitService : ISummitService
     {
         var countries = await _repository.HttpCountry.IndexAsync();
 
-        return countries
-            .Select(country =>
-            {
-                if (country.Name == null) throw new NullPropertyException(nameof(Country), nameof(Country.Name));
-                if (country.Name.Common == null) throw new NullPropertyException(nameof(Country), nameof(Country.Name.Common));
+        return countries.Select(country =>
+        {
+            if (country.Name == null) throw new NullPropertyException(nameof(Country), nameof(Country.Name));
+            if (country.Name.Common == null) throw new NullPropertyException(nameof(Country), nameof(Country.Name.Common));
 
-                return country.Name.Common;
-            })
-            .ToList();
+            return country.Name.Common;
+        }).ToList();
     }
 }

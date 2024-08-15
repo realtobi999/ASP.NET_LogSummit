@@ -1,5 +1,5 @@
 ﻿using LogSummitApi.Domain.Core.Interfaces.Factories;
-using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
+using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 using LogSummitApi.Infrastructure.Api.Repositories;
 using Microsoft.Extensions.Caching.Memory;
 

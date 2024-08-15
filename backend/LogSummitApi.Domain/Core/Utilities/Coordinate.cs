@@ -14,11 +14,6 @@ public class Coordinate
 
     public Coordinate(double latitude, double longitude, double elevation)
     {
-        // set those now so we can reference them in the exception later
-        Latitude = latitude;
-        Longitude = longitude;
-        Elevation = elevation;
-
         if (latitude < -90 || latitude > 90)
         {
             throw new InvalidCoordinateFormatException(this, "Latitude must be between -90 and 90 degrees.");
@@ -29,10 +24,14 @@ public class Coordinate
             throw new InvalidCoordinateFormatException(this, "Longitude must be between -180 and 180 degrees.");
         }
 
-        if (LowestElevationPoint > elevation || elevation > MaximumElevationPoint)
+        if (LowestElevationPoint >= elevation || elevation >= MaximumElevationPoint)
         {
             throw new InvalidCoordinateFormatException(this, $"Elevation must be between {LowestElevationPoint} meters and {MaximumElevationPoint} meters.");
         }
+
+        Latitude = latitude;
+        Longitude = longitude;
+        Elevation = elevation;
     }
 
     public override string ToString()

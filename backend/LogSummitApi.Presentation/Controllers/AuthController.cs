@@ -33,9 +33,8 @@ public class AuthController : ControllerBase
     {
         // we can ignore the null warning cause of the asp.net validation  
         var user = await _service.User.GetAsync(loginUserDto.Email!);
-        var authenticated = _service.User.Authenticate(user, loginUserDto.Password!);
 
-        if (!authenticated)
+        if (!_service.User.Authenticate(user, loginUserDto.Password!))
         {
             throw new NotAuthorized401Exception();
         }

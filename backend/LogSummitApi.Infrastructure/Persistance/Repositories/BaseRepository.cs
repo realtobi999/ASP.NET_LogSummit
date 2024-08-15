@@ -8,7 +8,7 @@ namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
 {
     protected readonly LogSummitContext _context;
-    
+
     public BaseRepository(LogSummitContext context)
     {
         _context = context;
@@ -42,5 +42,5 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     protected virtual IQueryable<T> GetQueryable()
     {
         return _context.Set<T>().AsQueryable();
-    } 
+    }
 }

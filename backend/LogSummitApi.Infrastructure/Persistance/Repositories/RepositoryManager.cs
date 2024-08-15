@@ -1,7 +1,7 @@
 ﻿using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
-using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
+using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 
 namespace LogSummitApi.Infrastructure.Persistance.Repositories;
 
@@ -10,7 +10,7 @@ public class RepositoryManager : IRepositoryManager
     private readonly LogSummitContext _context;
     private readonly IRepositoryFactory _factory;
     private readonly IHttpRepositoryFactory _httpFactory;
-    
+
     private readonly Lazy<IUserRepository> _users;
     private readonly Lazy<ISummitRepository> _summits;
     private readonly Lazy<IHttpCountryRepository> _httpCountries;

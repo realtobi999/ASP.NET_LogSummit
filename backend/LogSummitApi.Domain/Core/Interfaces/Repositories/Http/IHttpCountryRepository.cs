@@ -1,6 +1,6 @@
 ﻿using LogSummitApi.Domain.Core.Dto.Summit;
 
-namespace LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
+namespace LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 
 public interface IHttpCountryRepository
 {

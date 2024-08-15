@@ -35,7 +35,7 @@ public class Summit : ISerializable<SummitDto>
     [Required, Column("coordinate"), JsonIgnore]
     public string CoordinateString
     {
-        get 
+        get
         {
             if (this.Coordinate is null) throw new NullPropertyException(nameof(Summit), nameof(Coordinate));
 
@@ -52,13 +52,13 @@ public class Summit : ISerializable<SummitDto>
     [NotMapped]
     public Coordinate? Coordinate { get; set; }
     public User? User { get; set; }
-    public ICollection<Route>? Routes { get; set; } 
+    public ICollection<Route>? Routes { get; set; }
 
     // methods
 
     public SummitDto? ToDto()
     {
-        if (this.User is null) throw new NullPropertyException(nameof(Summit), nameof(User)); 
+        if (this.User is null) throw new NullPropertyException(nameof(Summit), nameof(User));
         if (this.Routes is null) throw new NullPropertyException(nameof(Summit), nameof(Routes));
 
         return new SummitDto()

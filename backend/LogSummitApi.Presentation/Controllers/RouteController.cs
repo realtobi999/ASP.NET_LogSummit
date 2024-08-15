@@ -20,17 +20,28 @@ public class RouteController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("summit/route")]
-    public async Task<IActionResult> Index(int limit, int offset)
+    [HttpGet("route")]
+    [HttpGet("route/user/{userId}")]
+    [HttpGet("route/summit/{summitId}")]
+    public async Task<IActionResult> Index(Guid? userId, Guid? summitId, int limit, int offset)
     {
         var routes = await _service.Route.IndexAsync();
 
         routes = routes.Where(r => r.IsPublic);
 
+        if (userId is not null)
+        {
+            routes = routes.Where(r => r.UserId == userId);
+        }
+        if (summitId is not null)
+        {
+            routes = routes.Where(r => r.SummitId == summitId);
+        }
+
         return Ok(routes.Paginate(offset, limit));
     }
 
-    [HttpGet("summit/route/{routeId}")]
+    [HttpGet("route/{routeId}")]
     public async Task<IActionResult> Get(Guid routeId)
     {
         var route = await _service.Route.GetAsync(routeId);
@@ -40,7 +51,7 @@ public class RouteController : ControllerBase
         return Ok(route);
     }
 
-    [HttpPost("summit/route")]
+    [HttpPost("route")]
     public async Task<IActionResult> Create([FromBody] CreateRouteDto createRouteDto)
     {
         // authenticate the request
@@ -48,10 +59,10 @@ public class RouteController : ControllerBase
 
         var route = await _service.Route.CreateAsync(createRouteDto);
 
-        return Created($"/v1/api/summit/route/{route.Id}", null);
+        return Created($"/v1/api/route/{route.Id}", null);
     }
 
-    [HttpPut("summit/route/{routeId}")]
+    [HttpPut("route/{routeId}")]
     public async Task<IActionResult> Update(Guid routeId, [FromBody] UpdateRouteDto updateRouteDto)
     {
         var route = await _service.Route.GetAsync(routeId);
@@ -63,7 +74,7 @@ public class RouteController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("summit/route/{routeId}")]
+    [HttpDelete("route/{routeId}")]
     public async Task<IActionResult> Delete(Guid routeId)
     {
         var route = await _service.Route.GetAsync(routeId);

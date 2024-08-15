@@ -30,12 +30,12 @@ public class CoordinateExtensionsTests
         // prepare
         var coordinates = new List<Coordinate>
         {
-            new(37.7749, -122.4194, 10) 
+            new(37.7749, -122.4194, 10)
         };
 
         // act & assert
         double totalDistance = CoordinateExtensions.TotalDistance(coordinates);
 
-        totalDistance.Should().Be(0.0); 
+        totalDistance.Should().Be(0.0);
     }
 }

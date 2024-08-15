@@ -16,7 +16,7 @@ public static class JwtTestUtils
         return Convert.ToBase64String(key);
     }
 
-   public static Jwt CreateInstance()
+    public static Jwt CreateInstance()
     {
         var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
                                                       .AddJsonFile("appsettings.json")

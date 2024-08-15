@@ -21,7 +21,7 @@ public static class ServiceExtensions
         var jwt = JwtFactory.Create(config.GetSection("JWT:Issuer").Value, config.GetSection("JWT:Key").Value);
 
         services.AddSingleton<IJwt>(_ => jwt);
-        
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
                 {

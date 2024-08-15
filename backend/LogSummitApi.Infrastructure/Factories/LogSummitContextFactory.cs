@@ -14,7 +14,7 @@ public class LogSummitContextFactory : IDesignTimeDbContextFactory<LogSummitCont
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
                 .Build();
-              
+
         var builder = new DbContextOptionsBuilder<LogSummitContext>().UseNpgsql(configuration.GetConnectionString("LogSummit"));
 
         return new LogSummitContext(builder.Options);

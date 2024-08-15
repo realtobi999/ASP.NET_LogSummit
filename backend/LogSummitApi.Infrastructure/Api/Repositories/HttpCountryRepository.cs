@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Exceptions.Http;
-using LogSummitApi.Domain.Core.Interfaces.Repositories.HTTP;
+using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace LogSummitApi.Infrastructure.Api.Repositories;
@@ -20,15 +20,19 @@ public class HttpCountryRepository : IHttpCountryRepository
     }
 
     /// <summary>
-    /// Retrieves a list of <see cref="Country"/> from the cache or fetches it from the API if not present in the cache.
+    /// Retrieves a list of <c>Country</c> objects either from the cache or by making an API call if the data is not cached.
+    /// <para>
+    /// If the data is available in the cache, it will be returned directly. If not, the method will fetch the data from the API,
+    /// cache it for future requests, and then return the data.
+    /// </para>
     /// </summary>
     /// <returns>
-    /// A task that represents the asynchronous operation containing <see cref="IEnumerable{Country}"/> 
-    /// representing the list of countries.
+    /// A task that represents the asynchronous operation. The task result is an <c>IEnumerable{Country}</c> containing the list of countries.
     /// </returns>
     /// <exception cref="ServiceUnavailable503Exception">
-    /// Thrown when the API call fails and returns null data.
+    /// Thrown when the API call fails or returns null data, indicating that the service is unavailable.
     /// </exception>
+
     public async Task<IEnumerable<Country>> IndexAsync()
     {
         var value = await _cache.GetOrCreateAsync(CacheKey, async options =>

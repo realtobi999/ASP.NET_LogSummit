@@ -6,9 +6,8 @@ namespace LogSummitApi.Infrastructure.Persistance.Extensions;
 public static class LogSummitContextExtensions
 {
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="Summit"/> and <see cref="User"/> .
+    /// Configures one-to-many relationship between <c>Summit</c> and <c>User</c> .
     /// </summary>
-    /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
     public static void ConfigureSummitToUserRelationship(this ModelBuilder builder)
     {
         builder.Entity<Summit>()
@@ -18,9 +17,8 @@ public static class LogSummitContextExtensions
     }
 
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="User"/> and <see cref="Route"/> .
+    /// Configures one-to-many relationship between <c>User</c> and <c>Route</c> .
     /// </summary>
-    /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
     public static void ConfigureUserToRouteRelationship(this ModelBuilder builder)
     {
         builder.Entity<Route>()
@@ -31,15 +29,14 @@ public static class LogSummitContextExtensions
     }
 
     /// <summary>
-    /// Configures one-to-many relationship between <see cref="Summit"/> and <see cref="Route"/> .
+    /// Configures one-to-many relationship between <c>Summit</c> and <c>Route</c> .
     /// </summary>
-    /// <param name="builder">The <see cref="ModelBuilder"/> used to configure the entity relationships.</param>
     public static void ConfigureSummitToRouteRelationship(this ModelBuilder builder)
     {
         builder.Entity<Route>()
                .HasOne(sp => sp.Summit)
                .WithMany(s => s.Routes)
                .HasForeignKey(sp => sp.SummitId)
-               .OnDelete(DeleteBehavior.Cascade); 
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }
