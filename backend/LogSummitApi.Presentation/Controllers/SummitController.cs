@@ -63,7 +63,7 @@ public class SummitController : ControllerBase
         // authenticate the request
         if (dto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-        var summit = _mapper.CreateEntityFromDto(dto); 
+        var summit = _mapper.CreateEntityFromDto(dto);
 
         await _service.Summit.CreateAsync(summit);
         return Created($"/v1/api/summit/{summit.Id}", null);

@@ -26,7 +26,6 @@ public class Program
             builder.Services.ConfigureServiceManager();
             builder.Services.ConfigureValidators();
             builder.Services.ConfigureMappers();
-
             builder.Services.AddSingleton<IHasher, Hasher>();
 
             builder.Services.ConfigureJwtAuthentication(config);

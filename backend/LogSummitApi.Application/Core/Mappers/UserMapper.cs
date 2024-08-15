@@ -16,7 +16,7 @@ public class UserMapper : IUserMapper
 
     public User CreateEntityFromDto(CreateUserDto dto)
     {
-        return new User       
+        return new User
         {
             Id = dto.Id ?? Guid.NewGuid(),
             Username = dto.Username,

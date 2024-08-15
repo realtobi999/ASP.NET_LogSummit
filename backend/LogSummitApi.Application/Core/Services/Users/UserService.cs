@@ -33,7 +33,7 @@ public class UserService : IUserService
     public async Task CreateAsync(User user)
     {
         _repository.Users.Create(user);
-        
+
         await _repository.SaveSafelyAsync();
     }
 

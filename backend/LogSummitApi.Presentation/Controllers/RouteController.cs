@@ -60,7 +60,7 @@ public class RouteController : ControllerBase
         // authenticate the request
         if (dto.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
 
-        var route = _mapper.CreateEntityFromDto(dto); 
+        var route = _mapper.CreateEntityFromDto(dto);
 
         await _service.Route.CreateAsync(route);
         return Created($"/v1/api/route/{route.Id}", null);
