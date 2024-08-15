@@ -13,7 +13,8 @@ public class SummitRepository : BaseRepository<Summit>, ISummitRepository
     protected override IQueryable<Summit> GetQueryable()
     {
         return base.GetQueryable()
-                   .Include(s => s.User);
+                   .Include(s => s.User)
+                   .Include(s => s.Routes);
     }
 
     public override async Task<IEnumerable<Summit>> IndexAsync()

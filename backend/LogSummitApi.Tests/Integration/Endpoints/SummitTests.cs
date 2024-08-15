@@ -319,25 +319,34 @@ public class SummitTests
     {
         // prepare
         var client = new WebAppFactory<Program>().CreateDefaultClient();
-        var user = new User().WithFakeData();
-        var summit = new Summit().WithFakeData(user);
+        var user1 = new User().WithFakeData();
+        var user2 = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user1);
 
         summit.IsPublic = false;
 
-        var jwt = JwtTestUtils.CreateInstance().Generate([
+        var jwt1 = JwtTestUtils.CreateInstance().Generate([
             new Claim(ClaimTypes.Role, "User"),
-            new Claim("UserId", user.Id.ToString()),
+            new Claim("UserId", user1.Id.ToString()),
         ]);
-        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt1}");
 
-        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToRegisterUserDto());
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user1.ToRegisterUserDto());
         create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create3 = await client.PostAsJsonAsync("v1/api/auth/register", user2.ToRegisterUserDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
         var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
         create2.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
+        var jwt2 = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+            new Claim("UserId", user2.Id.ToString()),
+        ]);
+        client.DefaultRequestHeaders.Remove("Authorization");
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt2}");
 
         var response = await client.GetAsync($"v1/api/summit/{summit.Id}");
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 }

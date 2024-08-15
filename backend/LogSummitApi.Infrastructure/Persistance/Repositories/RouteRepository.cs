@@ -17,6 +17,13 @@ public class RouteRepository : BaseRepository<Route>, IRouteRepository
                    .Include(r => r.Summit);
     }
 
+    public override async Task<IEnumerable<Route>> IndexAsync()
+    {
+        var routes = await base.IndexAsync();
+
+        return routes.OrderBy(r => r.CreatedAt);
+    }
+
     public async Task<Route?> GetAsync(Guid id)
     {
         return await this.GetAsync(sp => sp.Id == id);

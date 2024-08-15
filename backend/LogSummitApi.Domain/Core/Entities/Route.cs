@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using LogSummitApi.Domain.Core.Attributes;
+using LogSummitApi.Domain.Core.Dto.Summit;
 using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Common;
@@ -65,13 +65,20 @@ public class Route : ISerializable<RouteDto>
         return new RouteDto()
         {
             Id = this.Id,
-            Summit = this.Summit.ToDto(),
             User = this.User.ToDto(),
             Name = this.Name,
             Description = this.Description,
             Distance = this.Distance,
             ElevationGain = this.ElevationGain,
             ElevationLoss = this.ElevationLoss,
+            Summit = new SummitDto()
+            {
+                Id = this.Summit.Id,
+                Name = this.Summit.Name,
+                Description = this.Summit.Description,
+                CreatedAt = this.Summit.CreatedAt,
+                Coordinate = this.Summit.Coordinate,
+            },
             Coordinates = this.Coordinates,
             CreatedAt = this.CreatedAt,
         };

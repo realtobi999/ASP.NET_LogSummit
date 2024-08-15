@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using LogSummitApi.Domain.Core.Dto.Summit;
+using LogSummitApi.Domain.Core.Dto.Summit.Routes;
 using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Utilities;
@@ -36,14 +37,11 @@ public class Summit : ISerializable<SummitDto>
     {
         get 
         {
-            if (this.Coordinate is null) throw new InvalidOperationException("Coordinate cannot be null.");
+            if (this.Coordinate is null) throw new NullPropertyException(nameof(Summit), nameof(Coordinate));
 
             return this.Coordinate.ToString();
         }
-        set
-        {   
-            Coordinate = Coordinate.Parse(value);
-        }
+        set => Coordinate = Coordinate.Parse(value);
     }
 
     public const double SummitProximityRadius = 55; // in this radius around the summit (in meters) no other summit can be located
@@ -61,11 +59,19 @@ public class Summit : ISerializable<SummitDto>
     public SummitDto? ToDto()
     {
         if (this.User is null) throw new NullPropertyException(nameof(Summit), nameof(User)); 
+        if (this.Routes is null) throw new NullPropertyException(nameof(Summit), nameof(Routes)); 
 
-        if (!this.IsPublic)
+        var routes = this.Routes.Select(r => new RouteDto()
         {
-            return null;
-        }
+            Id = r.Id,
+            Name = r.Name,
+            Description = r.Description,
+            Distance = r.Distance,
+            ElevationGain = r.ElevationGain,
+            ElevationLoss = r.ElevationLoss,
+            Coordinates = r.Coordinates,
+            CreatedAt = r.CreatedAt,
+        });
 
         return new SummitDto()
         {
@@ -75,6 +81,7 @@ public class Summit : ISerializable<SummitDto>
             Description = this.Description,
             CreatedAt = this.CreatedAt,
             Coordinate = this.Coordinate,
+            Routes = routes.ToList(),
         };
     }
 }
