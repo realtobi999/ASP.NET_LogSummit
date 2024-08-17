@@ -28,7 +28,7 @@ public class SummitController : ControllerBase
     [HttpGet("summit/country/{country}")]
     public async Task<IActionResult> Index(Guid? userId, string? country, int limit, int offset)
     {
-        var summits = (await _service.Summit.IndexAsync()).Where(r => r.IsPublic); // leave out all the private summits
+        var summits = (await _service.Summit.IndexAsync()).Where(s => s.IsPublic); // leave out all the private summits
 
         if (userId is not null)
         {

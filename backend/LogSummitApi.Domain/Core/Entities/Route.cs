@@ -52,6 +52,7 @@ public class Route : ISerializable<RouteDto>
 
     [NotMapped]
     public List<Coordinate> Coordinates = [];
+    public ICollection<RouteAttempt>? RouteAttempts { get; set; }
     public User? User { get; set; }
     public Summit? Summit { get; set; }
 
@@ -71,7 +72,7 @@ public class Route : ISerializable<RouteDto>
             Distance = this.Distance,
             ElevationGain = this.ElevationGain,
             ElevationLoss = this.ElevationLoss,
-            Summit = new SummitDto()
+            Summit = new SummitDto
             {
                 Id = this.Summit.Id,
                 Name = this.Summit.Name,

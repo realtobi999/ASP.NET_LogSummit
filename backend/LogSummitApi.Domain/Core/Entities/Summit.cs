@@ -69,7 +69,7 @@ public class Summit : ISerializable<SummitDto>
             Description = this.Description,
             CreatedAt = this.CreatedAt,
             Coordinate = this.Coordinate,
-            Routes = this.Routes.Select(r => new RouteDto()
+            Routes = this.Routes.Where(r => r.IsPublic).Select(r => new RouteDto
             {
                 Id = r.Id,
                 Name = r.Name,

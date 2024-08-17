@@ -23,6 +23,7 @@ public class User : ISerializable<UserDto>
 
     public ICollection<Summit>? Summits { get; set; }
     public ICollection<Route>? Routes { get; set; }
+    public ICollection<RouteAttempt>? RouteAttempts { get; set; }
 
     // methods
 
