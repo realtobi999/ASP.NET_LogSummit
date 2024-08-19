@@ -37,9 +37,9 @@ public class RouteValidator : IValidator<Route>
         }
 
         // validate that the last coordinate is atleast 10 meters in the range of the summit coordinate
-        if (summit.Coordinate is not null && !route.Coordinates.Last().IsWithinRange(summit.Coordinate, Summit.RouteProximityRadius))
+        if (summit.Coordinate is not null && !route.Coordinates.Last().HasInRange(summit.Coordinate, Summit.FINAL_COORDINATE_TOLERANCE_RADIUS))
         {
-            return (false, new BadRequest400Exception($"The last coordinate of the summit route is not within a {Summit.RouteProximityRadius}-meter range of the summit coordinate."));
+            return (false, new BadRequest400Exception($"The last coordinate of the summit route is not within a {Summit.FINAL_COORDINATE_TOLERANCE_RADIUS}-meter range of the summit coordinate."));
         }
 
         return (true, null);

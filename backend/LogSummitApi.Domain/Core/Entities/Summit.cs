@@ -44,8 +44,15 @@ public class Summit : ISerializable<SummitDto>
         set => Coordinate = Coordinate.Parse(value);
     }
 
-    public const double SummitProximityRadius = 55; // in this radius around the summit (in meters) no other summit can be located
-    public const double RouteProximityRadius = 10; // in this radius around the summit (in meters) the route last coordinate must be
+    // The minimum required radius (in meters) around the summit within which no other summit can be located. 
+    // This ensures that summits are adequately spaced apart to avoid overlapping.
+    public const double SUMMIT_PROXIMITY_RADIUS = 55;
+
+    // The maximum allowed radius (in meters) within which the final coordinate of the Route must be 
+    // located relative to the summit's coordinate. This ensures that the end of the RouteAttempt 
+    // is close enough to the summit, accurately marking the completion of the route.
+    public const double FINAL_COORDINATE_TOLERANCE_RADIUS = 10;
+
 
     // entity relationships
 

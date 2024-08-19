@@ -1,13 +1,12 @@
-using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Application.Core.Services.Summits.Coordinates;
 
 public static class CoordinateHelpers
 {
-    public static bool AreWithinRange(Coordinate coordinate1, Coordinate coordinate2, double range)
+    public static bool IsWithinDistanceFrom(Coordinate coordinate1, Coordinate coordinate2, double range)
     {
-        if (range <= 0) throw new ArgumentException("AreWithingRange 'range' argument needs to be bigger than zero.");
+        if (range <= 0) throw new ArgumentException($"{nameof(IsWithinDistanceFrom)} '{nameof(range)}' argument needs to be bigger than zero.");
 
         var distance = CoordinateMath.Haversine(coordinate1, coordinate2);
 
@@ -21,7 +20,7 @@ public static class CoordinateHelpers
             var found = false;
             for (int j = 0; j < attemptCoordinates.Count(); j++)
             {
-               if (routeCoordinates.ElementAt(i).IsWithinRange(attemptCoordinates.ElementAt(j), allowedDeviation))
+               if (routeCoordinates.ElementAt(i).HasInRange(attemptCoordinates.ElementAt(j), allowedDeviation))
                {
                     found = true;
                     break;

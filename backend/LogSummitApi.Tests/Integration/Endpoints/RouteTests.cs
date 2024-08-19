@@ -73,7 +73,7 @@ public class RouteTests
         content.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         content.Instance.Should().Be("POST /v1/api/route");
         content.Type.Should().Be(nameof(BadRequest400Exception));
-        content.Detail.Should().Contain(Summit.RouteProximityRadius.ToString());
+        content.Detail.Should().Contain(Summit.FINAL_COORDINATE_TOLERANCE_RADIUS.ToString());
     }
 
     [Fact]

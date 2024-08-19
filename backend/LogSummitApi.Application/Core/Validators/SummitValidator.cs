@@ -29,10 +29,10 @@ public class SummitValidator : IValidator<Summit>
         // check if there is already a summit within a set radius (only if the summit is set to public)
         if (summits.Any(existingSummit =>
         {
-            return existingSummit.Coordinate!.IsWithinRange(summit.Coordinate!, Summit.SummitProximityRadius) && existingSummit.Id != summit.Id && summit.IsPublic;
+            return existingSummit.Coordinate!.HasInRange(summit.Coordinate!, Summit.SUMMIT_PROXIMITY_RADIUS) && existingSummit.Id != summit.Id && summit.IsPublic;
         }))
         {
-            return (false, new BadRequest400Exception($"A summit already exists within a {Summit.SummitProximityRadius}-meter radius."));
+            return (false, new BadRequest400Exception($"A summit already exists within a {Summit.SUMMIT_PROXIMITY_RADIUS}-meter radius."));
         }
 
         // ensure that the country is valid
