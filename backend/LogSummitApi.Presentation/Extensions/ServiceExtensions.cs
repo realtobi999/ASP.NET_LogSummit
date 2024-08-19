@@ -72,5 +72,6 @@ public static class ServiceExtensions
         services.AddSingleton<IUserMapper, UserMapper>();
         services.AddSingleton<ISummitMapper, SummitMapper>();
         services.AddSingleton<IRouteMapper, RouteMapper>();
+        services.AddSingleton<IRouteAttemptMapper, RouteAttemptMapper>();
     }
 }
