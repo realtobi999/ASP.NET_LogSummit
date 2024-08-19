@@ -83,4 +83,56 @@ public class CoordinateHelpersTests
         gain.Should().Be(0.0);
         loss.Should().Be(0.0);
     }
+
+    [Fact]
+    public void ValidateCoordinatePathAlignments_ShouldReturnTrueWhenMatches()
+    {
+        // prepare
+        var routeCoordinates = new List<Coordinate>
+        {
+            new(45, 45, 0),
+            new(50, 45, 0),
+            new(55, 45, 0)
+        };
+
+        var attemptCoordinates = new List<Coordinate>
+        {
+            new(45, 45.000001, 0),   // close to (45, 45)
+            new(46, 45.0001, 0),     // between (45, 45) and (50, 45)
+            new(48, 45.0005, 0),     // between (45, 45) and (50, 45)
+            new(50, 45.00001, 0),    // close to (50, 45)
+            new(51, 45.0002, 0),     // between (50, 45) and (55, 45)
+            new(53, 45.0005, 0),     // between (50, 45) and (55, 45)
+            new(55, 45.00001, 0)     // close to (55, 45)
+        };
+
+        // act & assert
+        var result = CoordinateHelpers.ValidateCoordinatePathAlignments(routeCoordinates, attemptCoordinates, 10);
+
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ValidateCoordinatePathAlignments_ShouldReturnFalseWhenSomeRouteCoordinatesAreNotCovered()
+    {
+        // Arrange
+        var routeCoordinates = new List<Coordinate>
+        {
+            new(45, 45, 0),
+            new(50, 45, 0),
+            new(55, 45, 0) 
+        };
+
+        var attemptCoordinates = new List<Coordinate>
+        {
+            new(45, 45.000002, 0),
+            new(50.000002, 45.000004, 0) 
+            // missing coordinate for (55, 45)
+        };
+
+        // act & assert
+        bool result = CoordinateHelpers.ValidateCoordinatePathAlignments(routeCoordinates, attemptCoordinates, 10);
+
+        result.Should().BeFalse();
+    }
 }

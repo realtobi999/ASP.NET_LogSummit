@@ -1,3 +1,4 @@
+using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Application.Core.Services.Summits.Coordinates;
@@ -11,6 +12,28 @@ public static class CoordinateHelpers
         var distance = CoordinateMath.Haversine(coordinate1, coordinate2);
 
         return distance <= range;
+    }
+
+    public static bool ValidateCoordinatePathAlignments(IEnumerable<Coordinate> routeCoordinates, IEnumerable<Coordinate> attemptCoordinates, double allowedDeviation)
+    {
+        for (int i = 0; i < routeCoordinates.Count(); i++)
+        {
+            var found = false;
+            for (int j = 0; j < attemptCoordinates.Count(); j++)
+            {
+               if (routeCoordinates.ElementAt(i).IsWithinRange(attemptCoordinates.ElementAt(j), allowedDeviation))
+               {
+                    found = true;
+                    break;
+               } 
+            }
+            if (!found)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static (double gain, double loss) CalculateElevationChange(IEnumerable<Coordinate> coordinates, double distanceThreshold, double verticalThreshold)

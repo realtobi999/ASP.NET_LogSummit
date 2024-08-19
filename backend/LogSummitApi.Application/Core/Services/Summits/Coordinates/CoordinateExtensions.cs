@@ -1,3 +1,4 @@
+using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Application.Core.Services.Summits.Coordinates;
@@ -14,6 +15,11 @@ public static class CoordinateExtensions
         }
 
         return distance;
+    }
+
+    public static bool IsAlignedWith(this IEnumerable<Coordinate> routeCoordinates, IEnumerable<Coordinate> attemptCoordinates, double allowedDeviation)
+    {
+        return CoordinateHelpers.ValidateCoordinatePathAlignments(routeCoordinates, attemptCoordinates, allowedDeviation);
     }
 
     public static double TotalElevationGain(this IEnumerable<Coordinate> coordinates)
