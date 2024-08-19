@@ -5,4 +5,5 @@ public interface IServiceManager
     public ISummitService Summit { get; }
     public IRouteService Route { get; }
     public IUserService User { get; }
+    public IRouteAttemptService RouteAttempt { get; }
 }

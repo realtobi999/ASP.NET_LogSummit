@@ -7,4 +7,5 @@ public interface IServiceFactory
     IUserService CreateUserService();
     ISummitService CreateSummitService();
     IRouteService CreateRouteService();
+    IRouteAttemptService CreateRouteAttemptService();
 }

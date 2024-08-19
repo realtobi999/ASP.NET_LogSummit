@@ -14,6 +14,11 @@ public class RepositoryFactory : IRepositoryFactory
         _context = context;
     }
 
+    public IRouteAttemptRepository CreateRouteAttemptRepository()
+    {
+        return new RouteAttemptRepository(_context);
+    }
+
     public IRouteRepository CreateRouteRepository()
     {
         return new RouteRepository(_context);
