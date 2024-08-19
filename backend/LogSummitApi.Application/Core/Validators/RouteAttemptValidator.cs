@@ -37,6 +37,11 @@ public class RouteAttemptValidator : IValidator<RouteAttempt>
             return (false, new NotFound404Exception(nameof(Route), attempt.RouteId));
         }
 
+        if (!route.IsPublic && attempt.UserId == route.UserId)
+        {
+            return (false, new NotAuthorized401Exception());
+        }
+
         // ensure that the right visibility is enforced
         if (!route.IsPublic && attempt.IsPublic)
         {
