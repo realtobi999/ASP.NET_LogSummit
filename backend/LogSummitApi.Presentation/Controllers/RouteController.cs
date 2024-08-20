@@ -42,7 +42,7 @@ public class RouteController : ControllerBase
         return Ok(routes.Paginate(offset, limit));
     }
 
-    [HttpGet("route/{routeId}")]
+    [HttpGet("route/{routeId:guid}")]
     public async Task<IActionResult> Get(Guid routeId)
     {
         var route = await _service.Route.GetAsync(routeId);
@@ -64,7 +64,7 @@ public class RouteController : ControllerBase
         return Created($"/v1/api/route/{route.Id}", null);
     }
 
-    [HttpPut("route/{routeId}")]
+    [HttpPut("route/{routeId:guid}")]
     public async Task<IActionResult> Update(Guid routeId, UpdateRouteDto dto)
     {
         var route = await _service.Route.GetAsync(routeId);
@@ -78,7 +78,7 @@ public class RouteController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("route/{routeId}")]
+    [HttpDelete("route/{routeId:guid}")]
     public async Task<IActionResult> Delete(Guid routeId)
     {
         var route = await _service.Route.GetAsync(routeId);

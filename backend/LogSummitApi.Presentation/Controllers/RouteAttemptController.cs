@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LogSummitApi.Presentation.Controllers;
 
 [ApiController]
-[Route("api/v1")]
+[Route("v1/api")]
 [Authorize(Policy = "User")]
 public class RouteAttemptController : ControllerBase
 {
@@ -22,7 +22,7 @@ public class RouteAttemptController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPost("route/attempt")]
+    [HttpPatch("route/attempt")]
     public async Task<IActionResult> Create(CreateRouteAttemptDto dto)
     {
         // authenticate the request

@@ -14,7 +14,7 @@ public class CoordinateHelpersTests
         double range = 1000; // 1 km
 
         // act & assert
-        var result = CoordinateHelpers.AreWithinRange(coord1, coord2, range);
+        var result = CoordinateHelpers.IsWithinDistanceFrom(coord1, coord2, range);
 
         Assert.True(result);
     }
@@ -28,7 +28,7 @@ public class CoordinateHelpersTests
         double range = 500000; // 500 km
 
         // act & assert
-        var result = CoordinateHelpers.AreWithinRange(coord1, coord2, range);
+        var result = CoordinateHelpers.IsWithinDistanceFrom(coord1, coord2, range);
 
         Assert.False(result);
     }
@@ -41,8 +41,8 @@ public class CoordinateHelpersTests
         var coord2 = new Coordinate(48.8566, 2.3522, 0);
 
         // act & assert
-        Assert.Throws<ArgumentException>(() => CoordinateHelpers.AreWithinRange(coord1, coord2, 0));
-        Assert.Throws<ArgumentException>(() => CoordinateHelpers.AreWithinRange(coord1, coord2, -10));
+        Assert.Throws<ArgumentException>(() => CoordinateHelpers.IsWithinDistanceFrom(coord1, coord2, 0));
+        Assert.Throws<ArgumentException>(() => CoordinateHelpers.IsWithinDistanceFrom(coord1, coord2, -10));
     }
 
     [Fact]
