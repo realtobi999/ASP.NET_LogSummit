@@ -31,7 +31,7 @@ public class RouteValidator : IValidator<Route>
         }
 
         // ensure that if the summit is private only the owner can create a route
-        if (!summit.IsPublic && route.UserId == summit.UserId)
+        if (!summit.IsPublic && route.UserId != summit.UserId)
         {
             return (false, new NotAuthorized401Exception());
         }
