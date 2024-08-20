@@ -15,6 +15,11 @@ public class ValidatorFactory : IValidatorFactory
         _repository = repository;
     }
 
+    public IValidator<RouteAttempt> CreateRouteAttemptValidator()
+    {
+        return new RouteAttemptValidator(_repository);
+    }
+
     public IValidator<Route> CreateRouteValidator()
     {
         return new RouteValidator(_repository);

@@ -7,4 +7,5 @@ public interface IValidatorFactory
 {
     IValidator<Summit> CreateSummitValidator();
     IValidator<Route> CreateRouteValidator();
+    IValidator<RouteAttempt> CreateRouteAttemptValidator();
 }

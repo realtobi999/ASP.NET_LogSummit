@@ -25,7 +25,7 @@ public class ServiceFactory : IServiceFactory
 
     public IRouteAttemptService CreateRouteAttemptService()
     {
-        return new RouteAttemptService(_repository);
+        return new RouteAttemptService(_repository, _validators.CreateRouteAttemptValidator());
     }
 
     public IRouteService CreateRouteService()
