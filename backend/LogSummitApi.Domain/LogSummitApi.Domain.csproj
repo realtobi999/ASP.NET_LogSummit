@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="GeoCoordinates.Core" Version="1.0.0" />
+      <PackageReference Include="GeoCoordinates.Core" Version="1.1.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
   </ItemGroup>
 

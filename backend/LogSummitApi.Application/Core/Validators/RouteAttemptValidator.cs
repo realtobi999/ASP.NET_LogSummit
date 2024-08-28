@@ -1,4 +1,4 @@
-using GeoCoordinates.Core;
+using GeoCoordinates.Core.Extensions;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
@@ -61,7 +61,7 @@ public class RouteAttemptValidator : IValidator<RouteAttempt>
         }
 
         // validate that the route and attempt coordinates are in aliment relative to the route coordinates
-        if (!new CoordinatePath(route.Coordinates).IsAlignedWith(new CoordinatePath(attempt.Coordinates), Route.ALLOWED_DEVIATION_RADIUS))
+        if (!route.Coordinates.IsAlignedWith(attempt.Coordinates, Route.ALLOWED_DEVIATION_RADIUS))
         {
             return (false, new BadRequest400Exception($"The route attempt does not align with the route coordinates within the allowed deviation of {Route.ALLOWED_DEVIATION_RADIUS} meters."));
         }

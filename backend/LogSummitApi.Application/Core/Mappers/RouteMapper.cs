@@ -1,4 +1,4 @@
-using GeoCoordinates.Core;
+using GeoCoordinates.Core.Extensions;
 using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Common;
@@ -11,7 +11,6 @@ public class RouteMapper : IRouteMapper
     public Route CreateEntityFromDto(CreateRouteDto dto)
     {
         var coordinates = dto.Coordinates ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.Coordinates));
-        var path = new CoordinatePath(coordinates);
 
         return new Route()
         {
@@ -20,9 +19,9 @@ public class RouteMapper : IRouteMapper
             UserId = dto.UserId,
             Name = dto.Name,
             Description = dto.Description,
-            Distance = path.Distance,
-            ElevationGain = path.ElevationGain,
-            ElevationLoss = path.ElevationLoss,
+            Distance = coordinates.GetDistance(),
+            ElevationGain = coordinates.GetElevationGain(),
+            ElevationLoss = coordinates.GetElevationLoss(),
             IsPublic = dto.IsPublic ?? throw new NullPropertyException(nameof(CreateRouteDto), nameof(CreateRouteDto.IsPublic)),
             Coordinates = coordinates,
             CreatedAt = DateTime.UtcNow
