@@ -1,6 +1,6 @@
-﻿using LogSummitApi.Domain.Core.Dto.Summits.Routes;
+﻿using GeoCoordinates.Core;
+using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Dto.Users;
-using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Domain.Core.Dto.Summits;
 

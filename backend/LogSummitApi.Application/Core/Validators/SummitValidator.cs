@@ -1,5 +1,4 @@
-﻿using LogSummitApi.Application.Core.Services.Summits.Coordinates;
-using LogSummitApi.Domain.Core.Entities;
+﻿using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -29,7 +28,7 @@ public class SummitValidator : IValidator<Summit>
         // check if there is already a summit within a set radius (only if the summit is set to public)
         if (summits.Any(existingSummit =>
         {
-            return existingSummit.Coordinate!.HasInRange(summit.Coordinate!, Summit.SUMMIT_PROXIMITY_RADIUS) && existingSummit.Id != summit.Id && summit.IsPublic;
+            return existingSummit.Coordinate!.IsWithinDistanceTo(summit.Coordinate!, Summit.SUMMIT_PROXIMITY_RADIUS) && existingSummit.Id != summit.Id && summit.IsPublic;
         }))
         {
             return (false, new BadRequest400Exception($"A summit already exists within a {Summit.SUMMIT_PROXIMITY_RADIUS}-meter radius."));

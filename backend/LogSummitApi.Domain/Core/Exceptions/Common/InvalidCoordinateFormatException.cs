@@ -1,5 +1,5 @@
-﻿using LogSummitApi.Domain.Core.Exceptions.Http;
-using LogSummitApi.Domain.Core.Utilities;
+﻿using GeoCoordinates.Core;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 
 namespace LogSummitApi.Domain.Core.Exceptions.Common;
 

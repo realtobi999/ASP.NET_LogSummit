@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using LogSummitApi.Domain.Core.Utilities;
+using GeoCoordinates.Core;
 
 namespace LogSummitApi.Domain.Core.Dto.Summits.Routes;
 

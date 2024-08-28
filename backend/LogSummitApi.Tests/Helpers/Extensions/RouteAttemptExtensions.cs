@@ -1,7 +1,7 @@
 using Bogus;
+using GeoCoordinates.Core;
 using LogSummitApi.Domain.Core.Dto.Summits.Routes.Attempts;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Tests.Helpers.Extensions;
 
@@ -36,7 +36,7 @@ public static class RouteAttemptTestExtensions
         fakeRouteAttempt.Route = route;
 
         // Ensure that the last coordinate is the summit coordinate
-        if (route.Summit?.Coordinate != null && fakeRouteAttempt.Coordinates.Count > 0)
+        if (route.Summit?.Coordinate is not null && fakeRouteAttempt.Coordinates.Count > 0)
         {
             fakeRouteAttempt.Coordinates[^1] = route.Summit.Coordinate;
         }

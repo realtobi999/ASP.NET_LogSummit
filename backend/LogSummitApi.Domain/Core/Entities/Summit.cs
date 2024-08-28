@@ -5,7 +5,7 @@ using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Dto.Summits;
 using LogSummitApi.Domain.Core.Exceptions.Common;
 using LogSummitApi.Domain.Core.Interfaces.Common;
-using LogSummitApi.Domain.Core.Utilities;
+using GeoCoordinates.Core;
 
 namespace LogSummitApi.Domain.Core.Entities;
 

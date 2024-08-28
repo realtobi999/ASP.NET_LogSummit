@@ -1,4 +1,4 @@
-using LogSummitApi.Application.Core.Services.Summits.Coordinates;
+using GeoCoordinates.Core;
 using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
@@ -49,19 +49,19 @@ public class RouteAttemptValidator : IValidator<RouteAttempt>
         } 
 
         // validate that the first coordinate is atleast 10 meters in the range of the starting route coordinate
-        if (!attempt.Coordinates.First().HasInRange(route.Coordinates.First(), Route.FIRST_COORDINATE_TOLERANCE_RADIUS))
+        if (!attempt.Coordinates.First().IsWithinDistanceTo(route.Coordinates.First(), Route.FIRST_COORDINATE_TOLERANCE_RADIUS))
         {
             return (false, new BadRequest400Exception($"The first coordinate of the route attempt is not withing a {Route.FIRST_COORDINATE_TOLERANCE_RADIUS}-meter range of the fist route coordinate"));
         }
 
         // validate that the last coordinate is atleast 10 meters in the range of the summit coordinate
-        if (summit.Coordinate is not null && !attempt.Coordinates.Last().HasInRange(summit.Coordinate, Summit.FINAL_COORDINATE_TOLERANCE_RADIUS))
+        if (summit.Coordinate is not null && !attempt.Coordinates.Last().IsWithinDistanceTo(summit.Coordinate, Summit.FINAL_COORDINATE_TOLERANCE_RADIUS))
         {
             return (false, new BadRequest400Exception($"The last coordinate of the route attempt is not within a {Summit.FINAL_COORDINATE_TOLERANCE_RADIUS}-meter range of the summit coordinate."));
         }
 
         // validate that the route and attempt coordinates are in aliment relative to the route coordinates
-        if (!route.Coordinates.IsAlignedWith(attempt.Coordinates, Route.ALLOWED_DEVIATION_RADIUS))
+        if (!new CoordinatePath(route.Coordinates).IsAlignedWith(new CoordinatePath(attempt.Coordinates), Route.ALLOWED_DEVIATION_RADIUS))
         {
             return (false, new BadRequest400Exception($"The route attempt does not align with the route coordinates within the allowed deviation of {Route.ALLOWED_DEVIATION_RADIUS} meters."));
         }

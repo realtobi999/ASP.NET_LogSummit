@@ -1,8 +1,7 @@
 using Bogus;
-using LogSummitApi.Application.Core.Services.Summits.Coordinates;
+using GeoCoordinates.Core;
 using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Entities;
-using LogSummitApi.Domain.Core.Utilities;
 
 namespace LogSummitApi.Tests.Helpers.Extensions;
 
@@ -38,9 +37,11 @@ public static class RouteTestExtensions
             fakeRoute.Coordinates[^1] = summit.Coordinate;
         }
 
-        fakeRoute.Distance = fakeRoute.Coordinates.TotalDistance();
-        fakeRoute.ElevationGain = fakeRoute.Coordinates.TotalElevationGain();
-        fakeRoute.ElevationLoss = fakeRoute.Coordinates.TotalElevationLoss();
+        var path = new CoordinatePath(fakeRoute.Coordinates);
+
+        fakeRoute.Distance = path.Distance;
+        fakeRoute.ElevationGain = path.ElevationGain;
+        fakeRoute.ElevationLoss = path.ElevationLoss;
 
         return fakeRoute;
     }

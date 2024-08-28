@@ -1,5 +1,4 @@
-﻿using LogSummitApi.Application.Core.Services.Summits.Coordinates;
-using LogSummitApi.Domain.Core.Entities;
+﻿using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
@@ -43,7 +42,7 @@ public class RouteValidator : IValidator<Route>
         }
 
         // validate that the last coordinate is atleast 10 meters in the range of the summit coordinate
-        if (summit.Coordinate is not null && !route.Coordinates.Last().HasInRange(summit.Coordinate, Summit.FINAL_COORDINATE_TOLERANCE_RADIUS))
+        if (summit.Coordinate is not null && !route.Coordinates.Last().IsWithinDistanceTo(summit.Coordinate, Summit.FINAL_COORDINATE_TOLERANCE_RADIUS))
         {
             return (false, new BadRequest400Exception($"The last coordinate of the summit route is not within a {Summit.FINAL_COORDINATE_TOLERANCE_RADIUS}-meter range of the summit coordinate."));
         }
