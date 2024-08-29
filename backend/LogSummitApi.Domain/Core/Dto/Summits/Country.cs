@@ -2,11 +2,11 @@
 
 public record class Country
 {
-    public CountryNameDto? Name { get; init; }
+    public CountryNameDto? Name { get; set; }
 
     public record class CountryNameDto
     {
-        public string? Common { get; init; }
-        public string? Official { get; init; }
+        public string? Common { get; set; }
+        public string? Official { get; set; }
     }
 }

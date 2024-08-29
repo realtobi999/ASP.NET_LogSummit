@@ -25,10 +25,13 @@ public class SummitValidator : IValidator<Summit>
             return (false, new NotFound404Exception(nameof(User), summit.UserId));
         }
 
-        // check if there is already a summit within a set radius (only if the summit is set to public)
+        // check if there is already a public summit within a set radius (only if the validation summit is set to public)
         if (summits.Any(existingSummit =>
         {
-            return existingSummit.Coordinate!.IsWithinDistanceTo(summit.Coordinate!, Summit.SUMMIT_PROXIMITY_RADIUS) && existingSummit.Id != summit.Id && summit.IsPublic;
+            return existingSummit.Id != summit.Id && 
+            existingSummit.IsPublic && 
+            summit.IsPublic && 
+            existingSummit.Coordinate!.IsWithinDistanceTo(summit.Coordinate!, Summit.SUMMIT_PROXIMITY_RADIUS);
         }))
         {
             return (false, new BadRequest400Exception($"A summit already exists within a {Summit.SUMMIT_PROXIMITY_RADIUS}-meter radius."));

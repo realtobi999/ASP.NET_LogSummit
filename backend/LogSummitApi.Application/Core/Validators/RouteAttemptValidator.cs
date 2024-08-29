@@ -46,7 +46,7 @@ public class RouteAttemptValidator : IValidator<RouteAttempt>
         // ensure that the right visibility is enforced
         if (!route.IsPublic && attempt.IsPublic)
         {
-            return (false, new BadRequest400Exception($"Cannot set the route attempt to public because the route is private. Please set the summit to public or the route to private."));
+            return (false, new BadRequest400Exception("Cannot set the route attempt to public because the route is private. Please set the summit to public or the route to private."));
         } 
 
         // validate that the first coordinate is atleast 10 meters in the range of the starting route coordinate

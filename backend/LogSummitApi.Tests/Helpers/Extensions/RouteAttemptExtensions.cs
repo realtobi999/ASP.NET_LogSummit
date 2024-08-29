@@ -28,14 +28,16 @@ public static class RouteAttemptTestExtensions
     {
         var fakeRouteAttempt = _routeAttemptFaker.Generate();
 
-        fakeRouteAttempt.Coordinates = route.Coordinates;
+        // create a copy of the coordinates
+        fakeRouteAttempt.Coordinates = new List<Coordinate>(route.Coordinates);
+
         fakeRouteAttempt.UserId = user.Id;
         fakeRouteAttempt.RouteId = route.Id;
         fakeRouteAttempt.SummitId = route.SummitId;
         fakeRouteAttempt.User = user;
         fakeRouteAttempt.Route = route;
 
-        // Ensure that the last coordinate is the summit coordinate
+        // ensure that the last coordinate is the summit coordinate
         if (route.Summit?.Coordinate is not null && fakeRouteAttempt.Coordinates.Count > 0)
         {
             fakeRouteAttempt.Coordinates[^1] = route.Summit.Coordinate;
