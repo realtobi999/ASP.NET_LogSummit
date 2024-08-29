@@ -1,7 +1,7 @@
 .PHONY: test
 
 test:
-	cd backend/LogSummitApi.Tests && dotnet test
+	clear && cd backend/LogSummitApi.Tests && dotnet test
 
 build:
 	cd backend && dotnet build

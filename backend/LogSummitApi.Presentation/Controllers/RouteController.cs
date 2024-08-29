@@ -24,8 +24,6 @@ public class RouteController : ControllerBase
     }
 
     [HttpGet("route")]
-    [HttpGet("route/user/{userId}")]
-    [HttpGet("route/summit/{summitId}")]
     public async Task<IActionResult> Index(Guid? userId, Guid? summitId, int limit, int offset)
     {
         var routes = (await _service.Route.IndexAsync()).Where(r => r.IsPublic); // leave out all the private routes

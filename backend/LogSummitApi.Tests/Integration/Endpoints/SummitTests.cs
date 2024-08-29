@@ -171,7 +171,7 @@ public class SummitTests
         create4.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response = await client.GetAsync($"v1/api/summit/user/{user1.Id}");
+        var response = await client.GetAsync($"v1/api/summit?userId={user1.Id}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();
@@ -206,7 +206,7 @@ public class SummitTests
         create3.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // act & assert
-        var response = await client.GetAsync($"v1/api/summit/country/hungary");
+        var response = await client.GetAsync($"v1/api/summit?country=hungary");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var content = await response.Content.ReadFromJsonAsync<List<SummitDto>>() ?? throw new NullReferenceException();

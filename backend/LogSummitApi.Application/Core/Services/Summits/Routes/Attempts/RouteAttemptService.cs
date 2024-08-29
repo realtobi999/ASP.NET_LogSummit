@@ -26,4 +26,11 @@ public class RouteAttemptService : IRouteAttemptService
 
         await _repository.SaveSafelyAsync(); 
     }
+
+    public async Task<IEnumerable<RouteAttempt>> IndexAsync()
+    {
+        var attempts = await _repository.RouteAttempt.IndexAsync();
+
+        return attempts.OrderBy(a => a.CreatedAt);
+    }
 }

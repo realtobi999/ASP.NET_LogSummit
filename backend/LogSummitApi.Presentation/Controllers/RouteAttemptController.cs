@@ -1,3 +1,4 @@
+using LogSummitApi.Application.Core.Extensions;
 using LogSummitApi.Domain.Core.Dto.Summits.Routes.Attempts;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Mappers;
@@ -22,7 +23,28 @@ public class RouteAttemptController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPatch("route/attempt")]
+    [HttpGet("route/attempt")]
+    public async Task<IActionResult> Index(Guid? routeId, Guid? userId, Guid? summitId, int limit, int offset)
+    {
+        var attempts = (await _service.RouteAttempt.IndexAsync()).Where(a => a.IsPublic);
+
+        if (userId is not null)
+        {
+            attempts = attempts.Where(r => r.UserId == userId);
+        }
+        if (summitId is not null)
+        {
+            attempts = attempts.Where(r => r.SummitId == summitId);
+        }
+        if (routeId is not null)
+        {
+            attempts = attempts.Where(r => r.RouteId == routeId);
+        }
+
+        return Ok(attempts.Paginate(offset, limit));
+    }
+
+    [HttpPost("route/attempt")]
     public async Task<IActionResult> Create(CreateRouteAttemptDto dto)
     {
         // authenticate the request
