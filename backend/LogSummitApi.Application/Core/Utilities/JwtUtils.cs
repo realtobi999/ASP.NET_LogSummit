@@ -1,5 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.Metadata;
 using System.Security.Claims;
+using LogSummitApi.Domain.Core;
 using LogSummitApi.Domain.Core.Exceptions.Http;
 
 namespace LogSummitApi.Application.Core.Utilities;
@@ -13,13 +15,12 @@ public static class JwtUtils
             throw new BadRequest400Exception("Authorization header is missing. Expected Format: BEARER <TOKEN>");
         }
 
-        const string bearerPrefix = "Bearer ";
-        if (!header.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
+        if (!header.StartsWith(Constants.BEARER_PREFIX, StringComparison.OrdinalIgnoreCase))
         {
             throw new BadRequest400Exception("Invalid authorization header format. Expected format: BEARER <TOKEN>");
         }
 
-        string token = header[bearerPrefix.Length..].Trim();
+        string token = header[Constants.BEARER_PREFIX.Length..].Trim();
 
         if (string.IsNullOrEmpty(token))
         {

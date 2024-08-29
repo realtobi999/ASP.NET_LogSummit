@@ -49,15 +49,26 @@ public class Route : ISerializable<RouteDto>
     public DateTime CreatedAt { get; set; }
 
 
-    // The maximum allowed radius (in meters) within which the first coordinate of the RouteAttempt 
-    // must be located relative to the first coordinate of the defined route. This ensures that 
-    // the RouteAttempt starts within an acceptable distance from the official starting point of the route.
+    /// <summary>
+    /// The maximum allowed radius (in meters) within which the first coordinate of the RouteAttempt 
+    /// must be located relative to the first coordinate of the defined route.
+    /// </summary>
+    /// <remarks>
+    /// This ensures that the RouteAttempt starts within an acceptable distance from the official 
+    /// starting point of the route.
+    /// </remarks>
     public const double FIRST_COORDINATE_TOLERANCE_RADIUS = 10;
 
-    // The maximum allowed radius (in meters) by which any coordinate of the RouteAttempt can deviate 
-    // from the defined route's coordinate path. This defines the permissible boundary for RouteAttempt 
-    // accuracy, ensuring the attempt stays close to the intended route.
+    /// <summary>
+    /// The maximum allowed radius (in meters) by which any coordinate of the RouteAttempt can deviate 
+    /// from the defined route's coordinate path.
+    /// </summary>
+    /// <remarks>
+    /// This defines the permissible boundary for RouteAttempt accuracy, ensuring the attempt stays 
+    /// close to the intended route.
+    /// </remarks>
     public const double ALLOWED_DEVIATION_RADIUS = 10;
+
 
     // entity relationships
 

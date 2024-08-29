@@ -11,7 +11,7 @@ public class HttpCountryRepository : IHttpCountryRepository
 {
     private readonly HttpClient _client;
     private readonly IMemoryCache _cache;
-    private const string CacheKey = "CountriesList";
+    private const string CACHE_KEY = "CountriesList";
 
     public HttpCountryRepository(IHttpClientFactory httpFactory, IMemoryCache cache)
     {
@@ -35,7 +35,7 @@ public class HttpCountryRepository : IHttpCountryRepository
 
     public async Task<IEnumerable<Country>> IndexAsync()
     {
-        var value = await _cache.GetOrCreateAsync(CacheKey, async options =>
+        var value = await _cache.GetOrCreateAsync(CACHE_KEY, async options =>
         {
             options.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
             options.SlidingExpiration = TimeSpan.FromMinutes(30);
