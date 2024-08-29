@@ -5,23 +5,23 @@ namespace LogSummitApi.Domain.Core.Dto.Summits;
 
 public record class CreateSummitDto
 {
-    public Guid? Id { get; set; }
+    public Guid? Id { get; init; }
 
     [Required]
-    public Guid UserId { get; set; }
+    public Guid UserId { get; init; }
 
     [Required, MinLength(3), MaxLength(155)]
-    public string? Name { get; set; }
+    public string? Name { get; init; }
 
     [Required, MinLength(15), MaxLength(1555)]
-    public string? Description { get; set; }
+    public string? Description { get; init; }
 
     [Required, MaxLength(155)]
-    public string? Country { get; set; }
+    public string? Country { get; init; }
 
     [Required]
-    public bool? IsPublic { get; set; }
+    public bool? IsPublic { get; init; }
 
     [Required]
-    public Coordinate? Coordinate { get; set; }
+    public Coordinate? Coordinate { get; init; }
 }

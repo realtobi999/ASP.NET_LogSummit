@@ -2,6 +2,6 @@
 
 public record class LoginResponseDto
 {
-    public UserDto? User { get; set; }
-    public string? Token { get; set; }
+    public UserDto? User { get; init; }
+    public string? Token { get; init; }
 }
