@@ -232,4 +232,40 @@ public class RouteAttemptTests
         content.Count.Should().Be(1);
         content.ElementAt(0).Id.Should().Be(attempt3.Id);
     }
+
+    [Fact]
+    public async void Get_Returns200And404()
+    {
+        // prepare
+        var client = new WebAppFactory<Program>().CreateDefaultClient();
+        var user = new User().WithFakeData();
+        var summit = new Summit().WithFakeData(user);
+        var route = new Route().WithFakeData(user, summit);
+        var attempt = new RouteAttempt().WithFakeData(user, route);
+
+        var jwt = JwtTestUtils.CreateInstance().Generate([
+            new Claim(ClaimTypes.Role, "User"),
+            new Claim("UserId", user.Id.ToString()),
+        ]);
+        client.DefaultRequestHeaders.Add("Authorization", $"BEARER {jwt}");
+
+        var create1 = await client.PostAsJsonAsync("v1/api/auth/register", user.ToCreateUserDto());
+        create1.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create2 = await client.PostAsJsonAsync("v1/api/summit", summit.ToCreateSummitDto());
+        create2.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create3 = await client.PostAsJsonAsync("v1/api/route", route.ToCreateRouteDto());
+        create3.StatusCode.Should().Be(HttpStatusCode.Created);
+        var create4 = await client.PostAsJsonAsync("v1/api/route/attempt", attempt.ToCreateRouteAttemptDto());
+        create4.StatusCode.Should().Be(HttpStatusCode.Created);
+    
+        // act & assert
+        var response1 = await client.GetAsync($"v1/api/route/attempt/{attempt.Id}"); 
+        response1.StatusCode.Should().Be(HttpStatusCode.OK);
+        var response2 = await client.GetAsync($"v1/api/route/attempt/{Guid.NewGuid()}");
+        response2.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        var content = await response1.Content.ReadFromJsonAsync<RouteAttemptDto>() ?? throw new NullReferenceException();
+
+        content.Id.Should().Be(attempt.Id);
+    }
 }

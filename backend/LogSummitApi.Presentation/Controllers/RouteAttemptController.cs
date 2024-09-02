@@ -44,6 +44,16 @@ public class RouteAttemptController : ControllerBase
         return Ok(attempts.Paginate(offset, limit));
     }
 
+    [HttpGet("route/attempt/{attemptId:guid}")]
+    public async Task<IActionResult> Get(Guid attemptId)
+    {
+        var attempt = await _service.RouteAttempt.GetAsync(attemptId);
+
+        if (!attempt.IsPublic && attempt.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+
+        return Ok(attempt);
+    }
+
     [HttpPost("route/attempt")]
     public async Task<IActionResult> Create(CreateRouteAttemptDto dto)
     {

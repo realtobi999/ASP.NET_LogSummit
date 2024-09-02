@@ -1,4 +1,5 @@
 using LogSummitApi.Domain.Core.Entities;
+using LogSummitApi.Domain.Core.Exceptions.Http;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using LogSummitApi.Domain.Core.Interfaces.Services;
@@ -25,6 +26,13 @@ public class RouteAttemptService : IRouteAttemptService
         _repository.RouteAttempt.Create(attempt);
 
         await _repository.SaveSafelyAsync(); 
+    }
+
+    public async Task<RouteAttempt> GetAsync(Guid Id)
+    {
+        var attempt = await _repository.RouteAttempt.GetAsync(Id) ?? throw new NotFound404Exception(nameof(RouteAttempt), Id);
+
+        return attempt;
     }
 
     public async Task<IEnumerable<RouteAttempt>> IndexAsync()
