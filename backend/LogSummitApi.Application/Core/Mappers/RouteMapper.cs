@@ -32,7 +32,10 @@ public class RouteMapper : IRouteMapper
     {
         route.Name = dto.Name;
         route.Description = dto.Description;
-        route.IsPublic = dto.IsPublic ?? throw new NullPropertyException(nameof(UpdateRouteDto), nameof(UpdateRouteDto.IsPublic));
         route.Coordinates = dto.Coordinates;
+        route.Distance = dto.Coordinates.GetDistance();
+        route.ElevationGain = dto.Coordinates.GetElevationGain();
+        route.ElevationLoss = dto.Coordinates.GetElevationLoss();
+        route.IsPublic = dto.IsPublic ?? throw new NullPropertyException(nameof(UpdateRouteDto), nameof(UpdateRouteDto.IsPublic));
     }
 }
