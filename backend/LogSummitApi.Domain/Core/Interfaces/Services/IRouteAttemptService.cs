@@ -8,4 +8,5 @@ public interface IRouteAttemptService
     Task<RouteAttempt> GetAsync(Guid Id);
     Task CreateAsync(RouteAttempt attempt);
     Task UpdateAsync(RouteAttempt attempt);
+    Task DeleteAsync(RouteAttempt attempt);
 }

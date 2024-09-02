@@ -79,4 +79,16 @@ public class RouteAttemptController : ControllerBase
         await _service.RouteAttempt.UpdateAsync(attempt);
         return NoContent();
     }
+
+    [HttpDelete("route/attempt/{attemptId:guid}")]
+    public async Task<IActionResult> Delete(Guid attemptId)
+    {
+        var attempt = await _service.RouteAttempt.GetAsync(attemptId);
+
+        // authenticate the request
+        if (attempt.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+
+        await _service.RouteAttempt.DeleteAsync(attempt);
+        return NoContent();
+    }
 }

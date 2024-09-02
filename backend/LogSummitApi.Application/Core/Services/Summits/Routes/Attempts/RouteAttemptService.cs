@@ -28,6 +28,13 @@ public class RouteAttemptService : IRouteAttemptService
         await _repository.SaveSafelyAsync(); 
     }
 
+    public async Task DeleteAsync(RouteAttempt attempt)
+    {
+        _repository.RouteAttempt.Delete(attempt);
+
+        await _repository.SaveSafelyAsync();
+    }
+
     public async Task<RouteAttempt> GetAsync(Guid Id)
     {
         var attempt = await _repository.RouteAttempt.GetAsync(Id) ?? throw new NotFound404Exception(nameof(RouteAttempt), Id);
