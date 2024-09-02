@@ -41,4 +41,15 @@ public class RouteAttemptService : IRouteAttemptService
 
         return attempts.OrderBy(a => a.CreatedAt);
     }
+
+    public async Task UpdateAsync(RouteAttempt attempt)
+    {
+        // validate the object
+        var (valid, exception) = await _validator.IsValidAsync(attempt);
+        if (!valid && exception is not null) throw exception;
+
+        _repository.RouteAttempt.Update(attempt);
+
+        await _repository.SaveSafelyAsync(); 
+    }
 }

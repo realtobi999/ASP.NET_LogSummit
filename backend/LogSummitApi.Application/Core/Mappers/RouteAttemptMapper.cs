@@ -23,4 +23,13 @@ public class RouteAttemptMapper : IRouteAttemptMapper
             CreatedAt = DateTime.UtcNow,
         };
     }
+
+    public void UpdateEntityFromDto(RouteAttempt attempt, UpdateRouteAttemptDto dto)
+    {
+        attempt.Name = dto.Name;
+        attempt.Description = dto.Description;
+        attempt.Coordinates = dto.Coordinates;
+        attempt.IsPublic = dto.IsPublic ?? throw new NullPropertyException(nameof(UpdateRouteAttemptDto), nameof(UpdateRouteAttemptDto.IsPublic));
+        attempt.Time = dto.Time;
+    }
 }

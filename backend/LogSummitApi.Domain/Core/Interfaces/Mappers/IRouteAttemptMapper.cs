@@ -3,7 +3,6 @@ using LogSummitApi.Domain.Core.Entities;
 
 namespace LogSummitApi.Domain.Core.Interfaces.Mappers;
 
-public interface IRouteAttemptMapper
+public interface IRouteAttemptMapper : IBaseMapper<RouteAttempt, CreateRouteAttemptDto, UpdateRouteAttemptDto>
 {
-    RouteAttempt CreateEntityFromDto(CreateRouteAttemptDto dto);
 }

@@ -65,4 +65,18 @@ public class RouteAttemptController : ControllerBase
         await _service.RouteAttempt.CreateAsync(attempt);
         return Created($"/v1/api/route/attempt/{attempt.Id}", null);
     }
+
+    [HttpPut("route/attempt/{attemptId:guid}")]
+    public async Task<IActionResult> Update(Guid attemptId, UpdateRouteAttemptDto dto)
+    {
+        var attempt = await _service.RouteAttempt.GetAsync(attemptId);
+
+        // authenticate the request
+        if (attempt.UserId != this.GetUserIdFromJwt()) throw new NotAuthorized401Exception();
+
+        _mapper.UpdateEntityFromDto(attempt, dto);
+
+        await _service.RouteAttempt.UpdateAsync(attempt);
+        return NoContent();
+    }
 }
