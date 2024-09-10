@@ -1,3 +1,4 @@
+using System.Net;
 using LogSummitApi.Domain.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -27,7 +28,7 @@ public class CustomSuccessSerializationFilter : IAsyncResultFilter
         {
             objectResult.Value = new SuccessMessage()
             {
-                Success = true,
+                Success = objectResult.StatusCode >= 200 && objectResult.StatusCode <= 299,
                 Data = objectResult.Value ?? new(),
                 Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}"
             };
