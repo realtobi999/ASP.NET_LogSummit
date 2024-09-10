@@ -15,6 +15,7 @@ namespace LogSummitApi.Presentation.Middleware.Filters;
 /// The <c>SuccessMessage</c> object will be populated with:
 /// <list type="bullet">
 ///     <item><description><c>Success</c> set to <c>true</c></description></item>
+///     <item><description><c>StatusCode</c> containing the response status code (200 - 299)</description></item>
 ///     <item><description><c>Data</c> containing the original result data from the action, or an empty object if the result is null.</description></item>
 ///     <item><description><c>Instance</c> containing the HTTP method and request path of the request.</description></item>
 /// </list>
@@ -24,11 +25,12 @@ public class CustomSuccessSerializationFilter : IAsyncResultFilter
 {
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (context.Result is ObjectResult objectResult)
+        if (context.Result is ObjectResult objectResult && objectResult.StatusCode >= 200 && objectResult.StatusCode <= 299)
         {
             objectResult.Value = new SuccessMessage()
             {
-                Success = objectResult.StatusCode >= 200 && objectResult.StatusCode <= 299,
+                Success = true,
+                Status = (int) objectResult.StatusCode!,
                 Data = objectResult.Value ?? new(),
                 Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}"
             };

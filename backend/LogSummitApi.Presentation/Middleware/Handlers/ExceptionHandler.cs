@@ -14,7 +14,7 @@ namespace LogSummitApi.Presentation.Middleware.Handlers;
 /// <para>
 /// The error response includes:
 /// <list type="bullet">
-///     <item><description><c>StatusCode</c> - HTTP status code representing the error.</description></item>
+///     <item><description><c>Status</c> - HTTP status code representing the error.</description></item>
 ///     <item><description><c>Type</c> - The type of the exception that occurred.</description></item>
 ///     <item><description><c>Title</c> - A brief, human-readable title of the error (used for HTTP-specific exceptions).</description></item>
 ///     <item><description><c>Detail</c> - A detailed message describing the error.</description></item>
@@ -56,7 +56,7 @@ public class ExceptionHandler : IExceptionHandler
     {
         var error = new ErrorMessage
         {
-            StatusCode = exception.StatusCode,
+            Status = exception.StatusCode,
             Type = exception.GetType().Name,
             Title = exception.Title,
             Detail = exception.Message,
@@ -70,7 +70,7 @@ public class ExceptionHandler : IExceptionHandler
     {
         var error = new ErrorMessage
         {
-            StatusCode = (int)HttpStatusCode.InternalServerError,
+            Status = (int)HttpStatusCode.InternalServerError,
             Type = exception.GetType().Name,
             Title = "An unexpected internal error occurred",
             Detail = exception.Message,
@@ -82,7 +82,7 @@ public class ExceptionHandler : IExceptionHandler
 
     private static async Task WriteErrorAsync(HttpContext context, ErrorMessage error, CancellationToken token)
     {
-        context.Response.StatusCode = error.StatusCode;
+        context.Response.StatusCode = error.Status;
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsJsonAsync(error, token);
     }
