@@ -40,7 +40,7 @@ const buttonClasses = computed(() => {
 
     const variantClasses = {
         primary: 'bg-purple-500 text-white font-medium hover:bg-purple-600',
-        secondary: 'bg-gray-500 text-white font-medium hover:bg-gray-600',
+        secondary: 'bg-zinc-600 text-white font-medium hover:bg-zinc-700',
         danger: 'bg-red-500 text-white hover:bg-red-600',
     }[props.variant];
 

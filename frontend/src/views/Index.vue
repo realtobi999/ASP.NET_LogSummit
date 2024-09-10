@@ -7,16 +7,16 @@
             </h1>
 
             <div class="mt-5 flex space-x-1">
-                <custom-button size="md">
-                    <router-link to="/" class="text-lg">
+                <router-link to="/register" class="text-lg">
+                    <custom-button size="md">
                         Sign Up
-                    </router-link>
-                </custom-button>
-                <custom-button size="md">
-                    <router-link to="/" class="text-lg">
+                    </custom-button>
+                </router-link>
+                <router-link to="/" class="text-lg">
+                    <custom-button size="md">
                         Login
-                    </router-link>
-                </custom-button>
+                    </custom-button>
+                </router-link>
             </div>
         </div>
 
