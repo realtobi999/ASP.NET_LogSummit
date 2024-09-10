@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
 using LogSummitApi.Application.Core.Utilities;
 using LogSummitApi.Domain.Core.Interfaces.Common;
@@ -19,6 +18,7 @@ public class Program
             builder.Services.AddExceptionHandler<ExceptionHandler>();
 
             builder.Services.ConfigureDbContext(config);
+            builder.Services.ConfigureCORS(config);
             builder.Services.AddHttpClient();
             builder.Services.AddMemoryCache();
 
@@ -57,6 +57,7 @@ public class Program
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("CORS");
             app.UseAuthentication();
             app.UseAuthorization();
 

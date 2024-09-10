@@ -18,6 +18,22 @@ namespace LogSummitApi.Presentation.Extensions;
 
 public static class ServiceExtensions
 {
+    public static void ConfigureCORS(this IServiceCollection services, IConfiguration config)
+    {
+        var client = config.GetSection("Client:Url").Value;
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CORS",
+                builder =>
+                {
+                    builder.WithOrigins(client!) 
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+        });
+    }
+
     public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration config)
     {
         var jwt = JwtFactory.Create(config.GetSection("JWT:Issuer").Value, config.GetSection("JWT:Key").Value);
