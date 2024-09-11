@@ -29,7 +29,7 @@ public class UtilTests
 
         var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();
 
-        content.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+        content.Status.Should().Be((int)HttpStatusCode.InternalServerError);
         content.Instance.Should().Be("GET /v1/api/check/error");
     }
 

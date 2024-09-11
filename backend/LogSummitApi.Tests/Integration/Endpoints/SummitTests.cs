@@ -67,7 +67,7 @@ public class SummitTests
         var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();
 
         content.Title.Should().Be("Bad Request");
-        content.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+        content.Status.Should().Be((int)HttpStatusCode.BadRequest);
         content.Instance.Should().Be("POST /v1/api/summit");
         content.Type.Should().Be(nameof(BadRequest400Exception));
         content.Detail.Should().Contain("A summit already exists");

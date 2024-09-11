@@ -25,7 +25,7 @@ public class ExceptionHandlerTests
 
         var content = await response.Content.ReadFromJsonAsync<ErrorMessage>() ?? throw new NullReferenceException();
 
-        content.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+        content.Status.Should().Be((int)HttpStatusCode.NotFound);
         content.Title.Should().Be("Resource Not Found");
     }
 }
