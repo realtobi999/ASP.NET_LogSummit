@@ -1,13 +1,12 @@
 <template>
-    <button :class="buttonClasses" :disabled="isDisabled" @click="onClick">
+    <button :class="buttonClass" :disabled="isDisabled" @click="onClick">
         <slot></slot>
     </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 
-// Props definition
 const props = defineProps({
     type: {
         type: String,
@@ -27,11 +26,10 @@ const props = defineProps({
     },
 });
 
-// Emits definition
 const emit = defineEmits(['click']);
 
-// Computed properties for dynamic Tailwind classes
-const buttonClasses = computed(() => {
+const isDisabled = computed(() => props.disabled);
+const buttonClass = computed(() => {
     const sizeClasses = {
         sm: 'min-w-[100px] px-3 py-2 text-sm',  
         md: 'min-w-[120px] px-4 py-2 text-base', 
@@ -50,10 +48,7 @@ const buttonClasses = computed(() => {
 });
 
 
-// Handling the click event
-const isDisabled = computed(() => props.disabled);
-
-function onClick(event) {
+function onClick(event: MouseEvent) {
     if (!isDisabled.value) {
         emit('click', event);
     }
