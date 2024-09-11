@@ -10,11 +10,6 @@ public class LogSummitContext(DbContextOptions<LogSummitContext> opt) : DbContex
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        // configure specific properties
-        builder.Entity<User>()
-               .HasIndex(u => u.Email)
-               .IsUnique();
-
         // configure entity relationships      
         builder.ConfigureUserToRouteAttemptRelationship();
         builder.ConfigureUserToRouteRelationship();

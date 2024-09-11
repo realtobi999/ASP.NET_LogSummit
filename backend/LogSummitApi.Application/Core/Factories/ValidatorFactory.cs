@@ -29,4 +29,9 @@ public class ValidatorFactory : IValidatorFactory
     {
         return new SummitValidator(_repository);
     }
+
+    public IValidator<User> CreateUserValidator()
+    {
+        return new UserValidator(_repository);
+    }
 }

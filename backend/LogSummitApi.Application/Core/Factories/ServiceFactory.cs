@@ -40,6 +40,6 @@ public class ServiceFactory : IServiceFactory
 
     public IUserService CreateUserService()
     {
-        return new UserService(_repository, _hasher);
+        return new UserService(_repository, _hasher, _validators.CreateUserValidator());
     }
 }

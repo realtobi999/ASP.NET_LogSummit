@@ -10,7 +10,7 @@ public class User : ISerializable<UserDto>
     [Required, Column("id")]
     public Guid Id { get; set; }
 
-    [Required, Column("username"), MaxLength(155)]
+    [Required, Column("username"), MaxLength(155)] // also unique
     public string? Username { get; set; }
 
     [Required, Column("email"), EmailAddress, MaxLength(155)]
@@ -32,6 +32,7 @@ public class User : ISerializable<UserDto>
         return new UserDto()
         {
             Id = this.Id,
+            Username = this.Username,
             Email = this.Email,
         };
     }
