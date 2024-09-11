@@ -14,6 +14,7 @@ namespace LogSummitApi.Presentation.Middleware.Handlers;
 /// <para>
 /// The error response includes:
 /// <list type="bullet">
+///     <item><description><c>Success</c> - Boolean representing the success status of the response.</description></item>
 ///     <item><description><c>Status</c> - HTTP status code representing the error.</description></item>
 ///     <item><description><c>Type</c> - The type of the exception that occurred.</description></item>
 ///     <item><description><c>Title</c> - A brief, human-readable title of the error (used for HTTP-specific exceptions).</description></item>
@@ -33,13 +34,6 @@ public class ExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken token)
     {
-        var error = new ErrorMessage()
-        {
-            Success = false,
-            Type = exception.GetType().Name,
-            Instance = $"{context.Request.Method} {context.Request.Path}"
-        };
-
         if (exception is IHttpException httpException)
         {
             await HandleHttpException(context, httpException, token);
@@ -56,6 +50,7 @@ public class ExceptionHandler : IExceptionHandler
     {
         var error = new ErrorMessage
         {
+            Success = false,
             Status = exception.StatusCode,
             Type = exception.GetType().Name,
             Title = exception.Title,
@@ -70,6 +65,7 @@ public class ExceptionHandler : IExceptionHandler
     {
         var error = new ErrorMessage
         {
+            Success = false,
             Status = (int)HttpStatusCode.InternalServerError,
             Type = exception.GetType().Name,
             Title = "An unexpected internal error occurred",
