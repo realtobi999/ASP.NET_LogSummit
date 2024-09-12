@@ -1,13 +1,16 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
+import { createRouter } from 'vue-router'
+import { createWebHistory } from 'vue-router'
 import IndexView from '../components/views/IndexView.vue'
 import RegisterView from '../components/views/RegisterView.vue'
 import LoginView from '../components/views/LoginView.vue'
+import DashboardView from '../components/views/DashboardView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Index',
-    component: IndexView
+    component: IndexView,
   },
   {
     path: '/register',
@@ -19,6 +22,14 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Login',
     component: LoginView
   },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: DashboardView,
+    meta: {
+      requiresAuth : true,
+    }
+  },
 ]
 
 const router = createRouter({
@@ -26,4 +37,18 @@ const router = createRouter({
   routes
 })
 
-export default router
+router.beforeEach((to, _from, next) => {
+  if (!to.meta.requiresAuth) {
+    next();
+  }
+
+  const token = localStorage.getItem('jwt_token');
+
+  if (!token) {
+    next('/login');
+  }
+
+  next();
+});
+
+export default router;

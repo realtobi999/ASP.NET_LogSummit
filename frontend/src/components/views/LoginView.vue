@@ -58,10 +58,8 @@ const submit = async () => {
             errors.value.push(...fieldErrors);
         }
     }
-    else if (isErrorMessage(response)) {
-        if (response.detail) {
+    else if (isErrorMessage(response) && response.detail) {
             errors.value.push(response.detail);
-        }
     }
     else {
         console.log("Successful Login...")
