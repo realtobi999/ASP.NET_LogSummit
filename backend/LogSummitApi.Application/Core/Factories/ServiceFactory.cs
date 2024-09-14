@@ -2,7 +2,6 @@
 using LogSummitApi.Application.Core.Services.Summits.Routes;
 using LogSummitApi.Application.Core.Services.Summits.Routes.Attempts;
 using LogSummitApi.Application.Core.Services.Users;
-using LogSummitApi.Domain.Core.Entities;
 using LogSummitApi.Domain.Core.Interfaces.Common;
 using LogSummitApi.Domain.Core.Interfaces.Factories;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;

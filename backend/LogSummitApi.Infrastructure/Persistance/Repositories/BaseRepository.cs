@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using LogSummitApi.Domain.Core.Attributes;
 using LogSummitApi.Domain.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 

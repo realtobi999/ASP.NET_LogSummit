@@ -1,4 +1,3 @@
-using System;
 using LogSummitApi.Domain.Core.Dto.Summits.Routes;
 using LogSummitApi.Domain.Core.Entities;
 

@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
+﻿using LogSummitApi.Domain.Core.Interfaces.Repositories.Http;
 
 namespace LogSummitApi.Domain.Core.Interfaces.Repositories;
 

@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Reflection.Metadata;
 using System.Security.Claims;
 using LogSummitApi.Domain.Core;
 using LogSummitApi.Domain.Core.Exceptions.Http;

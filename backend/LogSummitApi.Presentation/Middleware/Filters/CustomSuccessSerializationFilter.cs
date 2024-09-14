@@ -1,4 +1,3 @@
-using System.Net;
 using LogSummitApi.Domain.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

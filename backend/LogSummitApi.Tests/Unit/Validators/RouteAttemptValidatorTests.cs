@@ -1,4 +1,3 @@
-using System;
 using GeoCoordinates.Core;
 using LogSummitApi.Application.Core.Validators;
 using LogSummitApi.Domain.Core.Entities;
